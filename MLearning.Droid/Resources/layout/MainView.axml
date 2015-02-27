@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <Mvx.MvxListView
+        android:layout_width="match_parent"
+        android:layout_height="150.0dp"
+        local:MvxBind="ItemsSource CirclesList;ItemClick SelectCircleCommand"
+        local:MvxItemTemplate="@layout/item_circle"
+        android:id="@+id/mvx.MvxListView1"
+        android:layout_marginBottom="6.0dp" />
+    <Mvx.MvxListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="150.0dp"
+        android:id="@+id/listView2"
+        local:MvxItemTemplate="@layout/item_quiz"
+        local:MvxBind="ItemsSource QuizzesList;ItemClick SelectQuizCommand"
+        android:layout_marginBottom="6.0dp" />
+    <Mvx.MvxListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="150.0dp"
+        android:id="@+id/listVie3"
+        local:MvxItemTemplate="@layout/item_quiz"
+        local:MvxBind="ItemsSource QuestionList;ItemClick SelectQuestionCommand"
+        android:layout_marginBottom="6.0dp" />
+<!--<EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        local:MvxBind="Text NewPost" />
+    <Button
+        android:text="Post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button1"
+        local:MvxBind="Click PostCommand" />
+    <Button
+        android:text="Logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        local:MvxBind="Click LogoutCommand" />-->
+<!--  <Button
+        android:text="Register to Circle  "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button1"
+        local:MvxBind="Click NavigateToRegistrationCommand" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        local:MvxBind="Text CircleFilterString" />
+    <Mvx.MvxListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        local:MvxBind="ItemsSource CirclesList;ItemClick SelectCircleCommand"
+        local:MvxItemTemplate="@layout/item_circle"
+        android:id="@+id/mvx.MvxListView1" />
+    <Mvx.MvxListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        local:MvxBind="ItemsSource LearningOjectsList; ItemClick OpenLOCommand"
+        local:MvxItemTemplate="@layout/item_lo"
+        android:id="@+id/mvx.MvxListView1" />
+  -->
+<!--
+  
+  <Mvx.MvxListView
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   local:MvxBind="ItemsSource UsersList"
+   local:MvxItemTemplate="@layout/item_user"
+   android:id="@+id/mvx.MvxListView1" />
+
+<Button
+   android:text="Create LOComment  "
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content"
+   android:id="@+id/button1"
+   local:MvxBind="Click CreateLOCommentCommand" />
+   
+
+
+  <EditText
+        
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/textView3"
+      local:MvxBind="Text NewLOComment"/>
+
+
+  
+  
+  <Mvx.MvxListView
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   local:MvxBind="ItemsSource LOCommentsList"
+   local:MvxItemTemplate="@layout/item_lo_comment"
+   android:id="@+id/mvx.MvxListView1" />
+  
+
+     
+      <Mvx.MvxListView
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     local:MvxBind="ItemsSource PostsList"
+     local:MvxItemTemplate="@layout/item_post"
+     android:id="@+id/mvx.MvxListView1" />
+     
+   -->
+    <Mvx.MvxListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="170.0dp"
+        android:id="@+id/listView1"
+        local:MvxItemTemplate="@layout/item_question_op"
+        local:MvxBind="ItemsSource QuestionOptions; ItemClick TestSaveUserAnswer"
+        android:layout_marginBottom="0.0dp" />
+</LinearLayout>

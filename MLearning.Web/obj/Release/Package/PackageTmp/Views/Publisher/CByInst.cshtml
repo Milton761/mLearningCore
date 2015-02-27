@@ -1,0 +1,48 @@
+﻿@model IEnumerable<MLearning.Core.Entities.consumer_by_institution>
+
+@{
+    ViewBag.Title = "CByInst";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CByInst</h2>
+
+
+<table class="table">
+    <tr>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInInst.FirstOrDefault().name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInInst.FirstOrDefault().lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInInst.FirstOrDefault().username)
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lastname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>
+     
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

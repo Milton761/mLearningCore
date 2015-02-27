@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="MLearningWebContext-Web.config Connection String" description="MLearningWebContext Connection String used in web.config by the application to access the database." defaultValue="Data Source=(localdb)\v11.0; Initial Catalog=MLearningWebContext-20141029135546; Integrated Security=True; MultipleActiveResultSets=True; AttachDbFilename=|DataDirectory|MLearningWebContext-20141029135546.mdf" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Test\\Projects\\MLearning\\MLearning\.Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='MLearningWebContext']/@connectionString" />
+  </parameter>
+</parameters>

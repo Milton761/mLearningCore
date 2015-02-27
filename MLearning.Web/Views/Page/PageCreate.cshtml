@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "PageCreate";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section Styles
+{
+    <link href="/Content/Style2.css" rel="stylesheet" type="text/css" />    
+    
+}
+
+@section Scripts
+{
+  <script src="/Scripts/jquery.min.js"> </script>
+<script src="/Scripts/jquery-ui.js"></script>
+<script src="/Scripts/global.js"></script>
+<script src="/Scripts/XMLWriter.js"></script>
+<script type="text/javascript" src="/Scripts/script.js"></script>  
+}
+<h2>PageCreate</h2>
+
+<div id="wrap">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td colspan="3" height="80px">
+                <div class="head">
+                    <div class="header">
+                        <div class="headermenu">
+                            <div class="mlearnign"></div>
+                            <div class="mlearingapp">
+                                <span class="m">MLEARING</span><br />
+                                <span class="learning">APP</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="outer-div">
+                            <div id='content'><aside class='arrow'><a href="#">Publish</a></aside></div>
+                            <div id='content'><aside class='arrowinactive'><a href="#">Publish</a></aside></div>
+                            <div id='content'><aside class='arrowinactive'><a href="#">Publish</a></aside></div>
+                        </div>
+                    </div>
+
+            </td>
+        </tr>
+        <td width="15%"></td>
+        <td height="50" align="center" valign="middle">
+            <div class="InputsWrapper1">
+                <div id="yourhead">
+                    <div id="your">
+                        <h3 id="maintitle">TITULO PRINCIPAL<img src="/images/edit-form.png"></h3><h4 id="justclickid">Haga click en el texto para modificar el contenido</h4>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td width="15%"></td>
+        </tr>
+        <tr class="contenido">
+            <td style="width:15%">&nbsp;</td>
+            <td align="center" valign="top">
+                <div id="InputsWrapper" class="ui-sortable">
+                    <div></div>
+                </div>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3" height="80px">
+                <div id="toolbar">
+                    <div id="toolbarIcons">
+                        <p class="add-slide-toolbar">
+                            <button type="button" id="Header" class="btn icono1"><i class="sbicon"></i></button>
+                            <button type="button" id="Text" class="btn btn-primary icono2 "><i class="icono1"></i></button>
+                            <button type="button" id="Bullets" class="btn btn-primary icono3"><i class="myIcon"></i></button>
+                            <button type="button" id="Columns" class="btn btn-primary icono4"><i class="fa"></i></button>
+                            <button type="button" id="Quote" class="btn btn-primary icono5"><i class="sbicon"></i></button>
+                            <button type="button" id="Image" class="btn btn-primary icono6"><i class="sbicon"></i></button>
+                            <button type="button" id="Video" class="btn btn-primary icono7"><i class="sbicon"></i></button>
+                            <button type="button" id="BChart" class="btn btn-primary icono8"><i class="sbicon"></i></button>
+                            <button type="button" id="LChart" class="btn btn-primary icono9"><i class="sbicon"></i></button>
+                            <button type="button" id="PChart" class="btn btn-primary icono10"> <i class="sbicon"></i></button>
+                    </div>
+                    <div style="float:left; position:relative; left:70px; top: 10px;">
+                        <button type="button" id="next" class="Next bnext"><i>Next</i></button>
+                    </div></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td height="50px" colspan="3" class="footer">&nbsp;</td>
+        </tr>
+    </table>
+
+
+
+
+    <!-- Contenid-->
+
+</div>

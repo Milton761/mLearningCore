@@ -1,0 +1,177 @@
+﻿using Core.Security;
+using MLearning.Core.Configuration;
+using MLearning.Core.Entities;
+using MLearning.Core.Services;
+using MLearning.Web.Models;
+using MLearning.Web.Singleton;
+using MLearningDB;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+
+namespace MLearning.Web.Controllers
+{
+    public class AdminController : MLController
+    {
+        //
+        // GET: /Admin/
+
+        
+        IMLearningService _mLearningService;
+
+        public AdminController() : base()
+        {
+            _mLearningService = ServiceManager.GetService();
+        }
+
+
+
+
+
+        [Authorize(Roles = Constants.SuperAdminRole)]
+        async public Task<ActionResult> Index()
+        {
+            var list = await _mLearningService.GetHeads();
+            return View("HeadList",list);
+        }
+
+        public ActionResult Create()
+        {
+            return View("HeadCreate");
+        }
+
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        async public Task<ActionResult> Create(AdminViewModel adminObj)
+        {
+            try
+            {
+                adminObj.User.password = EncryptionService.encrypt(adminObj.User.password);
+
+                await _mLearningService.CreateInstitution(adminObj.Inst, adminObj.Head, adminObj.User);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        [Authorize(Roles = Constants.SuperAdminRole)]
+        async public Task<ActionResult> Edit(int user_id,int head_id,int inst_id)
+        {
+
+
+          
+
+            var user = await _mLearningService.GetObjectWithId<User>(user_id);
+             var head = await _mLearningService.GetObjectWithId<Head>(head_id);
+             var institution = await _mLearningService.GetObjectWithId<Institution>(inst_id);
+
+
+
+            return View("HeadEdit", new AdminViewModel { User = user, Head = head, Inst = institution });
+
+
+        }
+
+        
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public async Task<ActionResult> Edit(int user_id,int head_id,int inst_id, AdminViewModel adminObj)
+        {
+            try
+            {
+
+                var user = await _mLearningService.GetObjectWithId<User>(user_id);
+                var head = await _mLearningService.GetObjectWithId<Head>(head_id);
+                var institution = await _mLearningService.GetObjectWithId<Institution>(inst_id);
+
+
+                //Copy Ids
+                adminObj.User.id = user_id;
+                adminObj.Head.id = head_id;
+                adminObj.Inst.id = inst_id;
+
+                adminObj.User.password = EncryptionService.encrypt(adminObj.User.password);
+
+
+                //Fields which doesn't update
+                adminObj.User.email = user.email;
+                adminObj.User.is_online = user.is_online;
+                adminObj.User.social_id = user.social_id;
+                adminObj.User.image_url = user.image_url;
+                adminObj.User.updated_at = user.updated_at;
+                adminObj.User.created_at = user.created_at;
+
+
+                adminObj.Head.updated_at = head.updated_at;
+                adminObj.Head.created_at = head.created_at;
+                adminObj.Head.User_id = head.User_id;
+
+                adminObj.Inst.created_at = institution.created_at;
+                adminObj.Inst.updated_at = institution.updated_at;
+
+
+
+              
+                //Update DB
+                _mLearningService.UpdateObject<User>(adminObj.User);
+          
+
+                _mLearningService.UpdateObject<Head>(adminObj.Head);
+              
+
+                _mLearningService.UpdateObject<Institution>(adminObj.Inst);
+
+
+               return  RedirectToAction("Index");
+            
+            }
+            catch
+            {
+                return View("Index");
+            }
+            
+        }
+
+        [Authorize(Roles = Constants.SuperAdminRole)]
+        public async Task<ActionResult> Delete(int user_id, int head_id, int inst_id)
+        {
+            var user = await _mLearningService.GetObjectWithId<User>(user_id);
+            var head = await _mLearningService.GetObjectWithId<Head>(head_id);
+            var institution = await _mLearningService.GetObjectWithId<Institution>(inst_id);
+
+
+            return View("HeadDelete", new AdminViewModel { User = user, Head = head, Inst = institution });
+        }
+
+        //
+        // POST: /Default1/Delete/5
+       [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Delete(int user_id, int head_id, int inst_id,FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                _mLearningService.DeleteObject<User>(new User { id = user_id });
+                _mLearningService.DeleteObject<Head>(new Head { id = head_id });
+                _mLearningService.DeleteObject<Institution>(new Institution { id = inst_id });
+
+                return RedirectToAction("Index");
+            }
+            catch(Exception e)
+            {
+                return View("HeadDelete");
+            }
+        }
+
+
+
+	}
+}

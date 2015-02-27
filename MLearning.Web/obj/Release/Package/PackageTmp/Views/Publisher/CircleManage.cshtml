@@ -1,0 +1,228 @@
+﻿@model MLearning.Web.Models.ManageCircleViewModel
+
+@{
+    ViewBag.Title = "CircleManage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CircleManage</h2>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<table class="table">
+    <tr>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInCircle.FirstOrDefault().name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInCircle.FirstOrDefault().lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInCircle.FirstOrDefault().username)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInCircle.FirstOrDefault().email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInCircle.FirstOrDefault().image_url)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInCircle.FirstOrDefault().is_online)
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.ConsumerInCircle) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lastname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>      
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.image_url)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.is_online)
+        </td>
+  
+        <td>         
+            @Html.ActionLink("Remove", "Remove", new { user_id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+<h2>CByInst</h2>
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInInst.FirstOrDefault().name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInInst.FirstOrDefault().lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsumerInInst.FirstOrDefault().username)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.ConsumerInInst)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.username)
+            </td>
+
+            <td>
+                @Html.ActionLink("Add", "Add", new { user_id = item.id }) 
+               
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<h2>LObyC</h2>
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.LOInCircle.FirstOrDefault().title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOInCircle.FirstOrDefault().type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOInCircle.FirstOrDefault().description)
+        </th>
+ 
+        <th>
+            @Html.DisplayNameFor(model => model.LOInCircle.FirstOrDefault().url_cover)
+        </th>
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.LOInCircle)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+       
+            <td>
+                @Html.DisplayFor(modelItem => item.url_cover)
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+
+<h2>Public LOs</h2>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LOPublic.FirstOrDefault().title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOPublic.FirstOrDefault().type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOPublic.FirstOrDefault().description)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.LOPublic.FirstOrDefault().url_cover)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOPublic.FirstOrDefault().Publisher_id)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.LOPublic.FirstOrDefault().created_at)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOPublic.FirstOrDefault().updated_at)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.LOPublic)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.url_cover)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher_id)
+            </td>
+  
+            <td>
+                @Html.DisplayFor(modelItem => item.created_at)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.updated_at)
+            </td>
+            <td>
+                @Html.ActionLink("Add To Circle", "AddLOToCircle", new { lo_id = item.id }) 
+                
+            </td>
+        </tr>
+    }
+
+</table>

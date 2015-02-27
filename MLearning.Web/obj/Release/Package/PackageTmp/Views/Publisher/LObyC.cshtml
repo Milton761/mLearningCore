@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MLearningDB.lo_by_circle>
+
+@{
+    ViewBag.Title = "LObyC";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>LObyC</h2>
+
+
+<table class="table">
+    <tr>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.LOInCircle.FirstOrDefault().title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOInCircle.FirstOrDefault().type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOInCircle.FirstOrDefault().description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOInCircle.FirstOrDefault().url_package)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOInCircle.FirstOrDefault().url_cover)
+        </th>
+      
+      
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.url_package)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.url_cover)
+        </td>
+     
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<MLearningDB.LearningObject>
+
+@{
+    ViewBag.Title = "ListLO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListLO</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.url_package)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.url_cover)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publisher_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.created_at)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.updated_at)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.url_package)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.url_cover)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Publisher_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.created_at)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.updated_at)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

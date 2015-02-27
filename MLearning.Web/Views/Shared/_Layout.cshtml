@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <div class="header">
+        <!-- end .header -->
+        @using Microsoft.AspNet.Identity
+       
+        @if (Request.IsAuthenticated)
+        {
+             
+            using (Html.BeginForm("LogOff", "Login", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {               
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
+            }
+        }
+        
+        <div id="hl" class="hleft">
+            <p><img src="../images/person.png" width="100px" height="100px" class="circularperson" /></p>
+            <div class="login">
+                WELCOME<br />
+                <span class="usuario">usuario</span><br />
+                asaca
+            </div>
+            <div class="time">
+                <span class="clock">@DateTime.Now.Hour : @DateTime.Now.Minute : @DateTime.Now.Second</span><br /><br />
+                <span class="date">@DateTime.Now.Day / @DateTime.Now.Month / @DateTime.Now.Year</span>
+            </div><br />
+
+        </div>
+        <div id="hr" class="hright">
+            <span class="title1">MLerning</span><br />
+            <span class="title2">APP</span>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year @DateTime.Now.Hour - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

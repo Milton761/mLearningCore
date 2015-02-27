@@ -1,0 +1,70 @@
+﻿@model MLearning.Web.Models.PageTagViewModel
+
+@{
+    ViewBag.Title = "Tags";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Page Tags</h2>
+
+<p>
+    @Html.ActionLink("Create New", "TagCreate")
+</p>
+
+<br />
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<br />
+
+@Html.HiddenFor(model => model.PageTags.FirstOrDefault().tag_id)
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PageTags.FirstOrDefault().name)
+        </th>
+     
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.PageTags) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+       
+        <td>           
+            @Html.ActionLink("Delete", "DeleteTag", new { tag_id=item.tag_id })
+        </td>
+    </tr>
+}
+
+</table>
+
+<h2>All Tags</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AllTags.FirstOrDefault().name)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.AllTags)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+
+            <td>
+                @Html.ActionLink("Add", "AddTag", new { tag_id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

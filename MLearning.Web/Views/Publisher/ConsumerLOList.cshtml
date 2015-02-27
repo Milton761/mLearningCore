@@ -1,0 +1,127 @@
+﻿@model MLearning.Web.Models.AdminPublisherViewModel
+
+@{
+    ViewBag.Title = "ConsumerLOList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>CircleList</h2>
+
+<p>
+    @Html.ActionLink("Create New Circle", "CreateCircle")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Circles.FirstOrDefault().name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Circles.FirstOrDefault().type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Circles.FirstOrDefault().owner_id)
+        </th>
+     
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Circles)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.owner_id)
+            </td>
+        
+            <td>
+                @Html.ActionLink("Manage", "ManageCircle", new { circle_id = item.id }) |  
+                @Html.ActionLink("Edit", "EditCircle", new { circle_id = item.id }) |           
+                @Html.ActionLink("Delete", "DeleteCircle", new { circle_id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+<h2>LearningObjectList</h2>
+
+<p>
+    @Html.ActionLink("Create New LO", "CreateLO")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LearningObjects.FirstOrDefault().title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LearningObjects.FirstOrDefault().type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LearningObjects.FirstOrDefault().description)
+        </th>
+ 
+        <th>
+            @Html.DisplayNameFor(model => model.LearningObjects.FirstOrDefault().url_cover)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.LearningObjects.FirstOrDefault().url_background)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LearningObjects.FirstOrDefault().Publisher_id)
+        </th>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.LearningObjects.FirstOrDefault().created_at)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LearningObjects.FirstOrDefault().updated_at)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.LearningObjects) { 
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.url_cover)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.url_background)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Publisher_id)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.created_at)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.updated_at)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditLO", new { lo_id=item.id }) |          
+            @Html.ActionLink("Delete", "DeleteLO", new { lo_id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

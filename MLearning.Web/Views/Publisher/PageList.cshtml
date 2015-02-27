@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MLearning.Core.Entities.Page>
+
+@{
+    ViewBag.Title = "PageList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PageList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.url_img)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.url_xml)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lo_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.created_at)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.updated_at)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.url_img)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.url_xml)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lo_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.created_at)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.updated_at)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

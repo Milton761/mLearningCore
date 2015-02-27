@@ -1,0 +1,98 @@
+﻿@model MLearning.Web.Models.QuizQuestionsModel
+
+@{
+    ViewBag.Title = "QuizEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>QuizEdit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Quiz Edit</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Quiz.id)
+
+        @Html.HiddenFor(model => model.Quiz.created_at)
+        @Html.HiddenFor(model => model.Quiz.updated_at)
+        @Html.HiddenFor(model => model.Quiz.LearningObject_id)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quiz.title, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quiz.title)
+                @Html.ValidationMessageFor(model => model.Quiz.title)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quiz.content, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quiz.content)
+                @Html.ValidationMessageFor(model => model.Quiz.content)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+
+        <br />
+        <div>
+            @Html.ActionLink("Back to List", "EditLO", "Publisher", new { lo_id = Model.Quiz.LearningObject_id }, null);
+        </div>
+
+        <br />
+
+        <h2>QuestionList</h2>
+
+        <p>
+            @Html.ActionLink("Create New", "CreateQuestion", "Quiz", new { quiz_id = Model.Quiz.id }, null)
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Questions.FirstOrDefault().title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Questions.FirstOrDefault().content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Questions.FirstOrDefault().type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Questions.FirstOrDefault().answer)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.Questions)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.content)
+                    </td>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.type)
+                    </th>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.answer)
+                    </th>
+                    <td>
+                        @Html.ActionLink("Edit", "EditQuestion", "Quiz", new { question_id = item.id }, null) |
+                        @Html.ActionLink("Remove", "DeleteQuestion", "Quiz", new { question_id = item.id }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+}

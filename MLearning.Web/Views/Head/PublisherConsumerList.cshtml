@@ -1,0 +1,130 @@
+﻿@model MLearning.Web.Models.AdminHeadViewModel
+
+@{
+    ViewBag.Title = "PublisherConsumerList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PublisherConsumerList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreatePublisher")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Publishers.FirstOrDefault().name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publishers.FirstOrDefault().lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publishers.FirstOrDefault().username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publishers.FirstOrDefault().title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publishers.FirstOrDefault().country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publishers.FirstOrDefault().region)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publishers.FirstOrDefault().city)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publishers.FirstOrDefault().telephone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publishers.FirstOrDefault().institution_id)
+        </th>
+     
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Publishers) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lastname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.region)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.city)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telephone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.institution_id)
+        </td>  
+        <td>
+            @Html.ActionLink("Edit", "EditPublisher", new { user_id = item.id, publisher_id = item.publisher_id }) |
+            @Html.ActionLink("Delete", "DeletePublisher", new { user_id = item.id, publisher_id = item.publisher_id})
+        </td>
+    </tr>
+}
+
+</table>
+
+
+
+<h2>cconsumer</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateConsumer")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Consumers.FirstOrDefault().name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Consumers.FirstOrDefault().lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Consumers.FirstOrDefault().username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Consumers.FirstOrDefault().institution_id)
+        </th>    
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Consumers)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.institution_id)
+            </td>         
+            <td>
+                @Html.ActionLink("Edit", "EditConsumer", new { user_id = item.id, consumer_id = item.consumer_id }) |             
+                @Html.ActionLink("Delete", "DeleteConsumer", new { user_id = item.id, consumer_id = item.consumer_id })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,114 @@
+﻿@model MLearning.Web.Models.QuestionModel
+
+@{
+    ViewBag.Title = "QuestionEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>QuestionEdit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Question</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Question.id)
+
+        @Html.HiddenFor(model => model.Question.created_at)
+        @Html.HiddenFor(model => model.Question.updated_at)
+        @Html.HiddenFor(model => model.Question.Quiz_id)
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Question.title, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Question.title)
+                @Html.ValidationMessageFor(model => model.Question.title)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Question.content, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Question.content)
+                @Html.ValidationMessageFor(model => model.Question.content)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Question.answer, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Question.answer)
+                @Html.ValidationMessageFor(model => model.Question.answer)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Question.type, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Question.type)
+                @Html.ValidationMessageFor(model => model.Question.type)
+            </div>
+        </div>
+
+       
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+
+        <br />
+        <div>
+            @Html.ActionLink("Back to List", "Edit", "Quiz", new { quiz_id = Model.Question.Quiz_id }, null);
+        </div>
+
+        <br />
+
+        <h2>OptionList</h2>
+
+        <p>
+            @Html.ActionLink("Create New", "CreateOption", "Quiz", new { question_id = Model.Question.id }, null)
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Options.FirstOrDefault().option)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Options.FirstOrDefault().match_left)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.Options)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.option)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.match_left)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditOption", "Quiz", new { option_id = item.id }, null) |
+                        @Html.ActionLink("Remove", "DeleteOption", "Quiz", new { option_id = item.id }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
