@@ -48,6 +48,8 @@ namespace Core.Repositories
 
 
 
-         
+
+
+         Task<int> Count<T>();
     }
 }
