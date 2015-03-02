@@ -5,60 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!--
-<h2>CircleList</h2>
-
-<p>
-    @Html.ActionLink("Create New Circle", "CreateCircle")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Circles.FirstOrDefault().name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Circles.FirstOrDefault().type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Circles.FirstOrDefault().owner_id)
-        </th>
-     
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.Circles)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.owner_id)
-            </td>
-        
-            <td>
-                @Html.ActionLink("Manage", "ManageCircle", new { circle_id = item.id }) |  
-                @Html.ActionLink("Edit", "EditCircle", new { circle_id = item.id }) |           
-                @Html.ActionLink("Delete", "DeleteCircle", new { circle_id = item.id })
-            </td>
-        </tr>
-    }
-
-</table>
--->
-
-@(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.ProductViewModel>()
+@(Html.Kendo().Grid<MLearningDB.Circle>()
     .Name("grid")
     .Columns(columns =>
     {
         columns.Bound(c => c.name);
-        columns.Bound(p => c.type).Width(100);
+        columns.Bound(c => c.type).Width(100);
         //columns.Bound(p => p.UnitsInStock).Width(100);
         //columns.Bound(p => p.Discontinued).Width(100);
-        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(160);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(300);
     })
     .ToolBar(toolbar => toolbar.Create())
     .Editable(editable => editable.Mode(GridEditMode.PopUp))
@@ -68,13 +23,20 @@
     .HtmlAttributes(new { style = "height:430px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
-        .PageSize(20)
+        .PageSize(1)
+        
         .Events(events => events.Error("error_handler"))
-        .Model(model => model.Id(p => p.ProductID))
+        .Model(model =>{
+            model.Id(c => c.id);
+            model.Field(c => c.id).Editable(false);
+            model.Field(c => c.created_at).Editable(false);
+            model.Field(c => c.updated_at).Editable(false);
+        })
         .Create(update => update.Action("EditingPopup_Create", "Publisher"))
-        .Read(read => read.Action("EditingPopup_Read", "Grid"))
+        .Read(read => read.Action("Circle_read", "Publisher"))
         .Update(update => update.Action("EditingPopup_Update", "Grid"))
         .Destroy(update => update.Action("EditingPopup_Destroy", "Grid"))
+        .Total(ViewBag.totalCircles)
     )
 )
 
@@ -152,3 +114,19 @@
 }
 
 </table>
+
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>

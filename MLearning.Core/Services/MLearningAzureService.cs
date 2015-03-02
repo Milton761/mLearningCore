@@ -133,6 +133,10 @@ namespace MLearning.Core.Services
         }
 
     
+        public async Task<int> CountObjects<T>()
+        {
+            return await _repositoryService.Count<T>();
+        }
 
         public async Task<int> CreateObject<T>(T obj, Func<T,int> getId)
         {

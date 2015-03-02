@@ -10,7 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Trirand.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 
 namespace MLearning.Web.Controllers
 {
@@ -67,13 +68,19 @@ namespace MLearning.Web.Controllers
                 var circlesList = await _mLearningService.GetCirclesByOwner(UserID);
 
                 var loList = await _mLearningService.GetLOByUserOwner(UserID);
-                
-             
-
+                //viewData["totalCircles"] = 
                 return View("ConsumerLOList", new AdminPublisherViewModel { Circles=circlesList, LearningObjects =loList});
            
         }
 
+
+        public async Task<ActionResult> Circle_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            //request.
+            var circlesList = await _mLearningService.GetCirclesByOwner(UserID);
+            var data = circlesList.ToDataSourceResult(request);
+            return Json(data);
+        }
 
         // GET: /Publisher/CreateCircle
          [Authorize(Roles = Constants.PublisherRole)]
