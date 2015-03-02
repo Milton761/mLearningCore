@@ -7,8 +7,6 @@
 
 <h2>LOEdit</h2>
 
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -77,15 +75,15 @@
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
-
+        
         <br />
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>
 
         <br />
-
-
+        
+        
         <h2>PageList</h2>
 
         <p>
@@ -152,13 +150,41 @@
 
         </table>
 
+        <h2>QuizList</h2>
 
-     
+        <p>
+            @Html.ActionLink("Create New", "Create", "Quiz", new { lo_id = Model.LO.id }, null)
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quizzes.FirstOrDefault().title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quizzes.FirstOrDefault().content)
+                </th>
+                <th></th>
+            </tr>
 
-     
+            @foreach (var item in Model.Quizzes)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.content)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Quiz", new { quiz_id = item.id }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Quiz", new { quiz_id = item.id}, null)
+                    </td>
+                </tr>
+            }
 
-       
-    </div>
-}
+        </table>
+
+        </div>
+  }    
 
 
