@@ -16,7 +16,6 @@
         columns.Command(command => { command.Edit(); command.Destroy(); }).Width(300);
     })
     .ToolBar(toolbar => toolbar.Create())
-    .Editable(editable => editable.Mode(GridEditMode.PopUp))
     .Pageable()
     .Sortable()
     .Scrollable()
@@ -32,12 +31,12 @@
             model.Field(c => c.created_at).Editable(false);
             model.Field(c => c.updated_at).Editable(false);
         })
-        .Create(update => update.Action("EditingPopup_Create", "Publisher"))
+        .Create(update => update.Action("Circle_Create", "Publisher"))
         .Read(read => read.Action("Circle_read", "Publisher"))
-        .Update(update => update.Action("EditingPopup_Update", "Grid"))
-        .Destroy(update => update.Action("EditingPopup_Destroy", "Grid"))
-        .Total(ViewBag.totalCircles)
+        .Update(update => update.Action("Circle_Update", "Publisher"))
+        .Destroy(update => update.Action("EditingPopup_Destroy", "Publisher"))      
     )
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Circle"))
 )
 
 
