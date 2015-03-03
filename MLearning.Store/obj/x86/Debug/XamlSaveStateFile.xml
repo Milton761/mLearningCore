@@ -1,5 +1,6 @@
 <XamlCompilerSaveState>
   <ReferenceAssemblyList>
+    <LocalAssembly PathName="c:\test\projects\mlearning\mlearning.store\obj\x86\debug\intermediatexaml\mlearning.store.exe" HashGuid="1f62f4c3-dfb4-dc9b-f9d4-51d56e36ea63" />
     <ReferenceAssembly PathName="c:\program files (x86)\microsoft sdks\windows\v8.1\extensionsdks\microsoft.vclibs\12.0\references\commonconfiguration\neutral\platform.winmd" HashGuid="58b6b6d1-928e-9908-9804-eb460e5e101b" />
     <ReferenceAssembly PathName="c:\test\projects\mlearning\packages\mvvmcross.hottuna.crosscore.3.5.0\lib\win81\cirrious.crosscore.dll" HashGuid="db02cb3b-2fbd-1071-04b9-b7ad2d0dea05" />
     <ReferenceAssembly PathName="c:\test\projects\mlearning\packages\mvvmcross.hottuna.crosscore.3.5.0\lib\win81\cirrious.crosscore.windowscommon.dll" HashGuid="33137c4e-381b-0828-9fcf-2ac3014e11f4" />
@@ -15,7 +16,7 @@
     <ReferenceAssembly PathName="c:\test\projects\mlearning\packages\windowsazure.mobileservices.1.2.5\lib\netcore45\microsoft.windowsazure.mobile.dll" HashGuid="083034df-3ca7-6905-c884-535ec28d6c4e" />
     <ReferenceAssembly PathName="c:\test\projects\mlearning\packages\windowsazure.mobileservices.1.2.5\lib\netcore45\microsoft.windowsazure.mobile.ext.dll" HashGuid="c3fe55d4-dcfc-ac07-236d-f429b050553a" />
     <ReferenceAssembly PathName="c:\test\projects\mlearning\packages\windowsazure.storage.4.3.0\lib\win8\microsoft.windowsazure.storage.dll" HashGuid="c2e996d2-878d-9e97-40f1-0c90d5f85eda" />
-    <ReferenceAssembly PathName="c:\test\projects\mlearning\mlearning.core\bin\debug\mlearning.core.dll" HashGuid="330e05bf-f15e-bc70-f8e4-a96c12d66c5b" />
+    <ReferenceAssembly PathName="c:\test\projects\mlearning\mlearning.core\bin\debug\mlearning.core.dll" HashGuid="7d5b9d2a-c028-d398-2253-d38cccbf1113" />
     <ReferenceAssembly PathName="c:\test\projects\mlearning\packages\newtonsoft.json.6.0.4\lib\netcore45\newtonsoft.json.dll" HashGuid="21d6fdf9-5b56-582d-4524-cf342594819a" />
     <ReferenceAssembly PathName="c:\test\projects\mlearning\packages\microsoft.net.http.2.2.28\lib\win8\system.net.http.extensions.dll" HashGuid="b50282f8-b9f8-4408-8d49-ba2efe301624" />
     <ReferenceAssembly PathName="c:\test\projects\mlearning\packages\microsoft.net.http.2.2.28\lib\win8\system.net.http.primitives.dll" HashGuid="7b71418d-e056-7613-c839-85fb8f6472a6" />

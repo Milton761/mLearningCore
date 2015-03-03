@@ -631,14 +631,13 @@ namespace Core.Repositories
                {
                    _liteConnection.Insert(new table_sync { table_name = item });
                }
-           
-
-           
-
-
+      
         }
 
-        
+        public int Count<T>()
+        {
+            return 0;
+        }
        
     }
 }
