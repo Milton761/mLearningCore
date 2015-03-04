@@ -1,0 +1,19 @@
+﻿@model MLearningDB.Circle
+
+        <h3>Customized Circle edit template</h3>
+@using (Html.BeginForm())
+{
+        <br />
+        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.created_at)
+        @Html.HiddenFor(model => model.owner_id)
+        @Html.HiddenFor(model => model.updated_at)
+        @Html.HiddenFor(model => model.type)
+
+        <div>
+            @Html.LabelFor(model => model.name)
+        </div>
+        <div>
+            @Html.EditorFor(model => model.name)
+        </div>
+}

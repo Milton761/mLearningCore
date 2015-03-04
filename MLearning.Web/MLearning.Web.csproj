@@ -1063,7 +1063,7 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
-    <Content Include="Views\Publisher\Circle.cshtml" />
+    <Content Include="Views\Publisher\EditorTemplates\Circle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controllers\fonts\glyphicons-halflings-regular.woff" />

@@ -74,6 +74,16 @@ namespace MLearning.Web.Controllers
         }
 
 
+         public async Task<ActionResult> Circle_Create([DataSourceRequest] DataSourceRequest request, Circle circle)
+         {
+             if (circle != null && ModelState.IsValid)
+             {
+                 int circleId = await _mLearningService.CreateCircle(UserID, circle.name, circle.type);
+                 circle = await _mLearningService.GetObjectWithId<Circle>(circleId);
+             }
+             return Json(new[] { circle }.ToDataSourceResult(request, ModelState));
+         }
+
         public async Task<ActionResult> Circle_Read([DataSourceRequest] DataSourceRequest request)
         {
             //request.
@@ -81,6 +91,27 @@ namespace MLearning.Web.Controllers
             var data = circlesList.ToDataSourceResult(request);
             return Json(data);
         }
+
+
+        public async Task<ActionResult> Circle_Update([DataSourceRequest] DataSourceRequest request, Circle circle)
+        {
+            if (circle != null && ModelState.IsValid)
+            {
+                await _mLearningService.UpdateObject<Circle>(circle);
+            }
+            return Json(new[] { circle }.ToDataSourceResult(request, ModelState));
+        }
+
+        public async Task<ActionResult> Circle_Destroy([DataSourceRequest] DataSourceRequest request, Circle circle)
+        {
+            if (circle != null)
+            {
+                await _mLearningService.DeleteObject<Circle>(circle);
+            }
+            return Json(new[] { circle }.ToDataSourceResult(request, ModelState));
+        }
+
+        
 
         // GET: /Publisher/CreateCircle
          [Authorize(Roles = Constants.PublisherRole)]
@@ -94,7 +125,7 @@ namespace MLearning.Web.Controllers
         {
             try
             {
-                int circle_id = await _mLearningService.CreateCircle(UserID, circleObj.name,circleObj.type);
+                int circle_id = await _mLearningService.CreateCircle(UserID, circleObj.name, circleObj.type);
               
                 //Register the Publisher as a user in a Circle
                 _mLearningService.CreateObject<CircleUser>(new CircleUser { Circle_id = circle_id, User_id = UserID, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow }, c => c.id);
