@@ -13,7 +13,9 @@
         columns.Bound(c => c.type).Width(100);
         //columns.Bound(p => p.UnitsInStock).Width(100);
         //columns.Bound(p => p.Discontinued).Width(100);
-        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(300);
+        columns.Command(command => { command.Edit(); command.Destroy();}).Width(300);
+        columns.Template(c => { }).ClientTemplate(@Html.ActionLink("Administrar", "ManageCircle", new { circle_id = "#=id#" }).ToHtmlString()).Width(150);
+    
     })
     .ToolBar(toolbar => toolbar.Create())
     .Pageable()
@@ -22,8 +24,8 @@
     .HtmlAttributes(new { style = "height:430px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
-        .PageSize(1)
-        
+        .PageSize(20)
+
         .Events(events => events.Error("error_handler"))
         .Model(model =>{
             model.Id(c => c.id);
@@ -34,12 +36,12 @@
         .Create(update => update.Action("Circle_Create", "Publisher"))
         .Read(read => read.Action("Circle_read", "Publisher"))
         .Update(update => update.Action("Circle_Update", "Publisher"))
-        .Destroy(update => update.Action("EditingPopup_Destroy", "Publisher"))      
+        .Destroy(update => update.Action("Circle_Destroy", "Publisher"))
     )
-    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Circle"))
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
 )
 
-
+////.Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Circle"))
 <h2>LearningObjectList</h2>
 
 <p>
