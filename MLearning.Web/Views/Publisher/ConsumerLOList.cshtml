@@ -41,10 +41,52 @@
     .Editable(editable => editable.Mode(GridEditMode.InLine))
 )
 
-////.Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Circle"))
+<!--.Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Circle"))-->
 <h2>LearningObjectList</h2>
 
-<p>
+@(Html.Kendo().Grid<MLearningDB.LearningObject>()
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound(lo => lo.title);
+        columns.Bound(c => c.type).Width(100);
+        columns.Bound(lo => lo.description);
+        
+        //columns.Bound(p => p.UnitsInStock).Width(100);
+        //columns.Bound(p => p.Discontinued).Width(100);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(300);
+        columns.Template(c => { }).ClientTemplate(@Html.ActionLink("Administrar", "ManageCircle", new { circle_id = "#=id#" }).ToHtmlString()).Width(150);
+
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:430px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(c => c.id);
+            model.Field(c => c.id).Editable(false);
+            model.Field(c => c.created_at).Editable(false);
+            model.Field(c => c.updated_at).Editable(false);
+        })
+        .Create(update => update.Action("Circle_Create", "Publisher"))
+        .Read(read => read.Action("Circle_read", "Publisher"))
+        .Update(update => update.Action("Circle_Update", "Publisher"))
+        .Destroy(update => update.Action("Circle_Destroy", "Publisher"))
+    )
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
+)
+
+
+
+
+<!--<p>
     @Html.ActionLink("Create New LO", "CreateLO")
 </p>
 <table class="table">
@@ -113,8 +155,9 @@
         </td>
     </tr>
 }
+</table>-->
 
-</table>
+
 
 <script type="text/javascript">
     function error_handler(e) {
