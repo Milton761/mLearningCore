@@ -33,7 +33,10 @@ namespace MLearning.Core.Services
         }
 
 
-
+        public IRepositoryService repositoryService()
+        {
+            return _repositoryService;
+        }
 
         // Serverside: if login OK, sets field is_online to TRUE
         public async Task<LoginOperationResult<T>> ValidateLogin<T>(T account, Expression<Func<T, bool>> validation, Func<T, int> getID, Func<T, int> getType)

@@ -17,9 +17,10 @@ namespace Core.Repositories
          Task DeleteAsync<T>(T entity);
          Task<List<T>> SearchForAsync<T>(Expression<Func<T, bool>> predicate, Func<T, DateTime> getLastUpdate,Func<T,int> getID,bool cacheResult) where T : new();
          Task<List<T>> SearchForAsync<T>(Expression<Func<T, bool>> predicate, Dictionary<string, string> parameters,bool cacheResult);
-
+         IQueryable<T> SearchForQuery<T>(System.Linq.Expressions.Expression<Func<T, bool>> predicate, Dictionary<string, string> parameters);
          Task<List<T>> SearchForWithCacheAsync<T>(Expression<Func<T, bool>> predicate, string identifier) where T : new();
          Task<List<T>> GetAllAsync<T>();
+         IQueryable<T> GetAllQuery<T>();
 
         /// <summary>
         /// Obtiene todas los registros de una tabla y los almacena en cache
