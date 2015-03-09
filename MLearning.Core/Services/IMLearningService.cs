@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MLearning.Core.Configuration;
 using System.IO;
+using Core.Repositories;
 
 namespace MLearning.Core.Services
 {
@@ -56,7 +57,7 @@ namespace MLearning.Core.Services
         /// <returns></returns>
         Task<OperationResult> CreateAndRegisterConsumer(User account, int institution_id);
 
-
+        IRepositoryService repositoryService();
 
         Task RegisterUserToInstitution(int user_id, int institution_id);
 

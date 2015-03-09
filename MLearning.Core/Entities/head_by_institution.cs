@@ -13,6 +13,7 @@ namespace MLearning.Core.Entities
         public int head_id { get; set; }
         public string name { get; set; }
         public string lastname { get; set; }
+        public string fullname { get; set; }
         public string username { get; set; }
 
         public int institution_id { get; set; }

@@ -361,11 +361,11 @@ namespace Core.Repositories
 
         public async Task<List<T>> SearchForAsync<T>(System.Linq.Expressions.Expression<Func<T, bool>> predicate, Dictionary<string, string> parameters,bool cacheResult)
         {
-
+            //MobileService.GetTable<T>().q
             List<T> toReturn = null;
             try
             {
-                toReturn = await MobileService.GetTable<T>().Where(predicate).WithParameters(parameters).ToListAsync();
+                toReturn = await MobileService.GetTable<T>().Where(predicate).WithParameters(parameters).IncludeTotalCount().ToListAsync();
             }
             catch (Exception e)
             {
@@ -374,6 +374,11 @@ namespace Core.Repositories
 
             return toReturn;
          
+        }
+
+        public IQueryable<T> SearchForQuery<T>(System.Linq.Expressions.Expression<Func<T, bool>> predicate, Dictionary<string, string> parameters)
+        {
+            return MobileService.GetTable<T>().Where(predicate).WithParameters(parameters).IncludeTotalCount().Query;
         }
 
         public async Task<List<T>> SearchForAsync<T>(System.Linq.Expressions.Expression<Func<T, bool>> predicate, Func<T, DateTime> getLastUpdate, Func<T, int> getID, bool cacheResult,int skip,int take) where T : new()
@@ -436,6 +441,15 @@ namespace Core.Repositories
         public async Task<List<T>> GetAllAsync<T>()
         {
            return  await MobileService.GetTable<T>().Select(x => x).ToListAsync();
+        }
+
+        public IQueryable<T> GetAllQuery<T>()
+        {
+            var t = MobileService.GetTable<T>().IncludeTotalCount().Select(x => x);
+            var w = t.ToEnumerableAsync();
+            w.Start(); w.Wait();
+            var c = t.RequestTotalCount;
+            return t.Query;
         }
 
         public async Task<T> GetByIdAsync<T>(int id)

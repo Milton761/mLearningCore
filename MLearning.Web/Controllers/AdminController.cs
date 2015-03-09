@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 
 namespace MLearning.Web.Controllers
 {
@@ -35,7 +37,22 @@ namespace MLearning.Web.Controllers
         async public Task<ActionResult> Index()
         {
             var list = await _mLearningService.GetHeads();
-            return View("HeadList",list);
+            //return View("HeadList",list);
+            return View();
+        }
+
+        public ActionResult Institutions()
+        {
+            return View("Institutions");
+        }
+
+        public async Task<ActionResult> Institution_read([DataSourceRequest] DataSourceRequest request)
+        {
+            //IQueryable q = _mLearningService.repositoryService().GetAllQuery<Institution>()
+            //var i = q.Count();
+            //var data = q.ToDataSourceResult(request);
+            var data = (await _mLearningService.GetHeads()).ToDataSourceResult(request);
+            return Json(data);
         }
 
         public ActionResult Create()
