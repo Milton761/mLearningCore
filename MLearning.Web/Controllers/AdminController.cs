@@ -46,6 +46,42 @@ namespace MLearning.Web.Controllers
             return View("Institutions");
         }
 
+        public async Task<ActionResult> Institution_create([DataSourceRequest] DataSourceRequest request,head_by_institution inst)
+        {
+            if (inst != null && ModelState.IsValid)
+            {
+                Institution i = new Institution
+                {
+                    id = 0,
+                    name = inst.institution_name,
+                    country = inst.country,
+                    region = inst.region,
+                    city = inst.city,
+                    postal_code = inst.postal_code,
+                    telephone = inst.telephone,
+                    email = inst.email,
+                    website_address = inst.website_address,
+                    notes = inst.notes
+                };
+
+                User u = new User
+                {
+                    id = 0,
+                    name = inst.name,
+                    lastname = inst.lastname,
+                    username = inst.username,
+                    password = EncryptionService.encrypt(inst.password)
+                };
+
+
+                int instId = await _mLearningService.CreateInstitution(i, new Head() {id = 0}, u);
+                //inst = await _mLearningService.GetObjectWithId<head_by_institution>(instId);
+                inst.id = instId;
+                inst.fullname = inst.lastname+", "+inst.name;
+            }
+            return Json(new[] { inst }.ToDataSourceResult(request, ModelState));
+        }
+
         public async Task<ActionResult> Institution_read([DataSourceRequest] DataSourceRequest request)
         {
             //IQueryable q = _mLearningService.repositoryService().GetAllQuery<Institution>()
@@ -53,6 +89,52 @@ namespace MLearning.Web.Controllers
             //var data = q.ToDataSourceResult(request);
             var data = (await _mLearningService.GetHeads()).ToDataSourceResult(request);
             return Json(data);
+        }
+
+        public async Task<ActionResult> Institution_update([DataSourceRequest] DataSourceRequest request, head_by_institution inst)
+        {
+            if (inst != null /*&& ModelState.IsValid*/)
+            {
+                User user = await _mLearningService.GetObjectWithId<User>(inst.id);
+                //Head head = await _mLearningService.GetObjectWithId<Head>(head_id);
+                Institution institution = await _mLearningService.GetObjectWithId<Institution>(inst.institution_id);
+
+                user.name = inst.name;
+                user.lastname = inst.lastname;
+                user.username = inst.username;
+                //user.password = inst.password;
+               
+                institution.name = inst.institution_name;
+                institution.country = inst.country;
+                institution.region = inst.region;
+                institution.city = inst.city;
+                institution.postal_code = inst.postal_code;
+                institution.telephone = inst.telephone;
+                institution.email = inst.email;
+                institution.website_address = inst.website_address;
+                institution.notes = inst.notes;
+
+                //Update DB
+                await _mLearningService.UpdateObject<User>(user);
+
+
+                //_mLearningService.UpdateObject<Head>(adminObj.Head);
+
+
+                await _mLearningService.UpdateObject<Institution>(institution);
+            }
+            return Json(new[] { inst }.ToDataSourceResult(request/*, ModelState*/));
+        }
+
+        public async Task<ActionResult> Institution_destroy([DataSourceRequest] DataSourceRequest request, head_by_institution inst)
+        {
+            if (inst != null)
+            {
+                await _mLearningService.DeleteObject<User>(new User { id = inst.id });
+                await _mLearningService.DeleteObject<Head>(new Head { id = inst.head_id });
+                await _mLearningService.DeleteObject<Institution>(new Institution { id = inst.institution_id });
+            }
+            return Json(new[] { inst }.ToDataSourceResult(request, ModelState));
         }
 
         public ActionResult Create()

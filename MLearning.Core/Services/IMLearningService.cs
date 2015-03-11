@@ -260,7 +260,7 @@ namespace MLearning.Core.Services
         /// <param name="inst"></param>
         /// <param name="inst_head"></param>
         /// <returns></returns>
-        Task CreateInstitution(Institution inst,Head head_info, User user_credentials);
+        Task<int> CreateInstitution(Institution inst, Head head_info, User user_credentials);
 
         /// <summary>
         /// Returns the Institution ID of the Head User with the given UserID

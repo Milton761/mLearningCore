@@ -1067,6 +1067,7 @@
     <Content Include="Views\Publisher\EditorTemplates\Circle.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Institutions.cshtml" />
+    <Content Include="Views\Admin\EditorTemplates\Institution.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controllers\fonts\glyphicons-halflings-regular.woff" />
