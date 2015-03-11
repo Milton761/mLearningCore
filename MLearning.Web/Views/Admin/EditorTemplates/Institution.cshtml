@@ -106,8 +106,8 @@
             @Html.LabelFor(model => model.password, "Contraseña")
         </div>
         <div>
-            @Html.PasswordFor(model => model.password,new { value=""})
-            <!--Html.ValidationMessageFor(model => model.Password, "hj", new { value = "" })-->
+            @Html.PasswordFor(model => model.password, new { value = "" });
+            @Html.ValidationMessageFor(model => model.password,"", new { value = "" })
         </div>
 
     </div>
