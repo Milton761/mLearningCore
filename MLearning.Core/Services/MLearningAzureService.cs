@@ -431,7 +431,7 @@ namespace MLearning.Core.Services
 
 
 
-        async public Task CreateInstitution(Institution inst, Head head_info,User user_credentials)
+        async public Task<int> CreateInstitution(Institution inst, Head head_info, User user_credentials)
         {
             //Create Head account
 
@@ -455,7 +455,7 @@ namespace MLearning.Core.Services
            int inst_id = await CreateObject<Institution>(inst, i => i.id);     
             //Relationship
            RegisterUserToInstitution(r.id, inst_id);
-            
+           return user_id;
         }
 
 

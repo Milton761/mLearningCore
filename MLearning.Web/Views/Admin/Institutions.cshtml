@@ -4,21 +4,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Institutions</h2>
+<h2>Instituciones Educativas</h2>
 
 @(Html.Kendo().Grid<MLearning.Core.Entities.head_by_institution>()
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound(c => c.id).Width(100);
-        columns.Bound(c => c.name);//.Width(100);
-        columns.Bound(c => c.country);//.Width(100);
-        columns.Bound(c => c.city);
-        columns.Bound(c => c.fullname);
+        columns.Bound(c => c.id).HeaderTemplate("Id").Width(70);
+        columns.Bound(c => c.institution_name).HeaderTemplate("Nombre");//.Width(100);
+        columns.Bound(c => c.country).HeaderTemplate("Pais");//.Width(100);
+        columns.Bound(c => c.city).HeaderTemplate("Ciudad");
+        columns.Bound(c => c.fullname).HeaderTemplate("Director");
         //columns.Bound(c => c.)
         //columns.Bound(p => p.UnitsInStock).Width(100);
         //columns.Bound(p => p.Discontinued).Width(100);
-        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(300);
+        columns.Command(command => { command.Edit().UpdateText("Guardar").CancelText("Atras").Text("."); command.Destroy(); }).Width(300).HeaderTemplate("Acciones");
         //columns.Template(c => { }).ClientTemplate(@Html.ActionLink("Administrar", "ManageCircle", new { circle_id = "#=id#" }).ToHtmlString()).Width(150);
 
     })
@@ -26,7 +26,8 @@
     .Pageable()
     .Sortable()
     .Scrollable()
-    .HtmlAttributes(new { style = "height:430px;" })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Institution"))
+    //.HtmlAttributes(new { style = "height:430px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
         .PageSize(20)
@@ -44,7 +45,6 @@
                 .Update(update => update.Action("Institution_Update", "Admin"))
                 .Destroy(update => update.Action("Institution_Destroy", "Admin"))
     )
-    .Editable(editable => editable.Mode(GridEditMode.PopUp))
 )
 
 <script type="text/javascript">
