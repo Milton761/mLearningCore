@@ -17,6 +17,9 @@ namespace MLearning.Core.Entities
         public string lastname { get; set; }
         public string username { get; set; }
 
+        public int uid { get; set; }
+        public string fullname { get; set; }
+
         public int institution_id { get; set; }
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }

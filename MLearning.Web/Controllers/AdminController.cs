@@ -46,6 +46,15 @@ namespace MLearning.Web.Controllers
             return View("Institutions");
         }
 
+        public async Task<ActionResult> GetConsumers([DataSourceRequest] DataSourceRequest request)
+        {
+            //List<consumer_by_institution> cs = await _mLearningService.GetConsumersByInstitution(13);
+            List<Object> cs = new List<Object>();
+            cs.Add( new { fullname = "asdfadsfa", id = 123 });
+            cs.Add( new { fullname = "0000000000000", id = 143 });
+            return Json(cs.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
+
         public async Task<ActionResult> Institution_create([DataSourceRequest] DataSourceRequest request,head_by_institution inst)
         {
             if (inst != null && ModelState.IsValid)
@@ -88,7 +97,7 @@ namespace MLearning.Web.Controllers
             //var i = q.Count();
             //var data = q.ToDataSourceResult(request);
             var data = (await _mLearningService.GetHeads()).ToDataSourceResult(request);
-            return Json(data);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public async Task<ActionResult> Institution_update([DataSourceRequest] DataSourceRequest request, head_by_institution inst)

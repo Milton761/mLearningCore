@@ -47,18 +47,59 @@
     )
 )
 
-<script type="text/javascript">
-    function error_handler(e) {
-        if (e.errors) {
-            var message = "Errors:\n";
-            $.each(e.errors, function (key, value) {
-                if ('errors' in value) {
-                    $.each(value.errors, function () {
-                        message += this + "\n";
-                    });
-                }
-            });
-            alert(message);
+
+@(Html.Kendo().MultiSelect()
+          .Name("consumers")
+          .DataTextField("fullname")
+          .DataValueField("id")
+          .Placeholder("Busque alumnos para agregar ...")
+          .AutoBind(false)
+          .Value(new[] { new { fullname = "Chang", id = 2 }})
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("GetConsumers", "Admin");
+              })
+              .ServerFiltering(true);
+          })
+)
+
+<div id="transfer-test" style="width:400px"></div>
+
+    <script type="text/javascript">
+        function error_handler(e) {
+            if (e.errors) {
+                var message = "Errors:\n";
+                $.each(e.errors, function (key, value) {
+                    if ('errors' in value) {
+                        $.each(value.errors, function () {
+                            message += this + "\n";
+                        });
+                    }
+                });
+                alert(message);
+            }
         }
-    }
-</script>
+    </script>
+
+<!--<script>
+    $(function () {
+        var t = $('#transfer-test').bootstrapTransfer(
+            {
+                'target_id': 'multi-select-input',
+                'height': '15em',
+                'hilite_selection': true
+            });
+
+        t.populate([
+            { value: "1", content: "Apple" },
+            { value: "2", content: "Orange" },
+            { value: "3", content: "Banana" },
+            { value: "4", content: "Peach" },
+            { value: "5", content: "Grapes" }
+        ]);
+        //t.set_values(["2", "4"]);
+        //console.log(t.get_values());
+    });
+</script>-->
