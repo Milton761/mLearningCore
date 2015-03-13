@@ -13,6 +13,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using System.Diagnostics;
 
 namespace MLearning.Web.Controllers
 {
@@ -43,7 +44,49 @@ namespace MLearning.Web.Controllers
 
         public ActionResult Institutions()
         {
+            ViewBag.circleId = testCircleId;
             return View("Institutions");
+        }
+
+        public async Task<ActionResult> AddConsumers(List<int> ids, int circleId)
+        {
+            
+            foreach (int id in ids)
+            {
+                await _mLearningService.AddUserToCircle(id, circleId);
+            }
+                            
+            return Json("Ok!");
+        }
+
+        private int testCircleId = 46;
+
+        public async Task<ActionResult> CircleConsumers_read([DataSourceRequest] DataSourceRequest request)
+        {
+            List<consumer_by_circle> cc = await _mLearningService.GetConsumersByCircle(testCircleId);
+            return Json(cc.ToDataSourceResult(request));
+        }
+
+
+        public async Task<ActionResult> GetConsumers([DataSourceRequest] DataSourceRequest request)
+        {
+            List<consumer_by_institution> cs = await _mLearningService.GetConsumersByInstitution(13);
+            
+            //Debug.Print(request.Filters.Count.ToString());
+            
+            return Json(cs.ToDataSourceResult(request));
+        }
+
+        public ActionResult CircleConsumer_destroy([DataSourceRequest] DataSourceRequest request, consumer_by_institution cons, int circleId)
+        {
+            //_mLearningService.DeleteObject
+            if (cons != null) {
+                System.Diagnostics.Debug.WriteLine(cons);
+                System.Diagnostics.Debug.WriteLine(circleId);
+                _mLearningService.DeleteObject<CircleUser>( new CircleUser { id = cons.id, Circle_id = circleId, User_id = cons.username });
+            }
+            //ModelState
+            return Json(new[] { cons }.ToDataSourceResult(request/*, ModelState*/));
         }
 
         public async Task<ActionResult> Institution_create([DataSourceRequest] DataSourceRequest request,head_by_institution inst)
@@ -88,7 +131,7 @@ namespace MLearning.Web.Controllers
             //var i = q.Count();
             //var data = q.ToDataSourceResult(request);
             var data = (await _mLearningService.GetHeads()).ToDataSourceResult(request);
-            return Json(data);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public async Task<ActionResult> Institution_update([DataSourceRequest] DataSourceRequest request, head_by_institution inst)
