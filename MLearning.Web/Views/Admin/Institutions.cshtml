@@ -41,9 +41,9 @@
             model.Field(c => c.updated_at).Editable(false);
         })
         .Create(update => update.Action("Institution_Create", "Admin"))
-            .Read(read => read.Action("Institution_read", "Admin"))
-                .Update(update => update.Action("Institution_Update", "Admin"))
-                .Destroy(update => update.Action("Institution_Destroy", "Admin"))
+        .Read(read => read.Action("Institution_read", "Admin"))
+        .Update(update => update.Action("Institution_Update", "Admin"))
+        .Destroy(update => update.Action("Institution_Destroy", "Admin"))
     )
 )
 
@@ -54,18 +54,95 @@
           .DataValueField("id")
           .Placeholder("Busque alumnos para agregar ...")
           .AutoBind(false)
-          .Value(new[] { new { fullname = "Chang", id = 2 }})
+          //.Value(new[] { new { fullname = "Chang", id = 2 }})
+          .Filter(FilterType.Contains)
           .DataSource(source =>
           {
-              source.Read(read =>
-              {
-                  read.Action("GetConsumers", "Admin");
-              })
-              .ServerFiltering(true);
+              //source.Read(read =>
+              //{
+              //    read.Action("GetConsumers", "Admin");
+              //});
+              //.ServerFiltering(true);--
+              source.Custom()
+             .ServerFiltering(true)
+             .Type("aspnetmvc-ajax") //Set this type if you want to use DataSourceRequest and ToDataSourceResult instances
+             .Transport(transport =>
+             {
+                 transport.Read("GetConsumers", "Admin");
+             })
+             
+             .Schema(schema =>
+             {
+                 schema.Data("Data") 
+                       .Total("Total");
+             });
           })
 )
 
-<div id="transfer-test" style="width:400px"></div>
+<button class="k-button" id="get">Add consumers</button>
+
+@(Html.Kendo().Grid<MLearningDB.consumer_by_circle>()
+    .Name("consumersGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.id).HeaderTemplate("Id").Width(70);
+        columns.Bound(c => c.fullname).HeaderTemplate("Nombre");//.Width(100);
+        columns.Bound(c => c.email).HeaderTemplate("Email");//.Width(100);
+        columns.Bound(c => c.username).HeaderTemplate("Usuario");
+        columns.Command(command => { command.Destroy(); }).Width(100).HeaderTemplate("Acciones");
+
+    })
+        //.ToolBar(toolbar => toolbar.Create())
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(c => c.id);
+            model.Field(c => c.id).Editable(false);
+            model.Field(c => c.created_at).Editable(false);
+            model.Field(c => c.updated_at).Editable(false);
+        })
+        .Read(read => read.Action("CircleConsumers_read", "Admin"))
+            .Destroy(update => update.Action("CircleConsumer_destroy", "Admin", new { circleId = ViewBag.circleId }))
+    )
+)
+
+    <script>
+        $(document).ready(function () {
+            var consumers = $("#consumers").data("kendoMultiSelect");
+            //var optional = $("#optional").data("kendoMultiSelect");
+
+            var postData = {
+                ids : consumers.value(),
+                circleId : @(ViewBag.circleId)
+                };
+
+            $("#get").click(function () {
+                alert("Attendees:\n\nRequired: " + consumers.value());
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AddConsumers","Admin")",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(postData),
+                    success: function (data) { //alert(data); 
+                        $('#consumersGrid').data('kendoGrid').refresh();
+                        console.log("refreshingGrid");
+                    },
+                    failure: function (errMsg) {
+                        alert(errMsg);
+                    }
+                });
+            });
+        });
+    </script>
+
 
     <script type="text/javascript">
         function error_handler(e) {
@@ -83,23 +160,23 @@
         }
     </script>
 
-<!--<script>
-    $(function () {
-        var t = $('#transfer-test').bootstrapTransfer(
-            {
-                'target_id': 'multi-select-input',
-                'height': '15em',
-                'hilite_selection': true
-            });
+    <!--<script>
+        $(function () {
+            var t = $('#transfer-test').bootstrapTransfer(
+                {
+                    'target_id': 'multi-select-input',
+                    'height': '15em',
+                    'hilite_selection': true
+                });
 
-        t.populate([
-            { value: "1", content: "Apple" },
-            { value: "2", content: "Orange" },
-            { value: "3", content: "Banana" },
-            { value: "4", content: "Peach" },
-            { value: "5", content: "Grapes" }
-        ]);
-        //t.set_values(["2", "4"]);
-        //console.log(t.get_values());
-    });
-</script>-->
+            t.populate([
+                { value: "1", content: "Apple" },
+                { value: "2", content: "Orange" },
+                { value: "3", content: "Banana" },
+                { value: "4", content: "Peach" },
+                { value: "5", content: "Grapes" }
+            ]);
+            //t.set_values(["2", "4"]);
+            //console.log(t.get_values());
+        });
+    </script>-->
