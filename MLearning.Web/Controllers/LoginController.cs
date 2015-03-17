@@ -43,13 +43,9 @@ namespace MLearning.Web.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, username), new Claim(ClaimTypes.Role,type.ToString()), new Claim(ClaimTypes.Name,username)}, DefaultAuthenticationTypes.ApplicationCookie, ClaimTypes.Name, ClaimTypes.Role);
-            
-         
+                
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent}, identity);
-
-            
-
-            
+        
         }
 
 
@@ -58,10 +54,6 @@ namespace MLearning.Web.Controllers
         {
             return View();
         }
-
-
-      
-
 
         [HttpPost]
         async public Task<ActionResult> Login(FormCollection collection)
@@ -93,29 +85,19 @@ namespace MLearning.Web.Controllers
                         case UserType.SuperAdmin:
 
                             return RedirectToAction("Index","Admin");
-
-
-                            break;
-
+                            
                         case UserType.Head:
-
 
                             return RedirectToAction("Index", "Head", new { id=result.id});
                        
-                            break;
-
                         case UserType.Publisher:
 
                             return RedirectToAction("Index","Publisher", new { id=result.id});
-                            break;
-                    
+                            
                          default:
                             return RedirectToAction("Index");
-                          break;
-                      
-
+                          
                     }
-
 
                 }
                 else

@@ -33,7 +33,7 @@ namespace MLearning.Web.Controllers
         [Authorize(Roles = Constants.SuperAdminRole)]
         async public Task<ActionResult> Index()
         {
-            var list = await _mLearningService.GetHeads();
+            //var list = await _mLearningService.GetHeads();
             //return View("HeadList",list);
             return View();
         }

@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@Html.ActionLink("Profesores", "Publishers", new { id = ViewBag.InstitutionId });
+@Html.ActionLink("Alumnos", "Consummers");
+@Html.ActionLink("Circulos", "Circles");
