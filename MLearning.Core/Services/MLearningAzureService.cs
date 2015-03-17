@@ -284,6 +284,20 @@ namespace MLearning.Core.Services
            await _repositoryService.InsertAsync<CircleUser>(cuser);
         }
 
+        public async Task RemoveUserFromCircle(int user_id, int circle_id)
+        {
+            try
+            {
+                var cus = await _repositoryService.SearchForAsync<CircleUser>(cu => cu.Circle_id == circle_id && cu.User_id == user_id , new Dictionary<string, string>(), false);
+                var target = cus.FirstOrDefault();
+                await _repositoryService.DeleteAsync<CircleUser>(target);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
+        }
+
         public async Task<List<Circle>> GetCircles(string startsWith)
         {
             List<Circle> list;

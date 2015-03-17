@@ -359,10 +359,10 @@ namespace Core.Repositories
             
         }
 
-        public async Task<List<T>> SearchForAsync<T>(System.Linq.Expressions.Expression<Func<T, bool>> predicate, Dictionary<string, string> parameters,bool cacheResult)
+        public async Task<List<T>> SearchForAsync<T>(System.Linq.Expressions.Expression<Func<T, bool>> predicate, Dictionary<string, string> parameters, bool cacheResult)
         {
             //MobileService.GetTable<T>().q
-            List<T> toReturn = null;
+            List<T> toReturn ;
             try
             {
                 toReturn = await MobileService.GetTable<T>().Where(predicate).WithParameters(parameters).IncludeTotalCount().ToListAsync();
@@ -443,11 +443,11 @@ namespace Core.Repositories
            return  await MobileService.GetTable<T>().Select(x => x).ToListAsync();
         }
 
-        public IQueryable<T> GetAllQuery<T>()
+        public async Task<IQueryable<T>> GetAllQuery<T>()
         {
             var t = MobileService.GetTable<T>().IncludeTotalCount().Select(x => x);
-            var w = t.ToEnumerableAsync();
-            w.Start(); w.Wait();
+            var w = await t.ToEnumerableAsync();
+            //w.Start(); w.Wait();
             var c = t.RequestTotalCount;
             return t.Query;
         }

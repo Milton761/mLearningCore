@@ -109,7 +109,7 @@
             model.Field(c => c.updated_at).Editable(false);
         })
         .Read(read => read.Action("CircleConsumers_read", "Admin"))
-            .Destroy(update => update.Action("CircleConsumer_destroy", "Admin", new { circleId = ViewBag.circleId }))
+            .Destroy(update => update.Action("CircleConsumer_destroy", "Admin"))
     )
 )
 
@@ -132,8 +132,8 @@
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(postData),
                     success: function (data) { //alert(data); 
-                        $('#consumersGrid').data('kendoGrid').refresh();
-                        console.log("refreshingGrid");
+                        $('#consumersGrid').data('kendoGrid').dataSource.read();
+                        consumers.value(null);
                     },
                     failure: function (errMsg) {
                         alert(errMsg);
