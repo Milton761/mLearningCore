@@ -170,6 +170,7 @@ namespace MLearning.Core.Services
 
         Task<List<LearningObject>> GetPublicLOs();
 
+        Task<List<lo_owner>> GetLOsbyOwner();
 
         /// <summary>
         /// List all users registered in a circle
@@ -186,10 +187,6 @@ namespace MLearning.Core.Services
         /// <returns></returns>
         Task<List<post_with_username>> GetPostByCircle(int circleid);
        
-
-     
-     
-
         /// <summary>
         /// List all publishers in an institution
         /// </summary>
@@ -233,6 +230,7 @@ namespace MLearning.Core.Services
         /// </summary>
         /// <param name="circle_id"></param>
         /// <returns></returns>
+        /// 
         Task<List<tag_by_circle>> GetTagsByCircle(int circle_id);
 
         Task<List<tag_by_page>> GetTagsByLO(int lo_id);

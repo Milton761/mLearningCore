@@ -30,10 +30,6 @@ namespace MLearning.Web.Controllers
             _mLearningService = ServiceManager.GetService();
         }
 
-
-
-
-
         [Authorize(Roles = Constants.SuperAdminRole)]
         async public Task<ActionResult> Index()
         {
@@ -84,6 +80,9 @@ namespace MLearning.Web.Controllers
             }
             return Json(new[] { cons }.ToDataSourceResult(request/*, ModelState*/));
         }
+
+
+
 
         public async Task<ActionResult> Institution_create([DataSourceRequest] DataSourceRequest request,head_by_institution inst)
         {
@@ -175,6 +174,19 @@ namespace MLearning.Web.Controllers
             }
             return Json(new[] { inst }.ToDataSourceResult(request, ModelState));
         }
+
+        public ActionResult Units()
+        {
+            //ViewBag.circleId = testCircleId;
+            return View("LearningObjects");
+        }
+
+        public async Task<ActionResult> Units_read([DataSourceRequest] DataSourceRequest request)
+        {
+            var data = (await _mLearningService.GetLOsbyOwner()).ToDataSourceResult(request);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
 
         public ActionResult Create()
         {

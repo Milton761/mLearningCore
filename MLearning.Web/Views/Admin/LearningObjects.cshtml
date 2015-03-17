@@ -11,15 +11,16 @@
     .Columns(columns =>
     {
         columns.Bound(c => c.id).HeaderTemplate("Id").Width(70);
-        columns.Bound(c => c.fullname).HeaderTemplate("Nombre");//.Width(100);
-        columns.Bound(c => c.email).HeaderTemplate("Email");//.Width(100);
-        columns.Command(command => { command.Destroy(); }).Width(100).HeaderTemplate("Acciones");
+        columns.Bound(c => c.title).HeaderTemplate("Nombre");//.Width(100);
+        columns.Bound(c => c.fullname).HeaderTemplate("Autor");//.Width(100);
+        columns.Bound(c => c.created_at).HeaderTemplate("Fecha de creacion");//.Width(100);
+        columns.Command(command => command.Custom("Ver").Click("showDetails")).Width(100).HeaderTemplate("Acciones");
 
     })
-        //.ToolBar(toolbar => toolbar.Create())
     .Pageable()
     .Sortable()
     .Scrollable()
+        .HtmlAttributes(new { style = "height:430px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
         .PageSize(20)
@@ -30,9 +31,59 @@
             model.Id(c => c.id);
             model.Field(c => c.id).Editable(false);
             model.Field(c => c.created_at).Editable(false);
-            model.Field(c => c.updated_at).Editable(false);
+            //model.Field(c => c.updated_at).Editable(false);
         })
-        .Read(read => read.Action("CircleConsumers_read", "Admin"))
+        .Read(read => read.Action("Units_read", "Admin"))
             .Destroy(update => update.Action("CircleConsumer_destroy", "Admin"))
     )
 )
+
+
+@(Html.Kendo().Window().Name("Details")
+    .Title("Información de la unidad")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(400)
+)
+
+<script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        <h2>#=title #</h2>
+        <img width="128" height="128" src="#=url_cover#" />
+        <em>#=created_at #</em>
+        <dl>
+            <dt>Nombre: #=fullname #</dt>
+            <dt>Email: #=email #</dt>
+        </dl>
+         
+    </div>
+</script>
+<!--alt=""-->
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+    var detailsTemplate = kendo.template($("#template").html());
+
+    function showDetails(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var wnd = $("#Details").data("kendoWindow");
+
+        wnd.content(detailsTemplate(dataItem));
+        wnd.center().open();
+    }
+</script>
