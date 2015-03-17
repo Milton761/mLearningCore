@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MLearning.Core.Entities
 {
-    class lo_owner
+    public class lo_owner
     {
         public int id {get; set;}
         public string title {get; set;}

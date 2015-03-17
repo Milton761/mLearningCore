@@ -228,8 +228,11 @@ namespace MLearning.Core.Services
 
         }
 
-      
 
+        public async Task<List<lo_owner>> GetLOsbyOwner()
+        {
+            return await _repositoryService.SearchForAsync<lo_owner>(lo => true, new Dictionary<string, string>(), false);
+        }
 
         public async Task DownloadLOPage(string url_package)
         {
