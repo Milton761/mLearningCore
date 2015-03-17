@@ -77,15 +77,11 @@ namespace MLearning.Web.Controllers
             return Json(cs.ToDataSourceResult(request));
         }
 
-        public ActionResult CircleConsumer_destroy([DataSourceRequest] DataSourceRequest request, consumer_by_institution cons, int circleId)
+        public async Task<ActionResult> CircleConsumer_destroy([DataSourceRequest] DataSourceRequest request, consumer_by_circle cons)
         {
-            //_mLearningService.DeleteObject
             if (cons != null) {
-                System.Diagnostics.Debug.WriteLine(cons);
-                System.Diagnostics.Debug.WriteLine(circleId);
-                _mLearningService.DeleteObject<CircleUser>( new CircleUser { id = cons.id, Circle_id = circleId, User_id = cons.username });
+               await _mLearningService.RemoveUserFromCircle(cons.id, cons.Circle_id);
             }
-            //ModelState
             return Json(new[] { cons }.ToDataSourceResult(request/*, ModelState*/));
         }
 

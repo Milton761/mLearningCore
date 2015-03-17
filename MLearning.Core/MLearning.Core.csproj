@@ -50,6 +50,7 @@
     <Compile Include="Entities\json\QuestionAnswer.cs" />
     <Compile Include="Entities\json\LOContent.cs" />
     <Compile Include="Entities\lo_in_circle.cs" />
+    <Compile Include="Entities\lo_owner.cs" />
     <Compile Include="Entities\PageTag.cs" />
     <Compile Include="Entities\CircleTag.cs" />
     <Compile Include="Entities\Institution_has_Publisher.cs" />

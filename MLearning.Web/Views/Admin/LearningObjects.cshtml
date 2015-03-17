@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "LearningObjects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Unidades</h2>
+
+@(Html.Kendo().Grid<MLearning.Core.Entities.lo_owner>()
+    .Name("unitsGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.id).HeaderTemplate("Id").Width(70);
+        columns.Bound(c => c.fullname).HeaderTemplate("Nombre");//.Width(100);
+        columns.Bound(c => c.email).HeaderTemplate("Email");//.Width(100);
+        columns.Command(command => { command.Destroy(); }).Width(100).HeaderTemplate("Acciones");
+
+    })
+        //.ToolBar(toolbar => toolbar.Create())
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(c => c.id);
+            model.Field(c => c.id).Editable(false);
+            model.Field(c => c.created_at).Editable(false);
+            model.Field(c => c.updated_at).Editable(false);
+        })
+        .Read(read => read.Action("CircleConsumers_read", "Admin"))
+            .Destroy(update => update.Action("CircleConsumer_destroy", "Admin"))
+    )
+)

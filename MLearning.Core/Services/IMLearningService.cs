@@ -81,6 +81,7 @@ namespace MLearning.Core.Services
         /// <returns></returns>
         Task AddUserToCircle(int userid, int circleid);
 
+        Task RemoveUserFromCircle(int user_id, int circle_id);
 
         /// <summary>
         /// Persist an object in the database of type T
