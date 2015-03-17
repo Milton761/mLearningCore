@@ -610,6 +610,7 @@
     <None Include="Properties\PublishProfiles\mlearning - Web Deploy.pubxml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\commons.js" />
     <Content Include="Scripts\global.js" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -1014,6 +1015,9 @@
     <Content Include="Views\Admin\Institutions.cshtml" />
     <Content Include="Views\Admin\EditorTemplates\Institution.cshtml" />
     <Content Include="Views\Admin\LearningObjects.cshtml" />
+    <Content Include="Views\Head\Index.cshtml" />
+    <Content Include="Views\Head\Publishers.cshtml" />
+    <Content Include="Views\Head\EditorTemplates\Publisher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controllers\fonts\glyphicons-halflings-regular.woff" />

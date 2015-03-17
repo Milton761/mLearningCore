@@ -10,32 +10,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 
 namespace MLearning.Web.Controllers
 {
     public class HeadController : MLController
     {
-
-                
+            
          private IMLearningService _mLearningService;
 		public HeadController() : base()
         {
 
-           
             _mLearningService = ServiceManager.GetService();
         }
-
-
-  
-
-
 
         //
         // GET: /Head/
          [Authorize(Roles=Constants.HeadRole)]
         async public Task<ActionResult> Index(int ?id)
         {
-
 
                 if (id != null)
                 {
@@ -53,21 +47,31 @@ namespace MLearning.Web.Controllers
                     }
 
                 }
-            
 
-                
-                InstitutionID = await _mLearningService.GetHeadInstitutionID(UserID);
+                ViewBag.InstitutionId = InstitutionID = await _mLearningService.GetHeadInstitutionID(UserID);
 
-                var publisherList = await _mLearningService.GetPublishersByInstitution(InstitutionID);
-                var consumersList = await _mLearningService.GetConsumersByInstitution(InstitutionID);
+                //var publisherList = await _mLearningService.GetPublishersByInstitution(InstitutionID);
+                //var consumersList = await _mLearningService.GetConsumersByInstitution(InstitutionID);
 
-
-                return View("PublisherConsumerList", new AdminHeadViewModel { Publishers = publisherList, Consumers = consumersList });
-          
-
-            
+                //return View("PublisherConsumerList", new AdminHeadViewModel { Publishers = publisherList, Consumers = consumersList });
+                return View();
+           
         }
 
+         public ActionResult Publishers(int? id)
+         {
+             ViewBag.InstitutionId = InstitutionID = id ?? default(int);
+             return View();
+         }
+
+         public async Task<ActionResult> Publisher_read([DataSourceRequest] DataSourceRequest request)
+         {
+             var publisherList = await _mLearningService.GetPublishersByInstitution(InstitutionID);
+             return Json(publisherList.ToDataSourceResult(request));
+         }
+
+
+/*********************************************************************************************************/
         //
         // GET: /Head/Details/5
          [Authorize(Roles = Constants.HeadRole)]

@@ -15,9 +15,6 @@
         columns.Bound(c => c.country).HeaderTemplate("Pais");//.Width(100);
         columns.Bound(c => c.city).HeaderTemplate("Ciudad");
         columns.Bound(c => c.fullname).HeaderTemplate("Director");
-        //columns.Bound(c => c.)
-        //columns.Bound(p => p.UnitsInStock).Width(100);
-        //columns.Bound(p => p.Discontinued).Width(100);
         columns.Command(command => { command.Edit().UpdateText("Guardar").CancelText("Atras").Text("."); command.Destroy(); }).Width(300).HeaderTemplate("Acciones");
         //columns.Template(c => { }).ClientTemplate(@Html.ActionLink("Administrar", "ManageCircle", new { circle_id = "#=id#" }).ToHtmlString()).Width(150);
 
@@ -47,25 +44,19 @@
     )
 )
 
-
+<!--TODO move to its own view-->
 @(Html.Kendo().MultiSelect()
           .Name("consumers")
           .DataTextField("fullname")
           .DataValueField("id")
           .Placeholder("Busque alumnos para agregar ...")
           .AutoBind(false)
-          //.Value(new[] { new { fullname = "Chang", id = 2 }})
           .Filter(FilterType.Contains)
           .DataSource(source =>
           {
-              //source.Read(read =>
-              //{
-              //    read.Action("GetConsumers", "Admin");
-              //});
-              //.ServerFiltering(true);--
               source.Custom()
              .ServerFiltering(true)
-             .Type("aspnetmvc-ajax") //Set this type if you want to use DataSourceRequest and ToDataSourceResult instances
+             .Type("aspnetmvc-ajax")
              .Transport(transport =>
              {
                  transport.Read("GetConsumers", "Admin");
@@ -124,7 +115,6 @@
                 };
 
             $("#get").click(function () {
-                alert("Attendees:\n\nRequired: " + consumers.value());
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("AddConsumers","Admin")",
@@ -143,22 +133,6 @@
         });
     </script>
 
-
-    <script type="text/javascript">
-        function error_handler(e) {
-            if (e.errors) {
-                var message = "Errors:\n";
-                $.each(e.errors, function (key, value) {
-                    if ('errors' in value) {
-                        $.each(value.errors, function () {
-                            message += this + "\n";
-                        });
-                    }
-                });
-                alert(message);
-            }
-        }
-    </script>
 
     <!--<script>
         $(function () {
