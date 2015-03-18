@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using MLearning.Core.Entities;
 
 namespace MLearning.Web.Controllers
 {
@@ -64,12 +65,60 @@ namespace MLearning.Web.Controllers
              return View();
          }
 
+         public async Task<ActionResult> Publisher_create([DataSourceRequest] DataSourceRequest request, publisher_by_institution pub)
+         {
+             if (pub != null && ModelState.IsValid)
+             {
+                 var result = await _mLearningService.CreateAndRegisterPublisher(
+                     new User { name = pub.name, lastname = pub.lastname, email = pub.email, username = pub.username, password = EncryptionService.encrypt(pub.password) }
+                     , new Publisher { country = pub.country, region = pub.region, city = pub.city, telephone = pub.telephone }, InstitutionID);
+                 pub = await _mLearningService.GetObjectWithId<publisher_by_institution>(result.id);
+             }
+             return Json(new[] { pub }.ToDataSourceResult(request, ModelState));
+         }
+
          public async Task<ActionResult> Publisher_read([DataSourceRequest] DataSourceRequest request)
          {
+             //await _mLearningService.GetObjectWithId<publisher_by_institution>(6138);
              var publisherList = await _mLearningService.GetPublishersByInstitution(InstitutionID);
              return Json(publisherList.ToDataSourceResult(request));
          }
 
+         public async Task<ActionResult> Publisher_update([DataSourceRequest] DataSourceRequest request, publisher_by_institution pub)
+         {
+             if (pub != null && ModelState.IsValid)
+             {
+                 var user = await _mLearningService.GetObjectWithId<User>(pub.id);
+                 var publisher = await _mLearningService.GetObjectWithId<Publisher>(pub.publisher_id);
+
+                 user.name = pub.name;
+                 user.lastname = pub.lastname;
+                 user.username = pub.username;
+                 user.email = pub.email;
+                 user.password = EncryptionService.encrypt(pub.password);
+                
+                 publisher.country = pub.country;
+                 publisher.region = pub.region;
+                 publisher.city = pub.city;
+                 publisher.telephone = pub.telephone;
+
+                 //Update DB
+                 await _mLearningService.UpdateObject<User>(user);
+                 await _mLearningService.UpdateObject<Publisher>(publisher);
+                 pub = await _mLearningService.GetObjectWithId<publisher_by_institution>(pub.id); 
+             }
+             return Json(new[] { pub }.ToDataSourceResult(request,ModelState));
+         }
+        
+         public async Task<ActionResult> Publisher_destroy([DataSourceRequest] DataSourceRequest request, publisher_by_institution pub)
+         {
+             if (pub != null && ModelState.IsValid)
+             {
+                 await _mLearningService.DeleteObject<Publisher>(new Publisher { id = pub.publisher_id });
+                 await _mLearningService.DeleteObject<User>(new User { id = pub.id });
+             }
+             return Json(new[] { pub }.ToDataSourceResult(request, ModelState));
+         }
 
 /*********************************************************************************************************/
         //

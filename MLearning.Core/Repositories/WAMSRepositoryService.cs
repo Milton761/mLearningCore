@@ -463,13 +463,6 @@ namespace Core.Repositories
             return await MobileService.GetTable<T>().Take(n).ToListAsync();
         }
 
-
-
-
-
-
-
-
         public async System.Threading.Tasks.Task GetResource(string resourceName, string containerName)
         {
 

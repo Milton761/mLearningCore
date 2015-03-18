@@ -9,6 +9,9 @@
     @RenderSection("styles", required: false)
 	<!--This bundle was moved by the Telerik VS Extensions for compatibility reasons-->
 	<!--Scripts.Render("~/bundles/jquery")-->
+    @{
+        var culture = System.Globalization.CultureInfo.CurrentCulture.ToString();
+    }
 	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.common.min.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
@@ -18,8 +21,13 @@
 	<script src="@Url.Content("~/Scripts/kendo/2014.3.1411/jszip.min.js")"></script>
 	<script src="@Url.Content("~/Scripts/kendo/2014.3.1411/kendo.all.min.js")"></script>
 	<script src="@Url.Content("~/Scripts/kendo/2014.3.1411/kendo.aspnetmvc.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    <script src="@Url.Content("http://cdn.kendostatic.com/2014.3.1411/js/cultures/kendo.culture."+culture+".min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
     <script src="@Url.Content("~/Scripts/commons.js")"></script>
+    <script type="text/javascript">
+        //set current to the "en-GB" culture script
+        kendo.culture("@culture");
+    </script>
 </head>
 <body>
     <div class="header">

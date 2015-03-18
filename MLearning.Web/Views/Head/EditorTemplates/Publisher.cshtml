@@ -1,1 +1,81 @@
-﻿
+﻿@model MLearning.Core.Entities.publisher_by_institution
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h3>Profesor</h3>
+
+    <br />
+    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.institution_id)
+    /*@Html.HiddenFor(model => model.created_at)
+    @Html.HiddenFor(model => model.updated_at)*/
+    <div class="form-horizontal">
+
+        <div>
+            @Html.LabelFor(model => model.name, "Nombre")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.name)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.lastname, "Apellidos")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.lastname)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.country, "Pais")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.country)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.region, "Region/Estado")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.region)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.city, "Ciudad")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.city)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.telephone, "Telefono")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.telephone)
+            <!--(Html.Kendo().MaskedTextBoxFor(model => model.telephone)
+             .Mask("(999) 0000000"))-->
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.email, "Email")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.email)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.username, "Usuario")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.username)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.password, "Password")
+        </div>
+        <div>
+            @Html.PasswordFor(model => model.password)
+        </div>
+
+    </div>
+}

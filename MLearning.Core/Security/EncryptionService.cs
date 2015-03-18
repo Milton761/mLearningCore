@@ -12,7 +12,8 @@ namespace Core.Security
 
        public static string encrypt(string toEncrypt)
         {
-            byte[] data = System.Text.Encoding.UTF8.GetBytes(toEncrypt);
+            if (toEncrypt == null) return null;
+            byte[] data = System.Text.Encoding.UTF8.GetBytes(toEncrypt); 
             Sha256 sha = new Sha256();
             sha.AddData(data, 0, (uint)data.Length);
 

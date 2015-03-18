@@ -523,7 +523,7 @@ namespace MLearning.Core.Services
             old_publisher.telephone = publisher.telephone;
             old_publisher.title = publisher.title;
 
-            _repositoryService.UpdateAsync<Publisher>(old_publisher);
+            await _repositoryService.UpdateAsync<Publisher>(old_publisher);
 
             if (institution_id != Constants.NoInstitution)
             {
