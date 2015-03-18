@@ -75,10 +75,10 @@ namespace MLearning.Web.Controllers
 
         public async Task<ActionResult> CircleConsumer_destroy([DataSourceRequest] DataSourceRequest request, consumer_by_circle cons)
         {
-            if (cons != null) {
+            if (cons != null && ModelState.IsValid) {
                await _mLearningService.RemoveUserFromCircle(cons.id, cons.Circle_id);
             }
-            return Json(new[] { cons }.ToDataSourceResult(request/*, ModelState*/));
+            return Json(new[] { cons }.ToDataSourceResult(request, ModelState));
         }
 
 
@@ -131,7 +131,7 @@ namespace MLearning.Web.Controllers
 
         public async Task<ActionResult> Institution_update([DataSourceRequest] DataSourceRequest request, head_by_institution inst)
         {
-            if (inst != null /*&& ModelState.IsValid*/)
+            if (inst != null && ModelState.IsValid)
             {
                 User user = await _mLearningService.GetObjectWithId<User>(inst.id);
                 //Head head = await _mLearningService.GetObjectWithId<Head>(head_id);
@@ -161,7 +161,7 @@ namespace MLearning.Web.Controllers
 
                 await _mLearningService.UpdateObject<Institution>(institution);
             }
-            return Json(new[] { inst }.ToDataSourceResult(request/*, ModelState*/));
+            return Json(new[] { inst }.ToDataSourceResult(request, ModelState));
         }
 
         public async Task<ActionResult> Institution_destroy([DataSourceRequest] DataSourceRequest request, head_by_institution inst)
