@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Alumnos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Alumnos</h2>
+
+@(Html.Kendo().Grid<MLearning.Core.Entities.consumer_by_institution>()
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.id).HeaderTemplate("Id").Width(70);
+        columns.Bound(c => c.fullname).HeaderTemplate("Nombre");//.Width(100);
+        columns.Bound(c => c.email).HeaderTemplate("Email");//.Width(100);
+        columns.Bound(c => c.username).HeaderTemplate("Usuario");//.Width(100);
+        columns.Command(command => { command.Edit().UpdateText("Guardar").CancelText("Atras").Text("."); command.Destroy(); }).Width(300).HeaderTemplate("Acciones");
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Consumer"))
+        //.HtmlAttributes(new { style = "height:430px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(c => c.id);
+            model.Field(c => c.id).Editable(false);
+            model.Field(c => c.created_at).Editable(false);
+            model.Field(c => c.updated_at).Editable(false);
+        })
+        .Create(update => update.Action("Consumer_Create", "Head"))
+        .Read(read => read.Action("Consumer_read", "Head"))
+        .Update(update => update.Action("Consumer_Update", "Head"))
+        .Destroy(update => update.Action("Consumer_Destroy", "Head"))
+    )
+)
