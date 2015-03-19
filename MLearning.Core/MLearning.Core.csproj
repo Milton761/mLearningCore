@@ -47,6 +47,7 @@
     <Compile Include="DownloadCache\CacheService.cs" />
     <Compile Include="DownloadCache\DownloadCacheAttribute.cs" />
     <Compile Include="DownloadCache\IncrementalDownload.cs" />
+    <Compile Include="Entities\circle_by_owner.cs" />
     <Compile Include="Entities\json\QuestionAnswer.cs" />
     <Compile Include="Entities\json\LOContent.cs" />
     <Compile Include="Entities\lo_in_circle.cs" />

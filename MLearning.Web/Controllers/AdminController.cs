@@ -140,7 +140,8 @@ namespace MLearning.Web.Controllers
                 user.name = inst.name;
                 user.lastname = inst.lastname;
                 user.username = inst.username;
-                //user.password = inst.password;
+                if(inst.password!=null)
+                    user.password = EncryptionService.encrypt(inst.password);
                
                 institution.name = inst.institution_name;
                 institution.country = inst.country;

@@ -19,6 +19,8 @@ namespace MLearningDB
         public string name { get; set; }
         public int type { get; set; }
         public int owner_id { get; set; }
+        public int institution_id { get; set; }
+        public string code { get; set; }
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }
     }

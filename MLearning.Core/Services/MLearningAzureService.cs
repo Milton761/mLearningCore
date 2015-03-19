@@ -135,6 +135,16 @@ namespace MLearning.Core.Services
             return c.id;
         }
 
+        public async Task<int> CreateCircle(Circle circle)
+        {
+
+            circle.created_at = DateTime.UtcNow;
+            circle.updated_at = DateTime.UtcNow;
+
+            await _repositoryService.InsertAsync<Circle>(circle);
+
+            return circle.id;
+        }
     
         public int CountObjects<T>()
         {
@@ -506,6 +516,11 @@ namespace MLearning.Core.Services
 #endif
         }
 
+        async public Task<List<circle_by_owner>> GetCirclesByInstitution(int inst_id)
+        {
+            return await _repositoryService.SearchForAsync<circle_by_owner>(c => c.institution_id == inst_id,new Dictionary<string,string>(), false);
+        }
+
         async public Task<OperationResult> CreateAndRegisterPublisher(User account, Publisher publisher, int institution_id)
         {
             OperationResult op = await CreateAccount<User>(account, u => u.id, UserType.Publisher);
@@ -542,7 +557,7 @@ namespace MLearning.Core.Services
 
             if (institution_id != Constants.NoInstitution)
             {
-                RegisterUserToInstitution(user_id, institution_id);
+                await RegisterUserToInstitution(user_id, institution_id);
             }
             
 

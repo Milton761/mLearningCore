@@ -1018,6 +1018,9 @@
     <Content Include="Views\Head\Index.cshtml" />
     <Content Include="Views\Head\Publishers.cshtml" />
     <Content Include="Views\Head\EditorTemplates\Publisher.cshtml" />
+    <Content Include="Views\Head\Consumers.cshtml" />
+    <Content Include="Views\Head\EditorTemplates\Consumer.cshtml" />
+    <Content Include="Views\Head\Circles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controllers\fonts\glyphicons-halflings-regular.woff" />

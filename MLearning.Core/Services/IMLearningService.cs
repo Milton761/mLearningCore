@@ -72,6 +72,7 @@ namespace MLearning.Core.Services
         /// <returns></returns>
         Task<int> CreateCircle(int ownerid,string name,int type);
 
+        Task<int> CreateCircle(Circle circle);
 
         /// <summary>
         /// Registers a user in a circle
@@ -274,6 +275,8 @@ namespace MLearning.Core.Services
         /// <param name="inst_id"></param>
         /// <returns></returns>
         Task<List<consumer_by_institution>> GetConsumersByInstitution(int inst_id);
+
+        Task<List<circle_by_owner>> GetCirclesByInstitution(int inst_id);
 
         Task UnSubscribeConsumerFromCircle(int user_id, int circle_id);
 
