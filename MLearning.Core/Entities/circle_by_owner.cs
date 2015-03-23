@@ -11,7 +11,7 @@ namespace MLearning.Core.Entities
         public int id { get; set; }
         public string name { get; set; }
         public int type { get; set; }
-        public int owner_id { get; set; }
+        public int? owner_id { get; set; }
         public int institution_id { get; set; }
         public string code { get; set; }
         public string owner_fullname { get; set; }

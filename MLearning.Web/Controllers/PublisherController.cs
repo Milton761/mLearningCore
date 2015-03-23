@@ -29,11 +29,6 @@ namespace MLearning.Web.Controllers
             
         }
 
-
-
-       
-
-
         //
         // GET: /Publisher/
          [Authorize(Roles = Constants.PublisherRole)]
@@ -128,7 +123,7 @@ namespace MLearning.Web.Controllers
                 int circle_id = await _mLearningService.CreateCircle(UserID, circleObj.name, circleObj.type);
               
                 //Register the Publisher as a user in a Circle
-                _mLearningService.CreateObject<CircleUser>(new CircleUser { Circle_id = circle_id, User_id = UserID, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow }, c => c.id);
+                await _mLearningService.CreateObject<CircleUser>(new CircleUser { Circle_id = circle_id, User_id = UserID, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow }, c => c.id);
 
                 return RedirectToAction("Index", new { id = UserID });
             }

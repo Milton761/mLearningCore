@@ -105,7 +105,7 @@ namespace Core.Repositories
             catch (MobileServiceInvalidOperationException e)
             {
 
-                throw;
+                throw e;
             }
         }
 
