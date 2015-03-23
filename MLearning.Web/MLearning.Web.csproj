@@ -1021,6 +1021,8 @@
     <Content Include="Views\Head\Consumers.cshtml" />
     <Content Include="Views\Head\EditorTemplates\Consumer.cshtml" />
     <Content Include="Views\Head\Circles.cshtml" />
+    <Content Include="Views\Head\EditorTemplates\Circle.cshtml" />
+    <Content Include="Views\Head\CircleConsumers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controllers\fonts\glyphicons-halflings-regular.woff" />

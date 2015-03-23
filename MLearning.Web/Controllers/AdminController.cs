@@ -31,7 +31,7 @@ namespace MLearning.Web.Controllers
         }
 
         [Authorize(Roles = Constants.SuperAdminRole)]
-        async public Task<ActionResult> Index()
+        public ActionResult Index()
         {
             //var list = await _mLearningService.GetHeads();
             //return View("HeadList",list);
@@ -40,50 +40,11 @@ namespace MLearning.Web.Controllers
 
         public ActionResult Institutions()
         {
-            ViewBag.circleId = testCircleId;
+           
             return View("Institutions");
         }
 
-        public async Task<ActionResult> AddConsumers(List<int> ids, int circleId)
-        {
-            
-            foreach (int id in ids)
-            {
-                await _mLearningService.AddUserToCircle(id, circleId);
-            }
-                            
-            return Json("Ok!");
-        }
-
-        private int testCircleId = 46;
-
-        public async Task<ActionResult> CircleConsumers_read([DataSourceRequest] DataSourceRequest request)
-        {
-            List<consumer_by_circle> cc = await _mLearningService.GetConsumersByCircle(testCircleId);
-            return Json(cc.ToDataSourceResult(request));
-        }
-
-
-        public async Task<ActionResult> GetConsumers([DataSourceRequest] DataSourceRequest request)
-        {
-            List<consumer_by_institution> cs = await _mLearningService.GetConsumersByInstitution(13);
-            
-            //Debug.Print(request.Filters.Count.ToString());
-            
-            return Json(cs.ToDataSourceResult(request));
-        }
-
-        public async Task<ActionResult> CircleConsumer_destroy([DataSourceRequest] DataSourceRequest request, consumer_by_circle cons)
-        {
-            if (cons != null && ModelState.IsValid) {
-               await _mLearningService.RemoveUserFromCircle(cons.id, cons.Circle_id);
-            }
-            return Json(new[] { cons }.ToDataSourceResult(request, ModelState));
-        }
-
-
-
-
+       
         public async Task<ActionResult> Institution_create([DataSourceRequest] DataSourceRequest request,head_by_institution inst)
         {
             if (inst != null && ModelState.IsValid)

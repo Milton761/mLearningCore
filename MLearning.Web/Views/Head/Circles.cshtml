@@ -10,19 +10,20 @@
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound(c => c.id);
-        columns.Bound(c => c.code);
-        columns.Bound(c => c.name);
+        columns.Bound(c => c.id).HeaderTemplate("Id").Width(70);
+        columns.Bound(c => c.code).HeaderTemplate("Codigo");
+        columns.Bound(c => c.name).HeaderTemplate("Nombre");
         //columns.Bound(c => c.id); TODO Tag???
-        columns.Bound(c => c.owner_fullname);
+        columns.Bound(c => c.owner_fullname).HeaderTemplate("Profesor");
         columns.Command(command => { command.Edit(); command.Destroy(); }).Width(300);
-        columns.Template(c => { }).ClientTemplate(@Html.ActionLink("Administrar", "ManageCircle", new { circle_id = "#=id#" }).ToHtmlString()).Width(150);
+        columns.Template(c => { }).ClientTemplate(@Html.ActionLink("Administrar", "CircleConsumers", new { id = "#=id#" }).ToHtmlString()).Width(150);
 
     })
     .ToolBar(toolbar => toolbar.Create())
     .Pageable()
     .Sortable()
     .Scrollable()
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Circle"))
     .HtmlAttributes(new { style = "height:430px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
@@ -41,5 +42,4 @@
             .Update(update => update.Action("Circle_update", "Head"))
             .Destroy(update => update.Action("Circle_destroy", "Head"))
     )
-    .Editable(editable => editable.Mode(GridEditMode.InLine))
 )

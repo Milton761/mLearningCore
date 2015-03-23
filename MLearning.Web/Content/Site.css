@@ -40,3 +40,8 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+.form-horizontal .form-group{
+    margin-right: 15px;
+    margin-left: 15px;
+}

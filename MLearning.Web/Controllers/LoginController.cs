@@ -19,7 +19,7 @@ using System.Web.Security;
 
 namespace MLearning.Web.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : MLController
     {
 
 
@@ -39,7 +39,7 @@ namespace MLearning.Web.Controllers
             }
         }
 
-        private async void SignIn( bool isPersistent,string username,UserType type)
+        private void SignIn( bool isPersistent,string username,UserType type)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, username), new Claim(ClaimTypes.Role,type.ToString()), new Claim(ClaimTypes.Name,username)}, DefaultAuthenticationTypes.ApplicationCookie, ClaimTypes.Name, ClaimTypes.Role);
@@ -71,7 +71,7 @@ namespace MLearning.Web.Controllers
 
                 LoginOperationResult<User> result = await _mLearningService.ValidateLogin<User>(user, u => u.password == user.password && u.username == user.username, u => u.id, u => u.type);
                 // LoginOperationResult result = await _mLearningService.ValidateConsumerLogin(user.username,user.password);
-
+                UserID = result.id;
                 if (result.successful)
                 {
                    
