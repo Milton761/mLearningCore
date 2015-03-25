@@ -1,26 +1,36 @@
-﻿
+﻿@using MLearning.Core.Configuration
 @{
-    ViewBag.Title = "LearningObjects";
+    ViewBag.Title = "Unidades";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Unidades</h2>
 
-@(Html.Kendo().Grid<MLearning.Core.Entities.lo_by_owner>()
+@(Html.Kendo().Grid<MLearningDB.lo_in_circle>()
     .Name("unitsGrid")
     .Columns(columns =>
     {
-        columns.Bound(c => c.id).HeaderTemplate("Id").Width(70);
-        columns.Bound(c => c.title).HeaderTemplate("Nombre");//.Width(100);
-        columns.Bound(c => c.fullname).HeaderTemplate("Autor");//.Width(100);
-        columns.Bound(c => c.created_at).HeaderTemplate("Fecha de creacion");//.Width(100);
+        columns.Bound(c => c.id).Title("Id").Width(70);
+        columns.Bound(c => c.title).Title("Nombre");//.Width(100);
+        columns.Bound(c => c.type).Title("Tipo");/*.ClientTemplate(
+            "# if (#= type # == " + (int)LOType.Private + ") { #" +
+                "'Privado'"+
+            "# } else { #" +
+                "'Público'" +
+            "# } #"
+            );*/
+        columns.Bound(c => c.fullname).Title("Autor");//.Width(100);
+        columns.Bound(c => c.created_at).Title("Fecha de creacion").Format("{0:MM/dd/yyyy}");//.Width(100);
         columns.Command(command => command.Custom("Ver").Click("showDetails")).Width(100).HeaderTemplate("Acciones");
 
     })
     .Pageable()
     .Sortable()
     .Scrollable()
-        .HtmlAttributes(new { style = "height:430px;" })
+    .HtmlAttributes(new { style = "height:430px;" })
+    .ToolBar(toolbar => { toolbar.Custom().Text("Crear Unidad").Action("CreateLO", "Publisher");
+    toolbar.Template("<a class='k-button k-button-icontext' onclick='customCommand()' href='#'></span>Cutom Command</a>");
+    })
     .DataSource(dataSource => dataSource
         .Ajax()
         .PageSize(20)
@@ -33,7 +43,7 @@
             model.Field(c => c.created_at).Editable(false);
             //model.Field(c => c.updated_at).Editable(false);
         })
-        .Read(read => read.Action("Units_read", "Admin"))
+        .Read(read => read.Action("LOs_read", "Publisher"))
     )
 )
 
@@ -55,12 +65,12 @@
             <dt>Nombre: #=fullname #</dt>
             <dt>Email: #=email #</dt>
         </dl>
-         
+
     </div>
 </script>
 <!--alt=""-->
 <script type="text/javascript">
-   
+
     var detailsTemplate = kendo.template($("#template").html());
 
     function showDetails(e) {

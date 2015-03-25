@@ -1,10 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "CircleConsumers";
+    ViewBag.Title = "Alumnos del Circulo: " + ViewBag.CircleName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>CircleConsumers</h2>
+<h2>Alumnos del Circulo: @ViewBag.CircleName </h2>
 
 @(Html.Kendo().MultiSelect()
           .Name("consumers")
@@ -68,8 +68,6 @@
 <script>
     $(document).ready(function () {
         var consumers = $("#consumers").data("kendoMultiSelect");
-        //var optional = $("#optional").data("kendoMultiSelect");
-
         var postData = {
             ids : consumers.value(),
             circleId : @(ViewBag.circleId)

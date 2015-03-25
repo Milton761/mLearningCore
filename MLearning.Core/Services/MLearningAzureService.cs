@@ -162,7 +162,7 @@ namespace MLearning.Core.Services
         {
             Circle_has_LO circleLO = new Circle_has_LO { circle_id = circleid, lo_id = loid, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow };
 
-            _repositoryService.InsertAsync<Circle_has_LO>(circleLO);
+            await _repositoryService.InsertAsync<Circle_has_LO>(circleLO);
         }
 
         public async Task<List<circle_by_user>> GetCirclesByUser(int userid)
@@ -239,9 +239,14 @@ namespace MLearning.Core.Services
         }
 
 
-        public async Task<List<lo_owner>> GetLOsbyOwner()
+        public async Task<List<lo_by_owner>> GetLOsbyOwner()
         {
-            return await _repositoryService.SearchForAsync<lo_owner>(lo => true, new Dictionary<string, string>(), false);
+            return await _repositoryService.SearchForAsync<lo_by_owner>(lo => true, new Dictionary<string, string>(), false);
+        }
+
+        public async Task<List<lo_by_owner>> GetLOsbyOwner(int user_id)
+        {
+            return await _repositoryService.SearchForAsync<lo_by_owner>(lo => lo.user_id == user_id , new Dictionary<string, string>(), false);
         }
 
         public async Task DownloadLOPage(string url_package)
@@ -379,7 +384,7 @@ namespace MLearning.Core.Services
 
                 first.like = !first.like;
 
-                _repositoryService.UpdateAsync<UserLO>(first);
+                await _repositoryService.UpdateAsync<UserLO>(first);
             }
         }
 
@@ -400,7 +405,7 @@ namespace MLearning.Core.Services
 
             user.is_online = false;
 
-            _repositoryService.UpdateAsync<User>(user);
+            await _repositoryService.UpdateAsync<User>(user);
         }
 
 
@@ -473,7 +478,7 @@ namespace MLearning.Core.Services
 
             old_head.title = head_info.title;
 
-            _repositoryService.UpdateAsync<Head>(old_head);
+            await _repositoryService.UpdateAsync<Head>(old_head);
 
             //Create institution
             inst.updated_at = DateTime.UtcNow;
@@ -481,7 +486,7 @@ namespace MLearning.Core.Services
 
            int inst_id = await CreateObject<Institution>(inst, i => i.id);     
             //Relationship
-           RegisterUserToInstitution(r.id, inst_id);
+           await RegisterUserToInstitution(r.id, inst_id);
            return user_id;
         }
 
@@ -568,7 +573,7 @@ namespace MLearning.Core.Services
         public async Task RegisterUserToInstitution(int user_id, int institution_id)
         {
             Institution_has_User institutionHead = new Institution_has_User { institution_id = institution_id, user_id = user_id, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow };
-            CreateObject<Institution_has_User>(institutionHead, i => i.id);
+            await CreateObject<Institution_has_User>(institutionHead, i => i.id);
         }
 
 
@@ -581,7 +586,7 @@ namespace MLearning.Core.Services
            if (relationList.Count > 0)
            {
                var toDelete = relationList.FirstOrDefault();
-               _repositoryService.DeleteAsync<CircleUser>(toDelete);
+               await _repositoryService.DeleteAsync<CircleUser>(toDelete);
            }
         }
 

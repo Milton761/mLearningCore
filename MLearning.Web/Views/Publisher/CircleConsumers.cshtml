@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Alumnos del Circulo: " + ViewBag.CircleName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Alumnos del Circulo: @ViewBag.CircleName </h2>
+
+@(Html.Kendo().Grid<MLearningDB.consumer_by_circle>()
+    .Name("consumersGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.id).HeaderTemplate("Id").Width(70).Filterable(false);
+        columns.Bound(c => c.fullname).HeaderTemplate("Nombre");//.Width(100);
+        columns.Bound(c => c.email).HeaderTemplate("Email");//.Width(100);
+        columns.Bound(c => c.username).HeaderTemplate("Usuario");
+        //columns.Command(command => { command.Destroy(); }).Width(100).HeaderTemplate("Acciones");
+        columns.Template(c => { }).ClientTemplate(@Html.ActionLink("C", "-", new { id = "#=id#" }).ToHtmlString()).Width(150).Title("Acciones");
+
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+        .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(c => c.id);
+            model.Field(c => c.id).Editable(false);
+            model.Field(c => c.created_at).Editable(false);
+            model.Field(c => c.updated_at).Editable(false);
+        })
+        .Read(read => read.Action("CircleConsumers_read", "Head"))
+    )
+)
