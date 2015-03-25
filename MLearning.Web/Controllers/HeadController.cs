@@ -59,6 +59,7 @@ namespace MLearning.Web.Controllers
            
         }
 
+        #region Publisher CRUD
          public ActionResult Publishers(int? id)
          {
              if (id != null)
@@ -125,8 +126,9 @@ namespace MLearning.Web.Controllers
              }
              return Json(new[] { pub }.ToDataSourceResult(request, ModelState));
          }
+        #endregion
 
-/*********************************************************************************************************/
+        #region Consumers CRUD
          public ActionResult Consumers(int? id)
          {
              if(id != null)
@@ -185,8 +187,9 @@ namespace MLearning.Web.Controllers
              }
              return Json(new[] { cons }.ToDataSourceResult(request, ModelState));
          }
+#endregion
 
-/*********************************************************************************************************/
+        #region Circle CRUD
          public ActionResult Circles(int? id)
          {
              if (id != null)
@@ -243,23 +246,22 @@ namespace MLearning.Web.Controllers
              }
              return Json(new[] { circle }.ToDataSourceResult(request, ModelState));
          }
+#endregion
 
-/*********************************************************************************************************/
-         //private int testCircleId = 46;
-
-         public ActionResult CircleConsumers(int id)
+        #region Circle Admin
+         public async Task<ActionResult> CircleConsumers(int id)
          {
              CircleID = ViewBag.circleId = id;
+             var circle = await _mLearningService.GetObjectWithId<Circle>(id);
+             ViewBag.CircleName = circle.name;
              return View();
          }
-
 
          public async Task<ActionResult> CircleConsumers_read([DataSourceRequest] DataSourceRequest request)
          {
              List<consumer_by_circle> cc = await _mLearningService.GetConsumersByCircle(CircleID);
              return Json(cc.ToDataSourceResult(request));
          }
-
 
          public async Task<ActionResult> GetConsumers([DataSourceRequest] DataSourceRequest request)
          {
@@ -286,11 +288,16 @@ namespace MLearning.Web.Controllers
              if (cons != null && ModelState.IsValid)
              {
                  await _mLearningService.RemoveUserFromCircle(cons.id, cons.Circle_id);
+                 /*if (CircleID != null)
+                 {
+                     await _mLearningService.UnSubscribeConsumerFromCircle(user_id, CircleID);
+                 }*/
              }
              return Json(new[] { cons }.ToDataSourceResult(request, ModelState));
          }
+#endregion
 
-/*********************************************************************************************************/
+        #region old CRUDS
         //
         // GET: /Head/Details/5
          [Authorize(Roles = Constants.HeadRole)]
@@ -381,10 +388,10 @@ namespace MLearning.Web.Controllers
 
 
                 //Update DB
-                _mLearningService.UpdateObject<User>(pubObj.User);
+                await _mLearningService.UpdateObject<User>(pubObj.User);
 
 
-                _mLearningService.UpdateObject<Publisher>(pubObj.Publisher);
+                await _mLearningService.UpdateObject<Publisher>(pubObj.Publisher);
 
 
 
@@ -426,7 +433,7 @@ namespace MLearning.Web.Controllers
 
                 return RedirectToAction("Index", new { id = UserID });
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return RedirectToAction("Index", new { id = UserID });
             }
@@ -517,10 +524,10 @@ namespace MLearning.Web.Controllers
 
 
                 //Update DB
-                _mLearningService.UpdateObject<User>(consumerObj.User);
+                await _mLearningService.UpdateObject<User>(consumerObj.User);
 
 
-                _mLearningService.UpdateObject<Consumer>(consumerObj.Consumer);
+                await _mLearningService.UpdateObject<Consumer>(consumerObj.Consumer);
 
 
 
@@ -562,12 +569,11 @@ namespace MLearning.Web.Controllers
 
                 return RedirectToAction("Index", new { id = UserID });
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return RedirectToAction("Index", new { id = UserID });
             }
         }
-
-       
     }
+        #endregion
 }

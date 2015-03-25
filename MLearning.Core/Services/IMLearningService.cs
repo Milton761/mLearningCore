@@ -171,7 +171,9 @@ namespace MLearning.Core.Services
 
         Task<List<LearningObject>> GetPublicLOs();
 
-        Task<List<lo_owner>> GetLOsbyOwner();
+        Task<List<lo_by_owner>> GetLOsbyOwner();
+
+        Task<List<lo_by_owner>> GetLOsbyOwner(int user_id);
 
         /// <summary>
         /// List all users registered in a circle
