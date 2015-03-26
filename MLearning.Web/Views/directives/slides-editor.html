@@ -1,0 +1,16 @@
+<!--
+<div>prueba partial {{mensaje}}</div>
+<button type="button" ng-click="saludar()">{{mensaje}}</button>
+-->
+
+<div ng-repeat="campo in campos"  ng-switch on="campo.tipo">
+    <slide ng-switch-when='primero' tipo="primero">  </slide>
+    <slide ng-switch-when='segundo' tipo="segundo">  </slide>
+    <slide ng-switch-when='tercero' tipo="tercero">  </slide>
+    <slide ng-switch-when='cuarto' tipo="cuarto">  </slide>
+    <slide ng-switch-when='quinto' tipo="quinto">  </slide>
+    <slide ng-switch-when='sexto' tipo="sexto">  </slide>
+</div>
+
+
+

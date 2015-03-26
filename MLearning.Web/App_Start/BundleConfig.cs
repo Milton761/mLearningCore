@@ -8,8 +8,11 @@ namespace MLearning.Web
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            /*bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                        "~/Scripts/jquery-{version}.js"));*/
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/kendo/2014.3.1411/jquery.min.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -24,7 +27,51 @@ namespace MLearning.Web
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/style.css"));
-            BundleTable.EnableOptimizations = true;           
+
+            bundles.Add(new StyleBundle("~/Content/app").Include(
+                      "~/Content/app/animate.css",
+                      "~/Content/app/box.css",
+                      "~/Content/app/main.css"));
+
+
+            bundles.Add(new StyleBundle("~/Content/kendo").Include(
+                "~/Content/kendo/2014.3.1411/kendo.common.min.css",
+	            "~/Content/kendo/2014.3.1411/kendo.mobile.all.min.css",
+	            "~/Content/kendo/2014.3.1411/kendo.dataviz.min.css",
+	            "~/Content/kendo/2014.3.1411/kendo.metro.min.css",
+	            "~/Content/kendo/2014.3.1411/kendo.dataviz.default.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
+                "~/Scripts/kendo/2014.3.1411/jquery.min.js",
+                "~/Scripts/kendo/2014.3.1411/jszip.min.js",
+                "~/Scripts/kendo/2014.3.1411/kendo.all.min.js",
+                "~/Scripts/kendo/2014.3.1411/kendo.aspnetmvc.min.js",
+                "~/Scripts/kendo.modernizr.custom.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                      "~/Scripts/angular.js",
+                      "~/Scripts/angular-route.js",
+                      "~/Scripts/angular-animate.js",
+                      "~/Scripts/angular-resource.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                        "~/Scripts/app/app.js",
+                        "~/Scripts/app/controllers/main.js",
+                        "~/Scripts/app/controllers/about.js",
+                        "~/Scripts/app/controllers/admin/instituciones.js",
+                        "~/Scripts/app/controllers/admin/unidades.js",
+                        "~/Scripts/app/controllers/admin/administrador.js",
+                        "~/Scripts/app/services/admin/administrador.js",
+                        "~/Scripts/app/services/admin/instituciones.js",
+                        "~/Scripts/app/services/admin/unidades.js",
+                        "~/Scripts/app/directives/slides-editor.js",
+                        "~/Scripts/app/controllers/director/home.js",
+                        "~/Scripts/app/controllers/director/profesores.js",
+                        "~/Scripts/app/controllers/director/alumnos.js",
+                        "~/Scripts/app/controllers/director/circulos.js",
+                        "~/Scripts/app/directives/select-imagen.js"));
+
+            BundleTable.EnableOptimizations = false;           
         }
     }
 }

@@ -137,10 +137,10 @@ namespace MLearning.Web.Controllers
             return Json(new[] { inst }.ToDataSourceResult(request, ModelState));
         }
 
-        public ActionResult Units()
+        public ActionResult LearningObjects()
         {
             //ViewBag.circleId = testCircleId;
-            return View("LearningObjects");
+            return View();
         }
 
         public async Task<ActionResult> Units_read([DataSourceRequest] DataSourceRequest request)

@@ -4,7 +4,42 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script>
+    home = true;
+    agregarClickItem();
+    refrescar_activos();
+    expandir_menu();
+    hacerHome(true);
+    setItemActual('#administrador');
+</script>
+
+
 <h2>Index</h2>
+
+<div class="panel-super-boton">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-offset-1 col-xs-4">
+
+                <div class="home-super-boton institucion_esq cursor-pointer" ng-click="redireccionar('@Url.Action("Institutions","Admin")')">
+                    <div>
+                        <img src="../../images/institucion-icon.png" alt="" class="img-responsive">
+                    </div>
+                    <p>Instituciones</p>
+                </div>
+
+            </div>
+            <div class="col-xs-offset-1 col-xs-4">
+                <div class="home-super-boton unidad_esq  cursor-pointer">
+                    <div>
+                        <img src="../../images/unidades-icon.png" alt="" class="img-responsive">
+                    </div>
+                    <p>Unidades</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @Html.ActionLink("Institutions", "Institutions");
 @Html.ActionLink("Units", "Units");

@@ -52,6 +52,10 @@ namespace MLearning.Web.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            if(Request.IsAuthenticated && userType!=null)
+            {
+                return redirectToRoleHome();
+            }
             return View();
         }
 
@@ -75,29 +79,11 @@ namespace MLearning.Web.Controllers
                 if (result.successful)
                 {
                    
-                   UserType userType = (UserType)result.userType;
+                   userType = (UserType)result.userType;
                     //Session Code HERE
-                    SignIn(false, username,userType);
+                    SignIn(false, username,userType?? default(UserType));
 
-
-                    switch (userType)
-                    {
-                        case UserType.SuperAdmin:
-
-                            return RedirectToAction("Index","Admin");
-                            
-                        case UserType.Head:
-
-                            return RedirectToAction("Index", "Head", new { id=result.id});
-                       
-                        case UserType.Publisher:
-
-                            return RedirectToAction("Index","Publisher", new { id=result.id});
-                            
-                         default:
-                            return RedirectToAction("Index");
-                          
-                    }
+                    return redirectToRoleHome();
 
                 }
                 else
@@ -106,8 +92,6 @@ namespace MLearning.Web.Controllers
 
                 }
 
-
-               
             }
             catch
             {
@@ -116,6 +100,28 @@ namespace MLearning.Web.Controllers
         
         }
 
+        ActionResult redirectToRoleHome()
+        {
+            UserType uType = (userType?? default(UserType));
+            switch ((UserType)uType)
+            {
+                case UserType.SuperAdmin:
+
+                    return RedirectToAction("Index", "Admin");
+
+                case UserType.Head:
+
+                    return RedirectToAction("Index", "Head", new { id = UserID });
+
+                case UserType.Publisher:
+
+                    return RedirectToAction("Index", "Publisher", new { id = UserID });
+
+                default:
+                    return RedirectToAction("Index");
+
+            }
+        }
 
         [HttpPost]        
         public ActionResult LogOff()

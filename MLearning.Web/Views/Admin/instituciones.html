@@ -1,0 +1,305 @@
+<script>
+    home = false;
+    contraer_menu();
+    agregarClickItem();
+    setItemActual('#institucion');
+    hacerHome(false);
+</script>
+
+
+<style>
+    .tamBtnNuevo {
+        width: 50px;
+        height: 50px;
+    }
+
+    /*tabla*/
+    .tamIconTabla {
+        width: 25px;
+        margin-left: 10px;
+    }
+    /*color de la tabla*/
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: rgb(248,239,233);
+    }
+
+</style>
+
+
+<div class="container-fluid">
+    <div class="row"><br></div>
+    <div class="row"><br></div>
+    <div class="row"><br></div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            INSTITUCIONES   EDUCATIVAS
+        </div>
+
+
+    </div>
+
+
+    <br></br>
+<div class="row">
+    <div class="col-xs-offset-9 col-xs-3" >
+        <a href="" ng-click="nuevaInstitucion()">
+            <img class="img-responsive " src="images/010_btn_nuevo.png" >
+        </a>
+
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12" >
+
+        <div class="panel-default ">
+            <div class="panel-body table-responsive">
+
+
+                <table class="table table-condensed table-hover table-striped">
+                    <thead>
+                        <tr >
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Pais</th>
+                            <th>Ciudad</th>
+                            <th>Director</th>
+
+
+                            <th class = 'text-center'>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  ng-repeat="institucion in instituciones" >
+                            <td>{{institucion.id}}</td>
+                            <td>{{institucion.nombre}}</td>
+                            <td>{{institucion.pais}}</td>
+                            <td>{{institucion.ciudad}}</td>
+                            <td>{{institucion.director}}</td>
+                            <td style = "display:inline-flex;margin:auto;" class = 'text-center'>
+                                <a href="" ng-click="visualizarInstitucion(institucion)">
+                                    <img class="tamIconTabla img-responsive " src="images/011_btn_ver.png" >
+                                </a>
+
+                                <a href="" ng-click="editarInstitucion(institucion)">
+                                    <img class="tamIconTabla img-responsive" src="images/012_btn_editar.png" >
+                                </a>
+
+
+                                <a href="" ng-click="eliminarInstitucion(institucion)">
+                                    <img class="tamIconTabla img-responsive" src="images/013_btn_borrar.png" >
+                                </a>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer"></div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-xs-offset-1 col-xs-11">
+
+        <ul class="pagination">
+            <li><a href="#">&laquo;</a></li>
+
+            <li ng-repeat="pagina in paginas" ng-class="{active:pagina.nombre == selected}" >
+                <a href="" ng-click="crearPagina(pagina)">{{pagina.id}}</a>
+            </li>
+
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4">
+        <img class="tamIconTabla img-responsive " src="../images/011_btn_ver.png" alt="I'm image ">
+        Visualizar
+
+    </div>
+    <div class="col-xs-4">
+        <img class="tamIconTabla img-responsive" src="../images/012_btn_editar.png" alt="I'm image">
+        Editar
+    </div>
+    <div class="col-xs-4">
+        <img class="tamIconTabla img-responsive" src="../images/013_btn_borrar.png" alt="I'm image">
+        Eliminar
+
+    </div>
+
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+<script type="text/ng-template" id="myModalContent.html">
+
+<div class="modal-header">
+    <h3 class="modal-title"> {{tituloModal }} Nueva Institucion </h3>
+    </div>
+<div class="modal-body">
+
+
+
+    <form class="form" name="institucionForm" id="institucionForm">
+
+
+
+        <div class="form-group"
+
+
+             ng-class="{'has-error':institucionForm.FormNombre.$invalid && institucionForm.institucionFormNombre.$touched}">
+
+            <label for="nombre">Nombre:</label>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-bookmark"></i>
+    </div>
+                <input ng-model="institucionActual.nombre" class="form-control"
+                       name="institucionFormNombre" type="text"
+                       placeholder="Nombre institucion" ng-required="true"
+                       maxlength="20"> <span
+                                             ng-if="institucionForm.institucionFormNombre.$invalid && institucionForm.institucionFormNombre.$dirty"
+                                             class="glyphicon glyphicon-remove form-control-feedback"></span>
+    </div>
+            <span
+                  ng-if="institucionForm.institucionFormNombre.$error.required && institucionForm.institucionFormNombre.$touched"
+                  class="help-block">El nombre es requerido. </span>
+    </div>
+
+
+
+
+       <div class="row">
+
+           <div class="col-xs-4">
+            <label for="nombre">Pais</label>
+
+                <input ng-model="institucionActual.pais" class="form-control"
+                       name="institucionFormPais" type="text"
+                      >
+    </div>
+               <div class="col-xs-4">
+
+                <label for="nombre">Region/Estado</label>
+                <input ng-model="institucionActual.region" class="form-control"
+                       name="institucionFormRegion" type="text"
+                      >
+    </div>
+
+                   <div class="col-xs-4">
+                <label for="nombre">Ciudad</label>
+                <input ng-model="institucionActual.ciudad" class="form-control"
+                       name="institucionFormCiudad" type="text"
+                      >
+    </div>
+
+    </div>
+      <div class="row"><br></div>
+    <div class="row">
+        <div class="col-xs-4">
+            <label for="nombre">Cod postal</label>
+            <input ng-model="institucionActual.postal" class="form-control"
+                   name="institucionFormPostal" type="text"
+                   >
+    </div>
+        <div class="col-xs-4">
+            <label for="nombre">Telefono</label>
+            <input ng-model="institucionActual.telefono" class="form-control"
+                   name="institucionFormTelefono" type="text"
+                  >
+    </div>
+        <div class="col-xs-4">
+            <label for="nombre">Email</label>
+            <input ng-model="institucionActual.email" class="form-control"
+                   name="institucionFormEmail" type="text"
+                  >
+    </div>
+
+    </div>
+
+
+        <div class="row"><br></div>
+    <div class="row">
+        <div class="col-xs-6">Director</div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+           <div class="row">
+               <div class="col-xs-offset-1 col-xs-5">
+                   <label for="nombre">Nombre</label>
+                   <input ng-model="institucionActual.nombreDirector" class="form-control"
+                          name="institucionFormNombreDirector" type="text"
+                          >
+    </div>
+               <div class="col-xs-5">
+                   <label for="nombre">Apellidos</label>
+                   <input ng-model="institucionActual.apellidosDirector" class="form-control"
+                          name="institucionFormApellidosDirector" type="text"
+                         >
+    </div>
+    </div>
+
+            <div class="row">
+                <div class="col-xs-offset-1 col-xs-5">
+                    <label for="nombre">Usuario</label>
+                    <input ng-model="institucionActual.usuarioDirector" class="form-control"
+                           name="institucionFormUsuarioDirector" type="text"
+                           >
+    </div>
+                <div class="col-xs-5">
+                    <label for="nombre">Contraseña</label>
+                    <input ng-model="institucionActual.passwordDirector" class="form-control"
+                           name="institucionFormDirector" type="text"
+                          >
+    </div>
+    </div>
+
+    </div>
+    </div>
+
+
+    </form>
+
+
+
+
+    </div>
+<div class="modal-footer">
+
+
+    <button class="btn " ng-click="guardarModal()">Guardar</button>
+
+
+    <a  class="btn btn-default " role="button"" ng-click="cancel()">
+                                                                   Cancelar
+    </a>
+
+    </div>
+
+
+
+</script>
+
+
+

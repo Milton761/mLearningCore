@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +12,31 @@ namespace MLearning.Web.Controllers
     {
         public ActionResult Index()
         {
+            /* (!Request.IsAuthenticated)
+            {
+                return 
+            }*/
+            var a = Request.IsAuthenticated;
             return View();
+        }
+
+        public ActionResult Index0()
+        {
+            return PartialView();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            return PartialView();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
-            return View();
+            return PartialView();
         }
     }
 }
