@@ -87,7 +87,12 @@ angular.module('mlearningApp')
         window.location.href = path;
     };
 
-
+    $scope.openProfile = function () {
+        console.log("openProfile");
+    }
+    $scope.logout = function () {
+        $("#logoutForm").submit();
+    }
 });
 
 

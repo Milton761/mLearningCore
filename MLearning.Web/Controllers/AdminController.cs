@@ -40,7 +40,6 @@ namespace MLearning.Web.Controllers
 
         public ActionResult Institutions()
         {
-           
             return View("Institutions");
         }
 

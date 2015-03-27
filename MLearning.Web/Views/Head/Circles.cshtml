@@ -2,7 +2,17 @@
 @{
     ViewBag.Title = "Circulos";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.VisibleMenus = "[{codigo: 3},{codigo: 4},{codigo: 5},{codigo: 6}]";
+    ViewBag.ActiveRole = "DIRECTOR";
 }
+
+<script>
+    home = false;
+    contraer_menu();
+    agregarClickItem();
+    setItemActual('#circulo');
+    hacerHome(false);
+</script>
 
 <h2>Circulos</h2>
 

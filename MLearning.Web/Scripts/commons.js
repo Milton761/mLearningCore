@@ -12,6 +12,13 @@
     }
 }
 
+
+function editProfile()
+{
+
+}
+
+
 /*Angular functions*/
 
 var home = true;
@@ -120,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     $('.showPopup').click(function (event) {
         event.preventDefault();
-        console.log("aa");
+        //console.log("aa");
         $('.popup-user-opcion').css('visibility', 'visible');
     });
     $(document).mouseup(function (e) {

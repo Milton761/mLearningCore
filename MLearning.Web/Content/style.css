@@ -247,8 +247,8 @@ caption {
 }
 tbody
 {
-	color:#9b9c9e;
-	font-size:1.6em;
+	/*color:#9b9c9e;
+	font-size:1.6em;*/
 	text-align:center;
 }
 .tablehead { border-radius: 15px; }
@@ -258,7 +258,7 @@ th {
 	background-color:#0682c1;
 	text-align:center;
 }
-th,td,tr {border: 0px solid silver; vertical-align:middle; height: 45px;  }
+/*th,td,tr {border: 0px solid silver; vertical-align:middle; height: 45px;  }*/
 th{color:#FFF;}
 em {font-size: 14px bold; font-style:italic; color:#000;}
 /**Zebra Stripes**/
@@ -341,6 +341,14 @@ tr:nth-child(odd) /**every odd row**/
 	background-position: right bottom;
 	background-size:60px;
 	top: 50%;
+}
+
+.verticalCenter{
+  position: relative;
+  top: 50%;
+  /*-webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);*/
 }
 
 .unidad {

@@ -2,9 +2,19 @@
 @{
     ViewBag.Title = "Alumnos";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.VisibleMenus = "[{codigo: 3},{codigo: 4},{codigo: 5},{codigo: 6}]";
+    ViewBag.ActiveRole = "DIRECTOR";
 }
 
 <h2>Alumnos</h2>
+
+<script>
+    home = false;
+    contraer_menu();
+    agregarClickItem();
+    setItemActual('#alumno');
+    hacerHome(false);
+</script>
 
 @(Html.Kendo().Grid<MLearning.Core.Entities.consumer_by_institution>()
     .Name("grid")

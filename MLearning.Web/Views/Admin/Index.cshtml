@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.VisibleMenus = "[{codigo: 0},{codigo: 1},{codigo: 2}]";
+    ViewBag.ActiveRole = "SUPER ADMINISTRADOR";
 }
 
 <script>
@@ -12,9 +14,6 @@
     hacerHome(true);
     setItemActual('#administrador');
 </script>
-
-
-<h2>Index</h2>
 
 <div class="panel-super-boton">
     <div class="container">
@@ -40,6 +39,3 @@
         </div>
     </div>
 </div>
-
-@Html.ActionLink("Institutions", "Institutions");
-@Html.ActionLink("Units", "Units");
