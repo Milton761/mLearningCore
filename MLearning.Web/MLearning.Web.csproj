@@ -1830,6 +1830,7 @@
     <Content Include="Views\Publisher\LearningObjects.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Home\Index0.cshtml" />
+    <Content Include="Views\Shared\profileForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controllers\fonts\glyphicons-halflings-regular.woff" />

@@ -184,6 +184,19 @@
         </div>
     </div>
     
+    @{Html.Kendo().Window().Name("profile")
+    .Title("Perfil")
+    .Visible(false)
+    .Modal(true)
+    @*.Content(
+        @<text>
+        @{Html.RenderPartial("profileForm");} 
+        </text>
+    )*@
+    .LoadContentFrom(Url.Action("editUser","Home"))
+    .Draggable(true)
+    .Width(500).Render();}
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("Scripts", required: false)
     

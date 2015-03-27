@@ -88,7 +88,8 @@ angular.module('mlearningApp')
     };
 
     $scope.openProfile = function () {
-        console.log("openProfile");
+        //console.log("openProfile");
+        editProfile();
     }
     $scope.logout = function () {
         $("#logoutForm").submit();
