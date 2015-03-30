@@ -14,7 +14,7 @@
 
 $(function () {
     //callback handler for form submit
-    $("#profileForm").submit(function (e) {
+    /*$("#profileForm").submit(function (e) {
         var postData = $(this).serializeArray();
         var formURL = $(this).attr("action");
         console.log(formURL);
@@ -29,16 +29,16 @@ $(function () {
             error: function (jqXHR, textStatus, errorThrown) {
                 //if fails      
             }
-        });*/
+        });
         e.preventDefault(); //STOP default action
         //e.unbind(); //unbind. to stop multiple form submit.
-    });
+    });*/
 });
 
 function editProfile()
 {
     //var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-    var wnd = $("#profile").data("kendoWindow");
+    var wnd = $("#profileWindow").data("kendoWindow");
 
     //wnd.content(detailsTemplate(dataItem));
     wnd.center().open();

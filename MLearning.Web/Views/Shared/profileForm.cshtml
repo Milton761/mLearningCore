@@ -41,7 +41,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.passwordt, "Contraseña", new { @class = "control-label col-md-2" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.passwordt)
+                @Html.PasswordFor(model => model.passwordt)
                 @Html.ValidationMessageFor(model => model.passwordt)
             </div>
         </div>
@@ -57,7 +57,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.image_url, "Imagen", new { @class = "control-label col-md-2" })
             <div class="col-md-8">
-                <img width="128" height="128" src="@(Model.image_url)" />
+                <img width="128" height="128" src="@Model.image_url" />
                 @*@Html.EditorFor(model => model.image_url)
                 @Html.ValidationMessageFor(model => model.image_url)*@
             </div>
@@ -69,7 +69,37 @@
         </div>
     </div>
 }
+<script>
+    
 
+    $("#profileForm").submit(function (e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        //console.log(formURL);
+        $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                //data: return data from server
+                if(data.errors)
+                { console.log(data.errors); }
+                var window = $("#profileWindow");
+                if (window) {
+                    console.log(formURL);
+                    window.data("kendoWindow").close();
+                }
+                    
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //if fails      
+            }
+        });
+        e.preventDefault(); //STOP default action
+        //e.unbind(); //unbind. to stop multiple form submit.
+    });
+</script>
 @*<div>
     @Html.ActionLink("Back to List", "Index")
 </div>*@

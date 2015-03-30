@@ -1,4 +1,5 @@
 ﻿
+using Core.Security;
 using Microsoft.Owin;
 using MLearning.Core.Services;
 using MLearning.Web.Singleton;
@@ -28,7 +29,7 @@ namespace MLearning.Web.Controllers
             {
                 return 
             }*/
-            var a = Request.IsAuthenticated;
+            //var a = Request.IsAuthenticated;
             return View();
         }
 
@@ -40,9 +41,18 @@ namespace MLearning.Web.Controllers
         [Authorize]
         public async Task<ActionResult> editUser()
         {
-            if(UserID == default(int)) return PartialView("profileForm");
+            if(UserID == default(int)) return PartialView("profileForm", new User());
             var user = await _mLearningService.GetObjectWithId<User>(UserID);
             return PartialView("profileForm",user);
+        }
+
+        public async Task<ActionResult> updateUser(User u)
+        {
+            u.password = EncryptionService.encrypt(u.passwordt);
+            u.passwordt = null;
+            if (u.id != default(int))
+                await _mLearningService.UpdateObject<User>(u);
+            return Json("Ok!");
         }
 
         public ActionResult About()
