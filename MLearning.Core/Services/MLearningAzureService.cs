@@ -331,6 +331,11 @@ namespace MLearning.Core.Services
             return list;
         }
 
+        public async Task<List<Circle>> GetCircles()
+        {
+            return await _repositoryService.GetAllAsync<Circle>();
+        }
+
 
         public async  Task<List<Institution>> GetInstitutions()
         {

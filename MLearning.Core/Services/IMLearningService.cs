@@ -134,6 +134,8 @@ namespace MLearning.Core.Services
         /// <returns></returns>
         Task<List<Circle>> GetCircles(string startWith);
 
+        Task<List<Circle>> GetCircles();
+
         /// <summary>
         /// List all Institutions
         /// </summary>
