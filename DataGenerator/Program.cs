@@ -38,7 +38,8 @@ namespace DataGenerator
 
             //await LOcomments();
             //await CirclePosts();
-            await LOquizzes();
+            //await LOquizzes();
+            await CreateLearningObjects(951);
 
             Console.ReadKey(true);
             
@@ -95,7 +96,19 @@ namespace DataGenerator
             }
         }
 
-
+        static async Task CreateLearningObjects(int n)
+        {
+            IList<LearningObject> learningObjects = Builder<LearningObject>.CreateListOfSize(n).All().With(x => x.Publisher_id = 1).Build();
+            int i = 0;
+            foreach (var lo in learningObjects)
+            {
+                lo.id = default(int);
+                lo.title = LoremIpsum(5, 20, 1, 1, 1);
+                lo.description = LoremIpsum(5, 20, 1, 5, 1);
+                await _mLearningService.CreateObject<LearningObject>(lo, x => x.id);
+                drawTextProgressBar(++i, n);
+            }
+        }
 
         static string LoremIpsum(int minWords, int maxWords,
     int minSentences, int maxSentences,
@@ -129,6 +142,39 @@ namespace DataGenerator
             }
 
             return result;
+        }
+
+        private static void drawTextProgressBar(int progress, int total)
+        {
+            //draw empty progress bar
+            Console.CursorLeft = 0;
+            Console.Write("["); //start
+            Console.CursorLeft = 32;
+            Console.Write("]"); //end
+            Console.CursorLeft = 1;
+            float onechunk = 30.0f / total;
+
+            //draw filled part
+            int position = 1;
+            for (int i = 0; i < onechunk * progress; i++)
+            {
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.CursorLeft = position++;
+                Console.Write(" ");
+            }
+
+            //draw unfilled part
+            for (int i = position; i <= 31; i++)
+            {
+                Console.BackgroundColor = ConsoleColor.Green;
+                Console.CursorLeft = position++;
+                Console.Write(" ");
+            }
+
+            //draw totals
+            Console.CursorLeft = 35;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write(progress.ToString() + " of " + total.ToString() + "    "); //blanks at the end remove any excess
         }
 
     }

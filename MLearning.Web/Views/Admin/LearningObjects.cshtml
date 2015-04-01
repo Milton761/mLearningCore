@@ -34,7 +34,7 @@
         .HtmlAttributes(new { style = "height:430px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
-        .PageSize(20)
+        .PageSize(50)
 
         .Events(events => events.Error("error_handler"))
         .Model(model =>
