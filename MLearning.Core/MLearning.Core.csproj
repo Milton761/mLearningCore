@@ -41,6 +41,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Classes\Extensions.cs" />
     <Compile Include="Classes\GlobalInfo.cs" />
+    <Compile Include="Classes\DataPage.cs" />
     <Compile Include="Classes\PageParser.cs" />
     <Compile Include="Classes\PassBytes.cs" />
     <Compile Include="Configuration\Constants.cs" />

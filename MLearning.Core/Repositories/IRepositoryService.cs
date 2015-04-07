@@ -47,6 +47,6 @@ namespace Core.Repositories
 
          Task SyncTableUpdates();
 
-         int Count<T>();
+         //int Count<T>();
     }
 }

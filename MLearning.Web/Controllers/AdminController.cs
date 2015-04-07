@@ -144,6 +144,7 @@ namespace MLearning.Web.Controllers
 
         public async Task<ActionResult> Units_read([DataSourceRequest] DataSourceRequest request)
         {
+            //request.Filters
             var data = (await _mLearningService.GetLOsbyOwner()).ToDataSourceResult(request);
             return Json(data, JsonRequestBehavior.AllowGet);
         }

@@ -146,11 +146,6 @@ namespace MLearning.Core.Services
             return circle.id;
         }
     
-        public int CountObjects<T>()
-        {
-            return _repositoryService.Count<T>();
-        }
-
         public async Task<int> CreateObject<T>(T obj, Func<T,int> getId)
         {
             await _repositoryService.InsertAsync<T>(obj);

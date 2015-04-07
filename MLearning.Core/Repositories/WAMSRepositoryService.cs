@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using Core.Classes;
 using MLearning.Core.Configuration;
 using Cirrious.MvvmCross.Plugins.File;
+using MLearning.Core.Classes;
 
 
 
@@ -608,13 +609,6 @@ namespace Core.Repositories
             return list;
         }
 
-
-
-
-
-
-
-
         public void InitLocalSyncTable()
         {
             Assembly myassembly = GetType().GetTypeInfo().Assembly;
@@ -643,17 +637,22 @@ namespace Core.Repositories
       
         }
 
-        public async Task<List<T>> GetPage<T>(Expression<Func<T, bool>> predicate, long skip, long take)
+        public async Task<DataPage<T>> GetPage<T>(Expression<Func<T, bool>> predicate, int skip, int take)
         {
-            MobileService.GetTable<T>().Where(predicate).Skip(skip).Take(take)
+            var query = MobileService.GetTable<T>().Where(predicate).Skip(skip).Take(take).IncludeTotalCount();
+            var results = await query.ToEnumerableAsync();
+            DataPage<T> p = new DataPage<T>();
+            p.totalCount = ((ITotalCountProvider)results).TotalCount;
+            p.data = await query.ToListAsync();
+            return p;
         }
 
-        public async Task<long> Count<T>()
+        /*public async Task<long> Count<T>()
         {
             var query = MobileService.GetTable<T>().Take(1).IncludeTotalCount();
             var results = await query.ToEnumerableAsync();
             return ((ITotalCountProvider)results).TotalCount;
-        }
+        }*/
        
     }
 }
