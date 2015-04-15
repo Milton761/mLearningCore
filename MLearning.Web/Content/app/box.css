@@ -25,14 +25,14 @@ div.box-menu{
 
 
 div.box-menu-contenido{
-    min-height: 400px;  
+    min-height: 400px;
     flex-direction: column;
     align-items: center;
-    display: -webkit-box;      
-    display: -moz-box;        
-    display: -ms-flexbox;      
-    display: -webkit-flex;    
-    display: flex; 
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
 }
 
 div.box-menu-logo{
@@ -77,7 +77,7 @@ div.box-menu-items-contenido{
     display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
     display: -ms-flexbox;      /* TWEENER - IE 10 */
     display: -webkit-flex;     /* NEW - Chrome */
-    display: flex; 
+    display: flex;
 }
 
 div.box-menu-item{
@@ -177,14 +177,14 @@ div.circulo-activo div.circulo{
     background-size: 40px;
 }
 
-div.box-menu-item-contenido{  
+div.box-menu-item-contenido{
     flex-direction: row;
     align-items: center;
     display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
     display: -ms-flexbox;      /* TWEENER - IE 10 */
     display: -webkit-flex;     /* NEW - Chrome */
-    display: flex; 
+    display: flex;
 
 }
 
@@ -310,6 +310,7 @@ div.popup-user-opcion{
     position: absolute;
     visibility: collapse;
     padding-top: 32px;
+    text-align: center;
 
 }
 
@@ -337,10 +338,10 @@ div.box-user-linea{
     border-bottom:  2px solid rgb(176,178,179);
     height: 100%;
     width: 85%;
-   /* display: flex;
+    /* display: flex;
     flex-direction: column;*/
     justify-content: center;
-    
+
     text-align: right;
     text-align: -webkit-right;
     text-align: -moz-right;
@@ -351,7 +352,7 @@ div.box-user-linea>*{
     /*background: yellow;*/
     text-align: center;
     text-align: -webkit-center;
-    text-align: -moz-right;
+    text-align: -moz-center;
     width: 200px;
 }
 
@@ -369,7 +370,7 @@ div.boton-usuario{
     display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
     display: -ms-flexbox;      /* TWEENER - IE 10 */
     display: -webkit-flex;     /* NEW - Chrome */
-    display: flex; 
+    display: flex;
 }
 
 div.boton-usuario>div>img{
@@ -445,19 +446,21 @@ div.home-super-boton{
     border: 2px solid rgb(176,178,179);
     border-top: 0px;
     padding: 20px;
+
     display: flex;
+
     flex-direction: row;
     align-items: center;
     margin-top: 30px;
 }
 
 div.home-super-boton>div{
-    flex: 1;
+    width: 80px;
     padding-left: 10px;
 }
 
 div.home-super-boton>p{
-    flex: 2;
+
     font-size: 1.5em;
     padding-left: 10px;
 }
@@ -505,4 +508,39 @@ div.home-super-boton.circulo_esq{
 
 .popup-link:hover{
     color: dodgerblue;
+}
+
+
+/************************************/
+
+
+div.box-creditos{
+
+    /*position: fixed;*/
+    width: 100%;
+    /*height: 80px;*/
+    text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+}
+
+div.box-creditos-linea{
+    border-top:  2px solid rgb(176,178,179);
+    height: 100%;
+    width: 85%;
+    justify-content: center;
+ 
+    margin-top: 40px;
+}
+
+div.box-creditos-linea > *{
+    text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+}  
+
+
+.box-footer-img {
+    width: 50px;
+    height: 50px;
 }

@@ -37,8 +37,9 @@
     .Sortable()
     .Scrollable()
     .HtmlAttributes(new { style = "height:430px;" })
-    .ToolBar(toolbar => { toolbar.Custom().Text("Crear Unidad").Action("CreateLO", "Publisher");
-    toolbar.Template("<a class='k-button k-button-icontext' onclick='customCommand()' href='#'></span>Cutom Command</a>");
+    .ToolBar(toolbar => { toolbar.Custom().Text("Crear Unidad").Action("createLO", "Publisher");
+    toolbar.Template("<a class='k-button k-button-icontext' href='" + @Url.Action("newLO", new { id = ViewBag.CircleID }) + "'>Crear Unidad</a>" +
+        "<a class='k-button k-button-icontext' onclick='customCommand()' href='#'>Agregar Unidad</a>");
     })
     .DataSource(dataSource => dataSource
         .Ajax()

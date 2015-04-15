@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "View1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="container">
+        <div class="row"><br></div>
+        <div class="row"><br></div>
+        <div class="row"><br></div>
+        <div class='titulo_Prin'>CREAR UNA NUEVA UNIDAD</div>
+        <div class="row"><br></div>
+    </div>
+    <div class="container cont_Principal">
+        <div class="row"><br></div>
+        <div class="row">
+            <div class="col-xs-7">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="nombre"> Titulo de la Unidad</label>
+                        <input ng-model="unidadActual.titulo" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div style="margin-top:10px">
+                                    <label for="nombre"> Tipo:</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-1 col-sm-4">
+                                <div class="radio">
+                                    <input type="radio" ng-model='unidadActual.tipo' value="publico" checked> Publico
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="radio">
+                                    <input type="radio" ng-model='unidadActual.tipo' value="privado"> Privado
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row"><br></div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div style="margin-top:8px">
+                            <label for="nombre"> Etiqueta</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+
+                        <select class="form-control" ng-model="unidadActual.etiqueta" ng-options="etiqueta.name for etiqueta in etiquetas track by etiqueta.id"></select>
+                    </div>
+                </div>
+                <div class="row"><br></div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="nombre"> Descripcion</label>
+                        <textarea class="form-control"
+                                  ng-model="unidadActual.descripcion" type="text"
+                                  rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="row"><br></div>
+            </div>
+            <div class="col-xs-5">
+                <div class="row">
+                    <div class="col-xs-offset-4 col-xs-4 text-center img_cubierta">
+                        <div class="row"><br></div>
+                        <input src="images/029_icon_imagen.png" type="image" ng-model="pagina.loimage" height='25px' width='25px' />
+                        <div class="row"><br></div>
+                        <div class="row">Imagen de Cubierta</div>
+                    </div>
+
+                </div>
+                <div class="row"><br></div>
+                <div class="row">
+                    <div class="col-xs-offset-3 col-xs-6">
+                        <label for="nombre">Opcional</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-offset-3 col-xs-6 text-center img_optional">
+                        <div class="row"><br></div>
+
+                        <div class="row">
+                            <div class="col-xs-offset-1 col-xs-10 text-center img_cubierta">
+                                <div class="row"><br></div>
+                                <input src="images/029_icon_imagen.png" type="image" ng-model="pagina.loimage" height='50px' width='50px' />
+                                <div class="row"><br></div>
+                            </div>
+
+                        </div>
+                        <div class="row"><br></div>
+                        <div class="row">
+                            <div class="col-xs-offset-1 col-xs-2">col1</div>
+                            <div class="col-xs-2">col2</div>
+                            <div class="col-xs-2">col3</div>
+                            <div class="col-xs-2">col4</div>
+                        </div>
+                        <div class="row"><br></div>
+                    </div>
+                </div>
+                <div class="row"><br></div>
+            </div>
+        </div>
+    </div>
+    <div class="row"><br></div>
+</div>
+<div class="container">
+    <div class="row"><br></div>
+    <div class="row">
+        <div class="col-xs-offset-7 col-xs-2  col-sm-offset-8 col-sm-2 col-md-offset-10 col-md-1">
+            <a ng-click="crearUnidad()" href="index.html#/Seccion">
+                <img class="btn_med" src="images/030_btn_crear.png">
+            </a>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-1">
+            <a ng-click="cancelarUnidad()">
+                <img class="btn_med" src="images/031_btn_cancelar.png">
+            </a>
+        </div>
+    </div>
+</div>
+
+
+

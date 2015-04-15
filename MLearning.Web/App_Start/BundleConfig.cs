@@ -31,7 +31,8 @@ namespace MLearning.Web
             bundles.Add(new StyleBundle("~/Content/app").Include(
                       "~/Content/app/animate.css",
                       "~/Content/app/box.css",
-                      "~/Content/app/main.css"));
+                      "~/Content/app/main.css",
+                      "~/Content/app/style.css"));
 
 
             bundles.Add(new StyleBundle("~/Content/kendo").Include(

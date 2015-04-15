@@ -78,7 +78,14 @@ namespace MLearning.Web.Controllers
 
         public ActionResult LearningObjects(int id)
         {
-            CircleID = id;
+            CircleID = ViewBag.CircleID = id;
+            return View();
+        }
+
+        public ActionResult newLO(int id)
+        {
+            CircleID = ViewBag.CircleID = id;
+            
             return View();
         }
 
