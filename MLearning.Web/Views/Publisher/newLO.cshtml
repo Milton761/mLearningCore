@@ -1,8 +1,17 @@
 ﻿
 @{
-    ViewBag.Title = "View1";
+    ViewBag.Title = "Nueva Unidad";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ActiveRole = "PROFESOR";
 }
+
+<script>
+    home = false;
+    contraer_menu();
+    agregarClickItem();
+    //setItemActual('#institucion');
+    hacerHome(false);
+</script>
 
 <div class="container-fluid">
 
@@ -13,7 +22,7 @@
         <div class='titulo_Prin'>CREAR UNA NUEVA UNIDAD</div>
         <div class="row"><br></div>
     </div>
-    <div class="container cont_Principal">
+    <div class="container cont_Principal" ng-controller="unidadController">
         <div class="row"><br></div>
         <div class="row">
             <div class="col-xs-7">
@@ -76,7 +85,7 @@
                 <div class="row">
                     <div class="col-xs-offset-4 col-xs-4 text-center img_cubierta">
                         <div class="row"><br></div>
-                        <input src="images/029_icon_imagen.png" type="image" ng-model="pagina.loimage" height='25px' width='25px' />
+                        <input src="/images/029_icon_imagen.png" type="image" ng-model="pagina.loimage" height='25px' width='25px' />
                         <div class="row"><br></div>
                         <div class="row">Imagen de Cubierta</div>
                     </div>
@@ -95,7 +104,7 @@
                         <div class="row">
                             <div class="col-xs-offset-1 col-xs-10 text-center img_cubierta">
                                 <div class="row"><br></div>
-                                <input src="images/029_icon_imagen.png" type="image" ng-model="pagina.loimage" height='50px' width='50px' />
+                                <input src="/images/029_icon_imagen.png" type="image" ng-model="pagina.loimage" height='50px' width='50px' />
                                 <div class="row"><br></div>
                             </div>
 
@@ -121,12 +130,12 @@
     <div class="row">
         <div class="col-xs-offset-7 col-xs-2  col-sm-offset-8 col-sm-2 col-md-offset-10 col-md-1">
             <a ng-click="crearUnidad()" href="index.html#/Seccion">
-                <img class="btn_med" src="images/030_btn_crear.png">
+                <img class="btn_med" src="/images/030_btn_crear.png">
             </a>
         </div>
         <div class="col-xs-2 col-sm-2 col-md-1">
             <a ng-click="cancelarUnidad()">
-                <img class="btn_med" src="images/031_btn_cancelar.png">
+                <img class="btn_med" src="/images/031_btn_cancelar.png">
             </a>
         </div>
     </div>

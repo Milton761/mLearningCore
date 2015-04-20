@@ -2,7 +2,17 @@
 @{
     ViewBag.Title = "Alumnos del Circulo: " + ViewBag.CircleName;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ActiveRole = "PROFESOR";
 }
+
+
+<script>
+    home = false;
+    contraer_menu();
+    agregarClickItem();
+    //setItemActual('#institucion');
+    hacerHome(false);
+</script>
 
 <h2>Alumnos del Circulo: @ViewBag.CircleName </h2>
 

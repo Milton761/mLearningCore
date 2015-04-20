@@ -58,6 +58,8 @@ angular
 });
 
 
+var mlearningApp = angular.module('mlearningApp');
+
 angular.module('mlearningApp').factory('flickr', function ($resource) {
     return $resource('http://api.flickr.com/services/feeds/photos_public.gne',
                      { format: 'json',

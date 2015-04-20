@@ -30,7 +30,8 @@ namespace MLearning.Web.Controllers
                 return 
             }*/
             //var a = Request.IsAuthenticated;
-            return View();
+            //return View();
+            return RedirectToAction("", "Login");
         }
 
         public ActionResult Index0()

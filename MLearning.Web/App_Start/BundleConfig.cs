@@ -70,7 +70,19 @@ namespace MLearning.Web
                         "~/Scripts/app/controllers/director/profesores.js",
                         "~/Scripts/app/controllers/director/alumnos.js",
                         "~/Scripts/app/controllers/director/circulos.js",
-                        "~/Scripts/app/directives/select-imagen.js"));
+                        "~/Scripts/app/directives/select-imagen.js",
+                        
+                        "~/Scripts/app/pagina/paginaController.js",
+                        "~/Scripts/app/pagina/paginaService.js",
+
+                        "~/Scripts/app/seccion/seccionController.js",
+                        "~/Scripts/app/seccion/seccionService.js",
+
+                        "~/Scripts/app/unidad/unidadController.js",
+                        "~/Scripts/app/unidad/unidadService.js",
+
+                        "~/Scripts/app/examen/examenController.js",
+                        "~/Scripts/app/examen/examenService.js"));
 
             BundleTable.EnableOptimizations = false;           
         }

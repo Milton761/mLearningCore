@@ -136,38 +136,39 @@
     </div>
     @using Microsoft.AspNet.Identity
     <div class="box">
-        @if(Request.IsAuthenticated){
-        <div class="box-user">
-            <div class="box-user-linea">
-                <!--<div class="box-user-linea-body">-->
-                <span>@ViewBag.ActiveRole</span>
-                <div class="boton-usuario">
-                    <div class="popup-user-raiz">
-                        <div class="popup-user-opcion">
-                            <span ng-click="openProfile()" class="popup-link">
-                                <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
-                                Perfil
-                            </span>
-                            @using (Html.BeginForm("LogOff", "Login", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                            { }
-                            <span ng-click="logout()" class="popup-link">
-                                <i class="glyphicon glyphicon-off" aria-hidden="true"></i>
-                                Salir
-                            </span>
-                            
-                        </div>
-                    </div>
-                    <div>
-                        <img src="/images/yeoman.png" class="img-responsive" alt="">
-                    </div>
-                    <span class="popup-user-name">@(User.Identity.GetUserName())</span>
-                    <div class="showPopup cursor-pointer">
-                        <i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i>
-                    </div>
+        @if (Request.IsAuthenticated)
+        {
+            <div class="box-user">
+                <div class="box-user-linea">
+                    <!--<div class="box-user-linea-body">-->
+                    <span>@ViewBag.ActiveRole</span>
+                    <div class="boton-usuario">
+                        <div class="popup-user-raiz">
+                            <div class="popup-user-opcion">
+                                <span ng-click="openProfile()" class="popup-link">
+                                    <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                                    Perfil
+                                </span>
+                                @using (Html.BeginForm("LogOff", "Login", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                { }
+                                <span ng-click="logout()" class="popup-link">
+                                    <i class="glyphicon glyphicon-off" aria-hidden="true"></i>
+                                    Salir
+                                </span>
 
+                            </div>
+                        </div>
+                        <div>
+                            <img src="/images/yeoman.png" class="img-responsive" alt="">
+                        </div>
+                        <span class="popup-user-name">@(User.Identity.GetUserName())</span>
+                        <div class="showPopup cursor-pointer">
+                            <i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </div>
         }
 
 
@@ -175,7 +176,7 @@
             <div class="container-fluid">
                 @RenderBody()
                 <!--<div class="" ng-view="">
-                    
+
                 </div>-->
                 <footer>
                     <p>&copy; @DateTime.Now.Year @DateTime.Now.Hour - My ASP.NET Application</p>
@@ -189,9 +190,9 @@
                     <div class="row">
                         <div class="col-xs-offset-1 col-xs-4" style="">
                             <br>
-                            <img src="images/face.png" class="box-footer-img" alt="">
-                            <img src="images/twitter.png" class="box-footer-img" alt="">
-                            <img src="images/in.png" class="box-footer-img" alt="">
+                            <img src="/images/face.png" class="box-footer-img" alt="">
+                            <img src="/images/twitter.png" class="box-footer-img" alt="">
+                            <img src="/images/in.png" class="box-footer-img" alt="">
                         </div>
                         <div class="col-xs-5" style="padding-top: 22px;">
                             INICIO AYUDA TERMINOS DE USO <br>
@@ -204,17 +205,17 @@
         </div>
 
     </div>
-    
+
     @(Html.Kendo().Window().Name("profileWindow")
     .Title("Perfil")
     .Visible(false)
     .Modal(true)
-    .LoadContentFrom(Url.Action("editUser","Home"))
+    .LoadContentFrom(Url.Action("editUser", "Home"))
     .Draggable(true)
     .Width(500))
 
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("Scripts", required: false)
-    
+
 </body>
 </html>
