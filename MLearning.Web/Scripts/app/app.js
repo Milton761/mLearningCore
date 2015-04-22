@@ -96,6 +96,10 @@ angular.module('mlearningApp')
     $scope.logout = function () {
         $("#logoutForm").submit();
     }
+
+    $scope.crearUnidad = function () {
+        console.log('crear Unidad 222', $scope.unidadActual);
+    }
 });
 
 

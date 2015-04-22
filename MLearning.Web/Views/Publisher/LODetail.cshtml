@@ -1,0 +1,55 @@
+﻿@model MLearningDB.LearningObject
+
+@{
+    ViewBag.Title = "LODetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>LODetail</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <a class="btn btn-primary " role="button" href="index.html#/">
+                regresar a Unidad
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            UNIDAD: {{unidadActual.titulo}}
+        </div>
+    </div>
+
+
+
+
+    <div class="row cont_Principal">
+        <div class="col-xs-12">
+            <se-directive> </se-directive>
+        </div>
+    </div>
+    <div class="row"><br></div>
+
+    <div class="row cont_Principal">
+        <div class="row"><br></div>
+        <div class="col-sm-4">
+            {{aviso}}
+        </div>
+
+        <div class="col-sm-offset-8">
+            <a ng-click="addSeccion({})">
+                <img src="images/032_btn_nuevasesion.png" class="btn_gra">
+            </a>
+
+
+            <a ng-click="nuevoExamen()" href="index.html#/Examen">
+                <img class="btn_gra" src="images/033_btn_nuevoquiz.png">
+            </a>
+        </div>
+        <div class="row"><br></div>
+    </div>
+    <div class="row"><br></div>
+</div>
+
+<br>

@@ -57,6 +57,7 @@ namespace MLearning.Web
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                         "~/Scripts/app/app.js",
+                        "~/Scripts/app/globalService.js",
                         "~/Scripts/app/controllers/main.js",
                         "~/Scripts/app/controllers/about.js",
                         "~/Scripts/app/controllers/admin/instituciones.js",

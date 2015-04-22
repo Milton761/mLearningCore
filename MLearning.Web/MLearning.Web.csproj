@@ -382,6 +382,7 @@
     <Content Include="Scripts\app\directives\slides-editor.js" />
     <Content Include="Scripts\app\examen\examenController.js" />
     <Content Include="Scripts\app\examen\examenService.js" />
+    <Content Include="Scripts\app\globalService.js" />
     <Content Include="Scripts\app\pagina\paginaController.js" />
     <Content Include="Scripts\app\pagina\paginaService.js" />
     <Content Include="Scripts\app\seccion\seccionController.js" />
@@ -1989,6 +1990,7 @@
     <Content Include="Views\Home\Index0.cshtml" />
     <Content Include="Views\Shared\profileForm.cshtml" />
     <Content Include="Views\Publisher\newLO.cshtml" />
+    <Content Include="Views\Publisher\LODetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controllers\fonts\glyphicons-halflings-regular.woff" />

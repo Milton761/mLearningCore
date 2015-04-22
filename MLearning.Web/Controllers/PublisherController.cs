@@ -95,6 +95,183 @@ namespace MLearning.Web.Controllers
             return Json(los.ToDataSourceResult(request));
         }
 
+        public ActionResult LODetail(int id)
+        {
+            LOID = ViewBag.LOID = id;
+
+            return View();
+        }
+
+
+        //Not used
+        //Upload controller used instead
+        [AcceptVerbs(HttpVerbs.Post)]
+        async public Task<ActionResult> CreateLO(LearningObject obj)
+        {
+
+            try
+            {
+
+
+                //Create LO
+
+                obj.created_at = DateTime.UtcNow;
+                obj.updated_at = DateTime.UtcNow;
+
+                obj.Publisher_id = PublisherID;
+                obj.url_cover = "NULL";
+
+                int LO_id = await _mLearningService.CreateObject<LearningObject>(obj, lo => lo.id);
+
+
+
+                return Json(new { errors = new String[] { }, url = Url.Action("LODetail", new { id = LO_id }) });
+                //return RedirectToAction("Index", new { id = UserID });
+
+            }
+            catch (Exception e)
+            {
+                return Json(new {errors = new String[]{e.Message} });
+            }
+
+
+        }
+
+        [HttpPost]
+        async public Task<ActionResult> Upload(HttpPostedFileBase file, HttpPostedFileBase bg_file, LearningObject obj)
+        {
+
+            string cover_url = null;
+            string bg_url = null;
+            if (file != null && file.ContentLength > 0)
+            {
+
+
+                using (MemoryStream target = new MemoryStream())
+                {
+
+                    file.InputStream.CopyTo(target);
+
+                    cover_url = await _mLearningService.UploadResource(target, null);
+                }
+
+
+            }
+
+            if (bg_file != null && bg_file.ContentLength > 0)
+            {
+
+
+                using (MemoryStream target = new MemoryStream())
+                {
+                    bg_file.InputStream.CopyTo(target);
+
+                    bg_url = await _mLearningService.UploadResource(target, null);
+                }
+
+
+            }
+
+
+            obj.created_at = DateTime.UtcNow;
+            obj.updated_at = DateTime.UtcNow;
+            //obj.url_cover = cover_url;
+            //obj.url_background = bg_url;
+
+            obj.Publisher_id = PublisherID;
+
+
+            int LO_id = await _mLearningService.CreateObject<LearningObject>(obj, lo => lo.id);
+
+            return RedirectToAction("Index", new { id = UserID });
+        }
+
+
+        [Authorize(Roles = Constants.PublisherRole)]
+        async public Task<ActionResult> EditLO(int? lo_id)
+        {
+
+            if (lo_id != null)
+            {
+                int nonull = lo_id ?? default(int);
+
+                LOID = nonull;
+            }
+            else
+            {
+                if (LOID == default(int))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+
+            var lo = await _mLearningService.GetObjectWithId<LearningObject>(LOID);
+
+            var pages = await _mLearningService.GetPagesByLO(LOID);
+
+            List<Quiz> quizzes = await _mLearningService.GetQuizzesByLO(LOID);
+
+
+            return View("LOEdit", new LearningObjectPageViewModel { LO = lo, Pages = pages, Quizzes = quizzes });
+
+
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public async Task<ActionResult> EditLO(int lo_id, LearningObjectPageViewModel vm)
+        {
+            try
+            {
+                LearningObject obj = vm.LO;
+
+
+                //Update DB
+                await _mLearningService.UpdateObject<LearningObject>(obj);
+
+
+                return RedirectToAction("Index", new { id = UserID });
+
+            }
+            catch
+            {
+                return RedirectToAction("Index", new { id = UserID });
+            }
+
+        }
+
+        [Authorize(Roles = Constants.PublisherRole)]
+        public async Task<ActionResult> DeleteLO(int lo_id)
+        {
+            var circle = await _mLearningService.GetObjectWithId<LearningObject>(lo_id);
+
+
+
+            return View("LODelete", circle);
+        }
+
+        //
+        // POST: /Default1/Delete/5
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult DeleteLO(int lo_id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+
+                _mLearningService.DeleteObject<LearningObject>(new LearningObject { id = lo_id });
+
+
+
+                return RedirectToAction("Index", new { id = UserID });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", new { id = UserID });
+            }
+        }
+
 /*********************************************************************************************************/
 #region OLD cruds
         // GET: /Publisher/CreateCircle
@@ -222,173 +399,6 @@ namespace MLearning.Web.Controllers
 
 
             return View("LOCreate");
-        }
-
-
-
-        //Not used
-        //Upload controller used instead
-        [AcceptVerbs(HttpVerbs.Post)]
-        async public Task<ActionResult> CreateLO(LearningObject obj)
-        {
-            try
-            {
-
-
-                //Create LO
-              
-                obj.created_at = DateTime.UtcNow;
-                obj.updated_at = DateTime.UtcNow;
-
-                obj.Publisher_id = PublisherID;
-
-              
-               int LO_id =  await _mLearningService.CreateObject<LearningObject>(obj,lo=>lo.id);
-
-
-              
-
-                return RedirectToAction("Index", new { id = UserID });
-            }
-            catch
-            {
-                return RedirectToAction("Index", new { id = UserID });
-            }
-        }
-
-        [HttpPost]
-        async public Task<ActionResult> Upload(HttpPostedFileBase file, HttpPostedFileBase bg_file, LearningObject obj)
-        {
-
-            string cover_url = null;
-            string bg_url = null;
-            if (file != null && file.ContentLength > 0)
-            {
-
-
-                using (MemoryStream target = new MemoryStream())
-                {
-
-                    file.InputStream.CopyTo(target);
-
-                    cover_url = await _mLearningService.UploadResource(target, null);
-                }
-
-              
-            }
-
-            if (bg_file != null && bg_file.ContentLength > 0)
-            {
-
-
-                using (MemoryStream target = new MemoryStream())
-                {
-                    bg_file.InputStream.CopyTo(target);
-
-                    bg_url = await _mLearningService.UploadResource(target, null);
-                }
-
-
-            }
-
-
-            obj.created_at = DateTime.UtcNow;
-            obj.updated_at = DateTime.UtcNow;
-            //obj.url_cover = cover_url;
-            //obj.url_background = bg_url;
-
-            obj.Publisher_id = PublisherID;
-
-
-            int LO_id = await _mLearningService.CreateObject<LearningObject>(obj, lo => lo.id);
-
-            return RedirectToAction("Index", new { id = UserID });
-        }
-
-
-         [Authorize(Roles = Constants.PublisherRole)]
-        async public Task<ActionResult> EditLO(int? lo_id)
-        {
-
-            if (lo_id != null)
-            {
-                int nonull = lo_id??default(int);
-
-                LOID = nonull;
-            }
-            else
-            {
-                if (LOID == default(int))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
-
-            var lo = await _mLearningService.GetObjectWithId<LearningObject>(LOID);
-
-            var pages = await _mLearningService.GetPagesByLO(LOID);
-
-            List<Quiz> quizzes = await _mLearningService.GetQuizzesByLO(LOID);
-
-           
-            return View("LOEdit",  new LearningObjectPageViewModel { LO = lo, Pages = pages, Quizzes = quizzes });
-
-
-        }
-
-        [AcceptVerbs(HttpVerbs.Post)]
-         public async Task<ActionResult> EditLO(int lo_id, LearningObjectPageViewModel vm)
-        {
-            try
-            {
-                LearningObject obj = vm.LO;
-
-
-                //Update DB
-                await _mLearningService.UpdateObject<LearningObject>(obj);
-
-
-                return RedirectToAction("Index", new { id = UserID });
-
-            }
-            catch
-            {
-                return RedirectToAction("Index", new { id = UserID });
-            }
-
-        }
-
-         [Authorize(Roles = Constants.PublisherRole)]
-        public async Task<ActionResult> DeleteLO(int lo_id)
-        {
-            var circle = await _mLearningService.GetObjectWithId<LearningObject>(lo_id);
-
-
-
-            return View("LODelete", circle);
-        }
-
-        //
-        // POST: /Default1/Delete/5
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult DeleteLO(int lo_id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-
-                _mLearningService.DeleteObject<LearningObject>(new LearningObject { id = lo_id });
-
-
-
-                return RedirectToAction("Index", new { id = UserID });
-            }
-            catch (Exception )
-            {
-                return RedirectToAction("Index", new { id = UserID });
-            }
         }
 
          [Authorize(Roles = Constants.PublisherRole)]
