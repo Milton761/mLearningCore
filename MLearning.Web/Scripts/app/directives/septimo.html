@@ -1,0 +1,60 @@
+<div class="row"><br></div>
+       
+<div class="row cont_Principal padding_text">
+           
+    <div class="col-xs-12">
+        <div class="row padding_text"> 
+           
+            <div class="col-xs-5">
+               
+                <div class="row  padding_text">
+
+                    <div class="col-xs-12">
+                        <input ng-model="pagina.lotitle" class="form-control" type="text" placeholder="Titulo (Opcional)">
+                    </div> 
+                </div> 
+                
+                <div class="row padding_text">
+                    <div class="col-xs-12">
+                        <input ng-model="pagina.lovideo" class="form-control" type="text" placeholder="enlace de video (Youtube o vimeo)">
+                    </div> 
+                </div>
+               
+               
+               
+                <div class="row  padding_text">
+
+                    <div class=" col-xs-12">
+
+                        <textarea class="form-control"
+                                  ng-model="pagina.loparagraph" type="text"
+                                  placeholder="Texto"  rows="3">
+                        </textarea>
+
+                    </div> 
+                </div>  
+            </div>
+            <div class="col-xs-5">
+                <div class="row padding_text">                     
+                    <div class="col-xs-offset-2 col-xs-8 text-center img_cubierta" > 
+                        <div class="row"><br></div>   
+                        <input  src="images/029_icon_imagen.png" type="image" ng-model="pagina.loimage" height='80px' width = '80px'/>
+                        <div class="row"><br></div>
+                        <div class="row">Video</div> 
+                    </div> 
+
+
+                </div>
+            </div>
+            
+            <div class="col-xs-2 padding_eliminar" >
+                <a href="" ng-click="loslide.splice($index,1); ">
+                    <span class="glyphicon  glyphicon-remove" aria-hidden="true"></span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="row"><br></div>
+
+    </div>
+</div>

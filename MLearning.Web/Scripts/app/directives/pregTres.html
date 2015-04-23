@@ -1,0 +1,109 @@
+
+
+
+
+<div class="row"><br></div>
+<div class="row cont_Principal padding_text">
+    <div class="col-xs-10 padding_text">
+
+
+        <div class="row">
+
+            <div class="col-xs-12">
+                <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Titulo de la pregunta">
+            </div> 
+        </div> 
+
+
+
+        <div class="row padding_text">
+
+            <div class="col-xs-12">
+
+                <textarea class="form-control"
+                          ng-model="examen.loparagraph" type="text"
+                          placeholder="Texto"  rows="4">
+                </textarea>
+
+            </div> 
+        </div> 
+        <div class="row"><br></div> 
+
+        <div class="row">
+            <div class="col-xs-5">
+                <textarea class="form-control"
+                          ng-model="examen.lodrag" type="text"
+                          placeholder="Texto"  rows="6">
+                </textarea>
+            </div>
+            <div class="col-xs-7">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label > tipo de Respuesta</label>
+                    </div>    
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label for="">Alternativas</label>
+                    </div>  
+                    <div class="col-xs-3">
+                        numbers
+
+                    </div>
+                    <div class="col-xs-4">
+
+
+                        <input type="text" ng-model = 'numero'  ng-enter='crearRespuestas({num:numero})' placeholder='N° respuestas'  ng-blur="numero='' "   class='inputItem' >
+                    </div>   
+                </div>
+                <div class="row"><br></div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="">Respuesta Correctas</label>
+
+                    </div>    
+                </div>
+                <div class="row" >
+
+
+                    <ul ng-repeat = "item in respuestas" class='animate-list'>
+                        <div class="row">
+                            <div class="col-xs-offset-1 col-xs-1">
+                                <div class="radio">
+                                    <input  type="radio" ng-model='unidadActual.tipo' value="{{item}}" > 
+
+                                </div>
+                            </div>  
+                            <div class="col-xs-5">
+                                <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Answer">
+                            </div>
+                            <br>
+                        </div>
+                    </ul>
+
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+        <div class="row"><br></div> 
+    </div>
+
+
+
+
+    <div class="col-xs-2 padding_eliminar" >
+        <a href="" ng-click="examenes.splice($index,1); ">
+            <span class="glyphicon  glyphicon-remove" aria-hidden="true"></span>
+        </a>
+    </div>
+</div>
+
+
+
+

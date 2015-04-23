@@ -73,7 +73,7 @@ angular.module('mlearningApp').factory('flickr', function ($resource) {
 angular.module('mlearningApp')
     .controller('indexCtrl', function ($scope,$location,administradorService,flickr) {
 
-    $scope.mensaje = "EDuTic";
+    $scope.mensaje = "MLearning";
     $scope.showMenu = true;
     $scope.items = [
         /*{codigo: 0},

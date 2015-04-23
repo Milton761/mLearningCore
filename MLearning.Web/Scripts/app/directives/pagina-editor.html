@@ -1,0 +1,91 @@
+
+
+
+   
+   
+   
+   
+    <div class="row" >
+        <div class="col-xs-12">
+            <div ng-repeat="pagina in loslide track by $index"  ng-switch on="pagina.lotype" class='animate-list' >
+                <pg-slide ng-switch-when='0' tipo="cero">  </pg-slide>
+                <pg-slide ng-switch-when='1' tipo="primero">  </pg-slide>
+                <pg-slide ng-switch-when='2' tipo="segundo">  </pg-slide>
+                <pg-slide ng-switch-when='3' tipo="tercero">  </pg-slide>
+                <pg-slide ng-switch-when='4' tipo="cuarto">  </pg-slide>
+                <pg-slide ng-switch-when='5' tipo="quinto">  </pg-slide>
+                <pg-slide ng-switch-when='6' tipo="sexto">  </pg-slide>
+                <pg-slide ng-switch-when='7' tipo="septimo">  </pg-slide>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" >
+        <div class="col-xs-offset-3 col-xs-1 col-md-offset-4 col-md-1  btns_pag">
+           
+            <a  ng-click = "addPagina({lotype:'1'})">
+                <img class=" btn_peq" src="images/036_btn_tex_e_imag.png" >
+            </a>
+        
+
+        
+            <a  ng-click = "addPagina({lotype:'2'})">  
+                <img class=" btn_peq" src="images/037_btn_tex.png" >
+            </a>
+        
+
+        
+            <a  ng-click = "addPagina({lotype:'3'})"> 
+                <img class=" btn_peq" src="images/038_btn_list.png" >
+            </a>
+        
+
+       
+            <a   ng-click = "addPagina({lotype:'4'})">
+                <img class=" btn_peq" src="images/039_btn_column.png" >
+            </a>
+        
+
+        
+            <a   ng-click = "addPagina({lotype:'5'})">
+                <img class=" btn_peq" src="images/040_btn_quote.png" >
+            </a>
+       
+
+        
+            <a  ng-click = "addPagina({lotype:'6'})">
+                <img class=" btn_peq" src="images/041_btn_image.png" >
+            </a>
+       
+        
+  
+            <a  ng-click = "addPagina({lotype:'7'})">
+                <img class=" btn_peq" src="images/042_btn_video.png" >
+            </a>
+        </div>
+    </div>
+<div class="row"><br></div>
+    <div class="row">
+        <div class="col-xs-offset-8 col-xs-2 col-md-offset-10 col-md-1 ">
+           
+            <a   ng-click="guardarPagina()" href=""  >
+                <img class='btn_med'  src="images/035_btn_guardar.png" >
+               
+            </a>
+           </div>
+        <div class="col-xs-2 col-md-1">
+                       <a ng-click="cancelarPagina()" href="">
+
+                           <img class='btn_med' src="images/031_btn_cancelar.png" >
+            </a>
+        </div>
+    </div>
+    
+
+
+
+
+
+
+
+

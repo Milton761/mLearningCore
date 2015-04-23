@@ -1,0 +1,74 @@
+
+
+
+
+
+
+
+<div class="row" >
+    <div class="col-xs-12">
+        <div ng-repeat="examen in examenes track by $index"  ng-switch on="examen.lotype" class='animate-list' >
+            <ex-slide ng-switch-when='0' tipo="pregCero">  </ex-slide>
+            <ex-slide ng-switch-when='1' tipo="pregUno">  </ex-slide>
+            <ex-slide ng-switch-when='2' tipo="pregDos">  </ex-slide>
+            <ex-slide ng-switch-when='3' tipo="pregTres">  </ex-slide>
+            <ex-slide ng-switch-when='4' tipo="pregCuatro">  </ex-slide>
+            
+        </div>
+    </div>
+</div>
+
+<div class="row" >
+    <div class="col-xs-offset-3 col-xs-1 col-md-offset-4 col-md-1  btns_pag">
+
+        <a  ng-click = "addExamen({lotype:'1'})">
+            <img class=" btn_peq" src="images/045_btn_001quiz.png" >
+        </a>
+
+
+
+        <a  ng-click = "addExamen({lotype:'2'})">  
+            <img class=" btn_peq" src="images/046_btn_002quiz.png" >
+        </a>
+
+
+
+        <a  ng-click = "addExamen({lotype:'3'})"> 
+            <img class=" btn_peq" src="images/047_btn_003quiz.png" >
+        </a>
+
+
+
+        <a   ng-click = "addExamen({lotype:'4'})">
+            <img class=" btn_peq" src="images/048_btn_004quiz.png" >
+        </a>
+
+
+
+    </div>
+</div>
+<div class="row"><br></div>
+<div class="row">
+    <div class="col-xs-offset-8 col-xs-2 col-md-offset-10 col-md-1 ">
+
+        <a   ng-click="guardarExamen()" href=""  >
+            <img class='btn_med'  src="images/035_btn_guardar.png" >
+
+        </a>
+    </div>
+    <div class="col-xs-2 col-md-1">
+        <a ng-click="cancelarExamen()" href="">
+
+            <img class='btn_med' src="images/031_btn_cancelar.png" >
+        </a>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

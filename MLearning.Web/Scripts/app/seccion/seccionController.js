@@ -52,11 +52,11 @@ mlearningApp.controller('seccionController', function($scope,globales) {
     
 }).directive('seDirective', function () {
    return {
-        templateUrl: '/views/directives/seccion-editor.html'        
+        templateUrl: '/Scripts/app/directives/seccion-editor.html'        
     };
 }).directive('slSeccion', function () {
     return {
-         templateUrl: '/views/directives/seccionDirective.html' 
+        templateUrl: '/Scripts/app/directives/seccionDirective.html'
       
     };
 });

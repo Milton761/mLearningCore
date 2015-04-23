@@ -215,6 +215,11 @@
     <Compile Include="Models\QuizModel.cs" />
     <Compile Include="Models\ManageCircleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Singleton\ServiceManager.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -248,12 +253,16 @@
     <Content Include="Content\images\unidades-icon.png" />
     <Content Include="Content\images\unidad_esquina.png" />
     <Content Include="Content\images\yeoman.png" />
+    <Content Include="favicon.ico" />
     <Content Include="images\001_editar_seccion.png" />
     <Content Include="images\001_eliminar_seccion.png" />
     <Content Include="images\001_ver_seccion.png" />
     <Content Include="images\002_editar_pagina.png" />
     <Content Include="images\002_eliminar_pagina.png" />
     <Content Include="images\002_ver_pagina.png" />
+    <Content Include="images\003-CITEC-LOGO.png" />
+    <Content Include="images\003-CONCYTEC-LOGO.png" />
+    <Content Include="images\003-FONDECYT-LOGO.png" />
     <Content Include="images\003_editar_quiz.png" />
     <Content Include="images\003_eliminar_quiz.png" />
     <Content Include="images\003_ver_quiz.png" />
@@ -750,7 +759,6 @@
     <Content Include="images\orderedList9.png" />
     <Content Include="images\person.png" />
     <Content Include="Content\style.css" />
-    <Content Include="favicon.ico" />
     <Content Include="Controllers\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -2005,9 +2013,18 @@
       <Name>MLearning.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

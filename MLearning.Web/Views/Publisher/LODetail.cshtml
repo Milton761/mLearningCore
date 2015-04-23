@@ -5,6 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script>
+    home = false;
+    contraer_menu();
+    agregarClickItem();
+    //setItemActual('#institucion');
+    hacerHome(false);
+    var saveUnitURL = '@Url.Action("CreateLO", "Publisher")';
+</script>
+
 <h2>LODetail</h2>
 
 <div class="container">
@@ -39,12 +48,12 @@
 
         <div class="col-sm-offset-8">
             <a ng-click="addSeccion({})">
-                <img src="images/032_btn_nuevasesion.png" class="btn_gra">
+                <img src="/images/032_btn_nuevasesion.png" class="btn_gra">
             </a>
 
 
             <a ng-click="nuevoExamen()" href="index.html#/Examen">
-                <img class="btn_gra" src="images/033_btn_nuevoquiz.png">
+                <img class="btn_gra" src="/images/033_btn_nuevoquiz.png">
             </a>
         </div>
         <div class="row"><br></div>
