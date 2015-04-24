@@ -1,4 +1,4 @@
-<div class="container" ng-init = "expandido= false" >
+<div class="container" ng-init = "expandido= true" >
     <div class="row"><br></div>
     <div class="row">
         <div class="col-xs-1 cont_icon">
@@ -18,9 +18,7 @@
             <a ng-click = "visualizarSeccion()">
                 <img class="btn_peq img-responsive" src="/images/001_ver_seccion.png" >
             </a>
-            
-           
-       
+
             <a ng-click = "editarSeccion()">
                 <img class="btn_peq img-responsive" src="/images/001_editar_seccion.png" >
             </a>
@@ -37,7 +35,7 @@
 
     <div class="row" ng-show = 'expandido'>
         <div class="col-xs-offset-8 col-xs-2">
-            <a ng-click="nuevaPagina(seccion)" href="index.html#/Pagina"  >
+            <a ng-click="nuevaPagina(seccion)" href="/Page"  >
                 <img class= "btn_gra" src="/images/034_btn_nuevapagina.png" >
             </a>
         </div>

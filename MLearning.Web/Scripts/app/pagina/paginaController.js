@@ -47,7 +47,7 @@ mlearningApp.controller('paginaController', function ($scope,globales) {
 mlearningApp.directive('pgEditor', function () {
     return {
         scope: true,
-        templateUrl: 'views/directives/pagina-editor.html',
+        templateUrl: '/Scripts/app/directives/pagina-editor.html',
         link: function (scope, element, attrs) {
             //element.text('this is the slidesEditor directive');
         },
@@ -63,7 +63,7 @@ mlearningApp.directive('pgSlide', function () {
         scope: true,
         templateUrl: function (element, attrs) {
             var tipo = attrs.tipo || 'pagina-slide';
-            return 'views/directives/' + tipo + '.html';
+            return '/Scripts/app/directives/' + tipo + '.html';
         },
         link: function (scope, element, attrs) {
             //console.log('#',attrs);

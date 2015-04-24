@@ -1,0 +1,25 @@
+﻿@model MLearning.Core.Entities.Page
+
+@{
+    ViewBag.Title = "PageDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PageDetail</h2>
+
+<div class="container" ng-controller="paginaController">
+    <div class="row"><br></div>
+    <div class="row"><br></div>
+    <div class="row">
+        <div class="col-xs-8">
+            UNIDAD:{{unidadActual.titulo}}>{{seccionActual.tituloSeccion}}
+        </div>
+    </div>
+
+    <div class="row"><br></div>
+    <div class="row">
+        <div class="col-xs-12">
+            <pg-editor></pg-editor>
+        </div>
+    </div>
+</div>

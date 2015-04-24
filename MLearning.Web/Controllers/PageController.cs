@@ -37,16 +37,19 @@ namespace MLearning.Web.Controllers
         }
      
 
+
+        //public ActionResult Details()
+
    
         // GET: /Page/Create
 
         //
 
-        [Authorize(Roles = Constants.PublisherRole)]
-         async public Task<ActionResult> Index(int? id)
+        //[Authorize(Roles = Constants.PublisherRole)]
+         public ActionResult Index(int? id)
          {
-
-             return RedirectToAction("EditLO", "Publisher");
+             return View();
+             //return RedirectToAction("EditLO", "Publisher");
          
          }
 

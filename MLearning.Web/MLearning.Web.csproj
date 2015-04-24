@@ -2019,6 +2019,7 @@
     <Content Include="Views\Shared\profileForm.cshtml" />
     <Content Include="Views\Publisher\newLO.cshtml" />
     <Content Include="Views\Publisher\LODetail.cshtml" />
+    <Content Include="Views\Page\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controllers\fonts\glyphicons-halflings-regular.woff" />
