@@ -12,7 +12,7 @@
         </div>
 
         <div class="col-xs-7">
-            <input ng-model="seccion.tituloSeccion" class="form-control" type="text" placeholder="Titulo de la Seccion">
+            <input ng-model="seccion.name" class="form-control" type="text" placeholder="Titulo de la Seccion">
         </div>
         <div class="col-xs-4 cont_icon ">
             <a ng-click = "visualizarSeccion()">
@@ -35,7 +35,7 @@
 
     <div class="row" ng-show = 'expandido'>
         <div class="col-xs-offset-8 col-xs-2">
-            <a ng-click="nuevaPagina(seccion)" href="/Page"  >
+            <a ng-click="nuevaPagina(seccion)" href="#"  >
                 <img class= "btn_gra" src="/images/034_btn_nuevapagina.png" >
             </a>
         </div>

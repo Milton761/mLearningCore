@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using MLearning.Core.Entities;
 
 namespace MLearning.Web.Controllers
 {
@@ -95,11 +96,12 @@ namespace MLearning.Web.Controllers
             return Json(los.ToDataSourceResult(request));
         }
 
-        public ActionResult LODetail(int id)
+        public async Task<ActionResult> LODetail(int id)
         {
             LOID = ViewBag.LOID = id;
-
-            return View();
+            LearningObject model = await _mLearningService.GetObjectWithId<LearningObject>(LOID);
+                       
+            return View(model);
         }
 
 
@@ -108,13 +110,9 @@ namespace MLearning.Web.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         async public Task<ActionResult> CreateLO(LearningObject obj)
         {
-
             try
             {
-
-
                 //Create LO
-
                 obj.created_at = DateTime.UtcNow;
                 obj.updated_at = DateTime.UtcNow;
 
@@ -135,6 +133,24 @@ namespace MLearning.Web.Controllers
             }
 
 
+        }
+
+
+        async public Task<ActionResult> createLOSection(LOsection data)
+        {
+            String[] _errors;
+            int? id = null;
+            try
+            {
+                id = await _mLearningService.CreateObject<LOsection>(data, o => o.id);
+                _errors = new String[] { };
+            }
+            catch(Exception e)
+            {
+                _errors = new String[] { e.Message };
+            }
+
+            return Json(new { errors = _errors, result_id = id });
         }
 
         [HttpPost]

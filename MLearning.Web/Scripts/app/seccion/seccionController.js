@@ -5,7 +5,7 @@ mlearningApp.controller('seccionController', function($scope,globales) {
     $scope.unidadActual = null;
     
     $scope.getUnidad = function () {
-        $scope.unidadActual = globales.get('unidadActual');
+        $scope.unidadActual = currentLO;
         console.log('unidadActual :::',$scope.unidadActual);
     };
     
@@ -39,8 +39,27 @@ mlearningApp.controller('seccionController', function($scope,globales) {
     
     //es para poder guardar el seccion actual  
     $scope.nuevaPagina = function (data) {
-     console.log('nueva Pagina************* ',data);
-     globales.save('seccionActual',data);
+     //console.log('nueva Pagina************* ',data);
+        //globales.save('seccionActual',data);
+        data.LO_id = $scope.unidadActual.id;
+        data.id = 0;
+        $.ajax(
+        {
+            url: saveSectionURL,
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            success: function (data, textStatus, jqXHR) {
+                console.log(data);
+                if (data.errors.length == 0) {
+                    $scope.redireccionar(data.url);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+            }
+        });
+
     };
     
     

@@ -1,6 +1,9 @@
 ﻿@model MLearningDB.LearningObject
 
+@using Newtonsoft.Json
+
 @{
+    
     ViewBag.Title = "LODetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,7 +14,8 @@
     agregarClickItem();
     //setItemActual('#institucion');
     hacerHome(false);
-    var saveUnitURL = '@Url.Action("CreateLO", "Publisher")';
+    var saveSectionURL = '@Url.Action("CreateLOsection", "Publisher")';
+    var currentLO = @(Html.Raw(JsonConvert.SerializeObject(Model)))
 </script>
 
 <h2>LODetail</h2>
@@ -26,7 +30,7 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            UNIDAD: {{unidadActual.titulo}}
+            UNIDAD: {{unidadActual.title}}
         </div>
     </div>
 
