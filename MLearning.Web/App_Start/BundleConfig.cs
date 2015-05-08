@@ -12,7 +12,7 @@ namespace MLearning.Web
                         "~/Scripts/jquery-{version}.js"));*/
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/kendo/2014.3.1411/jquery.min.js"));
+                        "~/Scripts/kendo/2015.1.429/jquery.min.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -36,17 +36,17 @@ namespace MLearning.Web
 
 
             bundles.Add(new StyleBundle("~/Content/kendo").Include(
-                "~/Content/kendo/2014.3.1411/kendo.common.min.css",
-	            "~/Content/kendo/2014.3.1411/kendo.mobile.all.min.css",
-	            "~/Content/kendo/2014.3.1411/kendo.dataviz.min.css",
-	            "~/Content/kendo/2014.3.1411/kendo.metro.min.css",
-	            "~/Content/kendo/2014.3.1411/kendo.dataviz.default.min.css"));
+                "~/Content/kendo/2015.1.429/kendo.common.min.css",
+                "~/Content/kendo/2015.1.429/kendo.mobile.all.min.css",
+                "~/Content/kendo/2015.1.429/kendo.dataviz.min.css",
+                "~/Content/kendo/2015.1.429/kendo.metro.min.css",
+                "~/Content/kendo/2015.1.429/kendo.dataviz.default.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
-                "~/Scripts/kendo/2014.3.1411/jquery.min.js",
-                "~/Scripts/kendo/2014.3.1411/jszip.min.js",
-                "~/Scripts/kendo/2014.3.1411/kendo.all.min.js",
-                "~/Scripts/kendo/2014.3.1411/kendo.aspnetmvc.min.js",
+                "~/Scripts/kendo/2015.1.429/jquery.min.js",
+                "~/Scripts/kendo/2015.1.429/jszip.min.js",
+                "~/Scripts/kendo/2015.1.429/kendo.all.min.js",
+                "~/Scripts/kendo/2015.1.429/kendo.aspnetmvc.min.js",
                 "~/Scripts/kendo.modernizr.custom.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
