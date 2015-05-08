@@ -189,6 +189,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ML\" />
+    <Folder Include="Views\Resources\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\PublisherController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
+    <Compile Include="Controllers\ResourcesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1923,7 +1925,7 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Home\Index0.cshtml" />
     <Content Include="Views\Shared\profileForm.cshtml" />
-    <Content Include="Views\Publisher\newLO.cshtml" />
+    <Content Include="Views\Publisher\LO.cshtml" />
     <Content Include="Views\Publisher\LODetail.cshtml" />
     <Content Include="Views\Page\Index.cshtml" />
     <Content Include="Scripts\kendo\2015.1.429\jquery.min.map" />

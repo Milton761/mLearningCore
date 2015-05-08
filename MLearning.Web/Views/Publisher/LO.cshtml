@@ -1,4 +1,8 @@
-﻿
+﻿@model MLearningDB.LearningObject
+
+@using Newtonsoft.Json
+
+
 @{
     ViewBag.Title = "Nueva Unidad";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,6 +16,13 @@
     //setItemActual('#institucion');
     hacerHome(false);
     var saveUnitURL = '@Url.Action("CreateLO", "Publisher")';
+    @if (ViewBag.LOID != null)
+    {
+<text>
+    var currentLO = @Html.Raw(JsonConvert.SerializeObject(Model));
+</text>
+    }
+
 </script>
 <div ng-controller="unidadController">
 @using (Html.BeginForm("CreateLO", "Publisher", FormMethod.Post, new { id = "unitForm" }))
@@ -34,7 +45,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <label for="nombre"> Titulo de la Unidad</label>
-                            <input ng-model="unidadActual.title" class="form-control" type="text">
+                            <input ng-model="unidadActual.title" class="form-control" type="text" required>
                         </div>
                     </div>
                     <div class="row">
@@ -143,6 +154,9 @@
                 <a ng-click="cancelarUnidad()" href="#">
                     <img class="btn_med" src="/images/031_btn_cancelar.png">
                 </a>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-1">
+                <span ng-bind="statusMsg"></span>
             </div>
         </div>
     </div>

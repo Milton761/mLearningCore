@@ -35,22 +35,21 @@ namespace MLearning.Web.Controllers
                  RedirectToAction("Index","Home");
             }
         }
-     
 
-
-        //public ActionResult Details()
-
-   
+        //public ActionResult Details() 
         // GET: /Page/Create
-
         //
-
         //[Authorize(Roles = Constants.PublisherRole)]
-         public ActionResult Index(int? id)
+         public async Task<ActionResult> Index(int? id, int? sectionId)
          {
+             PageID = ViewBag.PageID = id?? default(int);
+             if(sectionId != null)
+             {
+                  var currentLOsection = await _mLearningService.GetObjectWithId<LOsection>(sectionId?? default(int));
+                  ViewBag.currentLO = await _mLearningService.GetObjectWithId<LearningObject>(currentLOsection.LO_id);
+                  ViewBag.currentLOsection = currentLOsection;
+             }
              return View();
-             //return RedirectToAction("EditLO", "Publisher");
-         
          }
 
         [Authorize(Roles = Constants.PublisherRole)]

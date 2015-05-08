@@ -15,7 +15,8 @@
     //setItemActual('#institucion');
     hacerHome(false);
     var saveSectionURL = '@Url.Action("CreateLOsection", "Publisher")';
-    var currentLO = @(Html.Raw(JsonConvert.SerializeObject(Model)))
+    var viewPageURL = '@Url.Action("Index", "Page")';
+    var currentLO = @(Html.Raw(JsonConvert.SerializeObject(Model)));
 </script>
 
 <h2>LODetail</h2>

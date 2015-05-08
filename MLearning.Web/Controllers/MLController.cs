@@ -1,4 +1,6 @@
 ﻿using MLearning.Core.Configuration;
+using MLearning.Core.Services;
+using MLearning.Web.Singleton;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,12 @@ namespace MLearning.Web.Controllers
 {
     public class MLController : Controller
     {
-
-
-        public MLController()
+        protected IMLearningService _mLearningService;
+		
+        public MLController(): base()
         {
+            _mLearningService = ServiceManager.GetService();
+
             InstitutionID = System.Web.HttpContext.Current.Session["InstitutionID"] as int? ?? default(int);
             UserID = System.Web.HttpContext.Current.Session["UserID"] as int? ?? default(int);
             PublisherID = System.Web.HttpContext.Current.Session["PublisherID"] as int? ?? default(int);
@@ -21,7 +25,7 @@ namespace MLearning.Web.Controllers
             PageID = System.Web.HttpContext.Current.Session["PageID"] as int? ?? default(int);
             QuizID = System.Web.HttpContext.Current.Session["QuizID"] as int? ?? default(int);
             QuestionID = System.Web.HttpContext.Current.Session["QuestionID"] as int? ?? default(int);
-            userType = System.Web.HttpContext.Current.Session["UserType"] as UserType?;
+            userType = System.Web.HttpContext.Current.Session["UserType"] as UserType?;            
         }
 
 

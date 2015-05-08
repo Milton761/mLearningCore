@@ -18,12 +18,7 @@ namespace MLearning.Web.Controllers
 {
     public class PublisherController : MLController
     {
-         private IMLearningService _mLearningService;
-		public PublisherController(): base()
-        {
-             _mLearningService = ServiceManager.GetService();
- 
-        }
+         
 
         //
         // GET: /Publisher/
@@ -83,10 +78,18 @@ namespace MLearning.Web.Controllers
             return View();
         }
 
-        public ActionResult newLO(int id)
+        public async Task<ActionResult> LO(int? id,int? circleId)
         {
-            CircleID = ViewBag.CircleID = id;
-            
+             ViewBag.CircleID = circleId;
+             if (id != null)
+                 CircleID = circleId ?? default(int);
+            ViewBag.LOID = id;
+            if(id!=null)
+            {
+                LOID = id?? default(int);
+                LearningObject model = await _mLearningService.GetObjectWithId<LearningObject>(LOID);
+                return View(model);
+            }
             return View();
         }
 
@@ -121,7 +124,7 @@ namespace MLearning.Web.Controllers
 
                 int LO_id = await _mLearningService.CreateObject<LearningObject>(obj, lo => lo.id);
 
-
+                await _mLearningService.PublishLearningObjectToCircle(CircleID, LO_id);
 
                 return Json(new { errors = new String[] { }, url = Url.Action("LODetail", new { id = LO_id }) });
                 //return RedirectToAction("Index", new { id = UserID });
@@ -139,7 +142,7 @@ namespace MLearning.Web.Controllers
         async public Task<ActionResult> createLOSection(LOsection data)
         {
             String[] _errors;
-            int? id = null;
+            int id = default(int);
             try
             {
                 id = await _mLearningService.CreateObject<LOsection>(data, o => o.id);
@@ -150,7 +153,7 @@ namespace MLearning.Web.Controllers
                 _errors = new String[] { e.Message };
             }
 
-            return Json(new { errors = _errors, result_id = id });
+            return Json(new { errors = _errors, result_id = id, url = Url.Action("", "Page", new { sectionId = id }) });
         }
 
         [HttpPost]

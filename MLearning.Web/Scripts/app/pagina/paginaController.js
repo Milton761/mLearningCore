@@ -4,12 +4,12 @@ mlearningApp.controller('paginaController', function ($scope,globales) {
     $scope.pagina = 'soy controlador de pagina';
     $scope.unidadActual = null;
     $scope.seccionActual = null;
-    $scope.loslide = [{lotype:'0'}];
+    $scope.loslide = [];
 
 
     $scope.getUnidadSeccion = function () {
-        $scope.unidadActual = globales.get('unidadActual');
-        $scope.seccionActual = globales.get('seccionActual');
+        $scope.unidadActual = currentLO;
+        $scope.seccionActual = currentLOSection;
 
         console.log('actual seccion::',$scope.seccionActual);
 
