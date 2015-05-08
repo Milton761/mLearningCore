@@ -15,10 +15,10 @@
     agregarClickItem();
     //setItemActual('#institucion');
     hacerHome(false);
-    //var saveSectionURL = '@Url.Action("CreateLOsection", "Publisher")';
-    //var viewPageURL = '@Url.Action("Index", "Page")';
+    var savePageURL = '@Url.Action("SavePage", "Page")';
     var currentLOSection = @(Html.Raw(JsonConvert.SerializeObject(ViewBag.currentLOsection)));
     var currentLO = @(Html.Raw(JsonConvert.SerializeObject(ViewBag.currentLO)));
+    var currentPage = @(Html.Raw(JsonConvert.SerializeObject(Model)));
 </script>
 
 <div class="container" ng-controller="paginaController">
@@ -48,7 +48,7 @@
                             <div class="row padding_text">
 
                                 <div class="col-xs-12">
-                                    <input ng-model="pagina.lotitle" class="form-control" type="text" placeholder="Titulo de la Pagina">
+                                    <input ng-model="currentPage.title" class="form-control" type="text" placeholder="Titulo de la Pagina">
                                 </div>
                             </div>
 
@@ -63,7 +63,7 @@
                                 <div class="col-xs-12">
 
                                     <textarea class="form-control"
-                                              ng-model="pagina.loparagraph" type="text"
+                                              ng-model="currentPage.description" type="text"
                                               placeholder="Descripcion" rows="4"></textarea>
 
                                 </div>

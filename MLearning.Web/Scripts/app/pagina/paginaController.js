@@ -5,12 +5,15 @@ mlearningApp.controller('paginaController', function ($scope,globales) {
     $scope.unidadActual = null;
     $scope.seccionActual = null;
     $scope.loslide = [];
-
+    
 
     $scope.getUnidadSeccion = function () {
         $scope.unidadActual = currentLO;
         $scope.seccionActual = currentLOSection;
-
+        if(currentPage != null)
+            $scope.currentPage = currentPage;
+         else
+            $scope.currentPage = {};
         console.log('actual seccion::',$scope.seccionActual);
 
     };
@@ -27,8 +30,33 @@ mlearningApp.controller('paginaController', function ($scope,globales) {
 
     //botones
     $scope.guardarPagina = function () {
-        console.log('guardar pagina');
-        console.log('todo el objeto json:::',$scope.loslide);
+        
+        $scope.currentPage.id = 0;
+
+        //TODO generate json from slides
+        $scope.currentPage.content = "_";
+        $scope.currentPage.lo_id = $scope.seccionActual.LO_id;
+        $scope.currentPage.url_img = "URL";
+        $scope.currentPage.LOsection_id = $scope.seccionActual.id;
+
+        $.ajax(
+        {
+            url: savePageURL,
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify($scope.currentPage),
+            success: function (data, textStatus, jqXHR) {
+                console.log(data);
+                if (data.errors != null) {
+                    //$scope.redireccionar(data.url);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+            }
+        });
+
+        console.log('saving page:::',$scope.currentPage);
     };
 
 

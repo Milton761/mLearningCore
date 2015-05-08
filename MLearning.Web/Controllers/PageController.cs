@@ -1,6 +1,7 @@
 ﻿using Core.DownloadCache;
 using MLearning.Core.Configuration;
 using MLearning.Core.Entities;
+using MLearning.Core.Entities.json;
 using MLearning.Core.Services;
 using MLearning.Web.Models;
 using MLearning.Web.Singleton;
@@ -51,6 +52,15 @@ namespace MLearning.Web.Controllers
              }
              return View();
          }
+
+         public async Task<ActionResult> SavePage(Page page)
+         {
+             page.created_at = DateTime.UtcNow;
+             page.updated_at = DateTime.UtcNow;
+             int id = await _mLearningService.CreateObject<Page>(page, p => p.id);
+             return Json(new JsonActionResult { resultId = id });
+         }
+
 
         [Authorize(Roles = Constants.PublisherRole)]
         public ActionResult Create(int lo_id)
