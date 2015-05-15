@@ -2,31 +2,34 @@
 
 @using Newtonsoft.Json
 
-
 @{
     ViewBag.Title = "Nueva Unidad";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.ActiveRole = "PROFESOR";
 }
 
-<script>
-    home = false;
-    contraer_menu();
-    agregarClickItem();
-    //setItemActual('#institucion');
-    hacerHome(false);
-    var saveUnitURL = '@Url.Action("CreateLO", "Publisher")';
-    @if (ViewBag.LOID != null)
-    {
-<text>
-    var currentLO = @Html.Raw(JsonConvert.SerializeObject(Model));
-</text>
-    }
-
-</script>
-<div ng-controller="unidadController">
-@using (Html.BeginForm("CreateLO", "Publisher", FormMethod.Post, new { id = "unitForm" }))
+@section Scripts
 {
+<script src="@Url.Content("~/Scripts/app/unidad/unidadController.js")"></script>
+<script src="@Url.Content("~/Scripts/app/unidad/unidadService.js")"></script>    
+    <script>
+        home = false;
+        contraer_menu();
+        agregarClickItem();
+        hacerHome(false);
+        var saveUnitURL = '@Url.Action("CreateLO", "Publisher")';
+        var url_cover = null;
+        @if (ViewBag.LOID != null)
+        {
+    <text>
+        var currentLO = @Html.Raw(JsonConvert.SerializeObject(Model));
+    </text>
+        }
+    </script>
+}
+<div ng-controller="unidadController">
+@using (Html.BeginForm("CreateLO", "Publisher", FormMethod.Post, new { id = "unitForm", name = "unitForm", ng_submit="asdf"}))
+    {
     <div class="container-fluid">
 
         <div class="container">
@@ -37,15 +40,18 @@
             <div class="row"><br></div>
         </div>
         <div class="container cont_Principal">
-            
+
             <div class="row"><br></div>
-               
+
             <div class="row">
                 <div class="col-xs-7">
                     <div class="row">
                         <div class="col-xs-12">
-                            <label for="nombre"> Titulo de la Unidad</label>
-                            <input ng-model="unidadActual.title" class="form-control" type="text" required>
+                            <label for="loTitle"> Titulo de la Unidad</label>
+                            <input name="loTitle" ng-model="unidadActual.title" class="form-control" type="text" required />
+                            <span style="color:red" ng-show="unitForm.loTitle.$dirty && unitForm.loTitle.$invalid">
+                                <span ng-show="unitForm.loTitle.$error.required">Campo obligatorio</span>
+                            </span>
                         </div>
                     </div>
                     <div class="row">
@@ -58,13 +64,12 @@
                                 </div>
                                 <div class="col-sm-offset-1 col-sm-4">
                                     <div class="radio">
-                                        <input type="radio" ng-model='unidadActual.type' value="@((int)MLearning.Core.Configuration.LOType.Public)"> Publico
+                                        <input type="radio" ng-model='unidadActual.type' value="@((int)MLearning.Core.Configuration.LOType.Public)" > Publico
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="radio">
                                         <input type="radio" ng-model='unidadActual.type' value="@((int)MLearning.Core.Configuration.LOType.Private)"> Privado
-
                                     </div>
                                 </div>
                             </div>
@@ -99,9 +104,21 @@
                 </div>
                 <div class="col-xs-5">
                     <div class="row">
-                        <div class="col-xs-offset-4 col-xs-4 text-center img_cubierta">
+                        <div class="col-xs-offset-4 col-xs-4 text-center img_cubierta" style="width: 100%; margin-left: 0%;">
                             <div class="row"><br></div>
-                            <input src="/images/029_icon_imagen.png" type="image" ng-model="pagina.loimage" height='25px' width='25px' />
+                            <input id="coverImageIn" name="coverImageIn" ng-model="unidadActual.url_cover" type="hidden" required />
+                            <!--<input id="coverImage" src="/images/029_icon_imagen.png" type="image" ng-model="unidadActual.url_cover" required />-->
+                            <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ unidadActual.url_cover }}" style="max-width: 100%; height: auto;" />
+                            <div class="row"><br></div>
+                            <div class="row">
+                                <input id="kendoCoverImage" name="files"
+                                       type="file"
+                                       kendo-upload
+                                       k-async="{ saveUrl: '@Url.Action("UploadImage", "Resources")', autoUpload: true }"
+                                       k-multiple="false"
+                                       k-show-file-list="false"
+                                       k-success="onCoverUploadSuccess" />
+                            </div>
                             <div class="row"><br></div>
                             <div class="row">Imagen de Cubierta</div>
                         </div>
@@ -122,6 +139,7 @@
                                     <div class="row"><br></div>
                                     <input src="/images/029_icon_imagen.png" type="image" ng-model="pagina.loimage" height='50px' width='50px' />
                                     <div class="row"><br></div>
+
                                 </div>
 
                             </div>
@@ -138,14 +156,14 @@
                     <div class="row"><br></div>
                 </div>
             </div>
-                
+
         </div>
         <div class="row"><br></div>
     </div>
     <div class="container">
         <div class="row"><br></div>
         <div class="row">
-            <div class="col-xs-offset-7 col-xs-2  col-sm-offset-8 col-sm-2 col-md-offset-10 col-md-1">
+            <div id="okButton" class="col-xs-offset-7 col-xs-2  col-sm-offset-8 col-sm-2 col-md-offset-10 col-md-1">
                 <a ng-click="crearUnidad()" href="#">
                     <img class="btn_med" src="/images/030_btn_crear.png">
                 </a>
@@ -163,4 +181,28 @@
     }
 </div>
 
+<script>
+
+    var f = $('#unitForm');
+    var url = f.attr('action');
+    f.removeAttr('action');
+    f.attr('asyncAction',url);
+
+    function GetImageUrl(e)
+    {
+        $("#okButton *").removeAttr('disabled').on('click');
+        url_cover = e.response.url;
+        $("#coverImage").attr("src", url_cover);
+        //var input = $("#coverImageIn")
+        //input.val(e.response.url);
+        //input.trigger('input');
+        //angular.element($('#coverImageIn')).triggerHandler('input')
+        //scope.unidadActual.url_cover = e.response.url;
+        console.log(url_cover);
+    }
+
+    function onUpload(e) {
+        $("#okButton *").attr("disabled", "disabled").off('click');
+    }
+</script>
 

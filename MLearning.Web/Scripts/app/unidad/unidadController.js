@@ -1,4 +1,4 @@
-angular.module('mlearningApp').controller('unidadController', function ($scope, globales) {
+angular.module('mlearningApp').controller('unidadController', function ($scope, globales,loService) {
     $scope.unidad = 'unidadController';
     $scope.unidades = [];
     $scope.pags = [];
@@ -11,36 +11,36 @@ angular.module('mlearningApp').controller('unidadController', function ($scope, 
     {
         $scope.unidadActual = {};
     }
-        
+    
     ///////combobox/////////
-    $scope.etiquetas = [
-        {id:1,name:'fisica1'},
-        {id:2,name:'fisica2'},
-        {id:3,name:'fisica3'}
-    ];
+    $scope.etiquetas = [];
   
     ///funciones
     
-    $scope.crearUnidad = function () {
-        $scope.statusMsg = "Enviando...";
-        $.ajax(
-        {
-            url: saveUnitURL,
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify($scope.unidadActual),
-            
-            success: function (data, textStatus, jqXHR) {
-                console.log(data);
-                if( data.errors != null, data.errors.length==0)
-                {
-                    $scope.redireccionar(data.url);
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
+    $scope.onCoverUploadSuccess = function (e) {
+        console.log(e.response);
+        $scope.$apply(function () {
+            $scope.unidadActual.url_cover = e.response.url;
+        //$("#coverImage").attr("src", e.response.url);
+        });
+    }
 
+    $scope.crearUnidad = function () {  
+        //$scope.statusMsg = "Enviando...";
+        if (!$scope.unitForm.$valid) {
+            // Submit as normal
+            console.log("Invalid fields in form!");
+            console.log($scope.unidadActual);
+            return;
+        }
+        loService.createLO($scope.unidadActual)
+        .success(function (data) {
+            console.log(data);
+            if (data.errors == null) {
+                $scope.redireccionar(data.url);
             }
         });
+       
         $scope.status = "";
         console.log('crear Unidad', $scope.unidadActual);
 

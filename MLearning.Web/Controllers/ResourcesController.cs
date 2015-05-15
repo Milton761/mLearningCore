@@ -18,17 +18,21 @@ namespace MLearning.Web.Controllers
             return View();
         }
 
-        public async Task<ActionResult> UploadImage(HttpPostedFileBase file)
+        public async Task<ActionResult> UploadImage(IEnumerable<HttpPostedFileBase> files)
         {
             try
             {
                 string result_url = null;
-                if (file != null && file.ContentLength > 0)
+                if(files!=null && files.Count() > 0)
                 {
-                    using (MemoryStream target = new MemoryStream())
+                    var file = files.ElementAt(0);
+                    if (file != null && file.ContentLength > 0)
                     {
-                        file.InputStream.CopyTo(target);
-                        result_url = await _mLearningService.UploadResource(target, null);
+                        using (MemoryStream target = new MemoryStream())
+                        {
+                            file.InputStream.CopyTo(target);
+                            result_url = await _mLearningService.UploadResource(target, null);
+                        }
                     }
                 }
                 return Json(new JsonActionResult() { errors = null, url = result_url });
