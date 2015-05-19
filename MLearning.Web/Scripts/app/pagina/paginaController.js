@@ -88,7 +88,10 @@ mlearningApp.directive('pgEditor', function () {
 });
 mlearningApp.directive('pgSlide', function () {
     return {
-        scope: true,
+        //scope: true,
+        scope: {
+            ngModel: '='
+        },
         templateUrl: function (element, attrs) {
             var tipo = attrs.tipo || 'pagina-slide';
             return '/Scripts/app/directives/' + tipo + '.html';

@@ -1,7 +1,7 @@
     <div class="row" >
         <div class="col-xs-12">
             <div ng-repeat="pagina in loslide track by $index"  ng-switch on="pagina.lotype" class='animate-list' >
-                <pg-slide ng-switch-when='0' tipo="cero">  </pg-slide>
+                <pg-slide ng-switch-when='0' tipo="cero" ng-model="slides[$index]">  </pg-slide>
                 <pg-slide ng-switch-when='1' tipo="primero">  </pg-slide>
                 <pg-slide ng-switch-when='2' tipo="segundo">  </pg-slide>
                 <pg-slide ng-switch-when='3' tipo="tercero">  </pg-slide>
