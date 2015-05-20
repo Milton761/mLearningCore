@@ -1,10 +1,10 @@
 
-mlearningApp.controller('paginaController', function ($scope,globales) {
+mlearningApp.controller('paginaController', function ($scope,globales,lopageService) {
 
     $scope.pagina = 'soy controlador de pagina';
     $scope.unidadActual = null;
     $scope.seccionActual = null;
-    $scope.loslide = [];
+    $scope.loslide = []; //[{ lotype: 0 }, { lotype: 1 }, { lotype: 2 }, { lotype: 3 }, { lotype: 4 }, { lotype: 5 }, { lotype: 6 }];
     
 
     $scope.getUnidadSeccion = function () {
@@ -27,36 +27,38 @@ mlearningApp.controller('paginaController', function ($scope,globales) {
         console.log($scope.loslide);
     }
 
+    $scope.onUploadSuccess = function (e) {
+
+    }
 
     //botones
     $scope.guardarPagina = function () {
         
-        $scope.currentPage.id = 0;
-
-        //TODO generate json from slides
-        $scope.currentPage.content = "_";
+        var isNew = false;
+        if (typeof $scope.currentPage.id == 'undefined')
+        {
+            $scope.currentPage.id = 0;
+            isNew = true;
+        }
+        
         $scope.currentPage.lo_id = $scope.seccionActual.LO_id;
         $scope.currentPage.url_img = "URL";
         $scope.currentPage.LOsection_id = $scope.seccionActual.id;
 
-        $.ajax(
-        {
-            url: savePageURL,
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify($scope.currentPage),
-            success: function (data, textStatus, jqXHR) {
-                console.log(data);
-                if (data.errors != null) {
-                    //$scope.redireccionar(data.url);
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
+        var content = {};
+        content.lopage = {};
+        content.lopage.loslide = $scope.loslide;
 
+        $scope.currentPage.content = JSON.stringify(content);
+
+        lopageService.createPage($scope.currentPage).success(function (data) {
+            console.log(data);
+            if (data.errors != null && isNew) {
+                $scope.redireccionar(data.url);
             }
         });
 
-        console.log('saving page:::',$scope.currentPage);
+        console.log('saving page:::', $scope.currentPage);
     };
 
 
@@ -88,10 +90,10 @@ mlearningApp.directive('pgEditor', function () {
 });
 mlearningApp.directive('pgSlide', function () {
     return {
-        //scope: true,
-        scope: {
+        scope: true,
+        /*scope: {
             ngModel: '='
-        },
+        },*/
         templateUrl: function (element, attrs) {
             var tipo = attrs.tipo || 'pagina-slide';
             return '/Scripts/app/directives/' + tipo + '.html';

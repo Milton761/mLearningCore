@@ -21,7 +21,6 @@ angular.module('mlearningApp').controller('unidadController', function ($scope, 
         console.log(e.response);
         $scope.$apply(function () {
             $scope.unidadActual.url_cover = e.response.url;
-        //$("#coverImage").attr("src", e.response.url);
         });
     }
 

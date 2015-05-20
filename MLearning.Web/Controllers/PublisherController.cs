@@ -126,7 +126,7 @@ namespace MLearning.Web.Controllers
 
                 await _mLearningService.PublishLearningObjectToCircle(CircleID, LO_id);
 
-                return Json(new { errors = new String[] { }, url = Url.Action("LODetail", new { id = LO_id }) });
+                return Json(new JsonActionResult { url = Url.Action("LODetail", new { id = LO_id }) });
                 //return RedirectToAction("Index", new { id = UserID });
 
             }
