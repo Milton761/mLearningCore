@@ -67,16 +67,23 @@
 )
 
 <script type="text/x-kendo-template" id="template">
-    <div id="details-container">
-        <h2>#=title #</h2>
-        <img width="128" height="128" src="#=url_cover#" />
-        <em>#=created_at #</em>
-        <dl>
-            <dt>Nombre: #=fullname #</dt>
-            <dt>Email: #=email #</dt>
-        </dl>
+    <div id="details-container" div class="form-horizontal">
+        <div class="row">
+            <h2>#=title #</h2>
+        </div>
+        <div class="row">
+            <img class="fullwidth" src="#=url_cover#" />
+         </div>
+            <em>#=created_at #</em>
 
-    </div>
+            <dl>
+                <dt>Autor: #=fullname #</dt>
+                <dt>Email: #=email #</dt>
+                <dt>Descripción:</dt>
+                <dd>#=description #</dd>
+            </dl>
+
+        </div>
 </script>
 <!--alt=""-->
 <script type="text/javascript">
@@ -88,7 +95,8 @@
 
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
         var wnd = $("#Details").data("kendoWindow");
-
+        var date = kendo.parseDate(dataItem.created_at)
+        dataItem.created_at = kendo.toString(date, "D");
         wnd.content(detailsTemplate(dataItem));
         wnd.center().open();
     }
