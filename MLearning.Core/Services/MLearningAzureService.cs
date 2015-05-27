@@ -697,5 +697,15 @@ namespace MLearning.Core.Services
         {
             return await _repositoryService.SearchForAsync<Quiz>(q => q.LearningObject_id==lo_id, q => q.updated_at, q => q.id, false);
         }
+
+        public async Task<List<LOsection>> GetSectionsByLO(int lo_id)
+        {
+            return await _repositoryService.SearchForAsync<LOsection>(s => s.LO_id == lo_id, new Dictionary<String,String>(), false);
+        }
+
+        public async Task<List<Page>> GetPagesByLOSection(int sec_id)
+        {
+            return await _repositoryService.SearchForAsync<Page>(s => s.LOsection_id == sec_id, new Dictionary<String, String>(), false);
+        }
     }
 }

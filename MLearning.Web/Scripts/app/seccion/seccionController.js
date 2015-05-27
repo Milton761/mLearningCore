@@ -1,23 +1,20 @@
 mlearningApp.controller('seccionController', function($scope,globales) {
 
     $scope.aviso = 'no se a Añadido Ninguna Seccion';
-    $scope.secciones = [];
+    $scope.sections = [];
     $scope.unidadActual = null;
     
     $scope.getUnidad = function () {
         $scope.unidadActual = currentLO;
+        $scope.sections = currentLOsections;
         console.log('unidadActual :::',$scope.unidadActual);
     };
-    
-    
-    
-    
-    
+   
     $scope.addSeccion = function (data) {
        $scope.aviso= ''; 
         
-        $scope.secciones.push(data);
-        console.log( $scope.secciones);
+       $scope.sections.push(data);
+        console.log( $scope.sections);
     };
     
     $scope.ocultarMostar =  function () {

@@ -16,6 +16,7 @@ using MLearning.Core.Entities;
 
 namespace MLearning.Web.Controllers
 {
+    [Authorize] 
     public class PublisherController : MLController
     {
          
@@ -103,7 +104,9 @@ namespace MLearning.Web.Controllers
         {
             LOID = ViewBag.LOID = id;
             LearningObject model = await _mLearningService.GetObjectWithId<LearningObject>(LOID);
-                       
+
+            ViewBag.LOsections = await _mLearningService.GetSectionsByLO(LOID);
+
             return View(model);
         }
 

@@ -305,5 +305,10 @@ namespace MLearning.Core.Services
         Task<string> UploadResource(Stream s,string filename);
 
         Task DeleteTagFromPage(int tag_id, int page_id);
+
+        Task<List<LOsection>> GetSectionsByLO(int lo_id);
+
+        Task<List<Page>> GetPagesByLOSection(int sec_id);
+
     }
 }

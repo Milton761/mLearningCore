@@ -17,6 +17,7 @@
     var saveSectionURL = '@Url.Action("CreateLOsection", "Publisher")';
     var viewPageURL = '@Url.Action("Index", "Page")';
     var currentLO = @(Html.Raw(JsonConvert.SerializeObject(Model)));
+    var currentLOsections = @(Html.Raw(JsonConvert.SerializeObject(ViewBag.LOsections)));
 </script>
 
 <h2>LODetail</h2>
