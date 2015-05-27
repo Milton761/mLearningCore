@@ -44,23 +44,37 @@ namespace MLearning.Web.Controllers
          public async Task<ActionResult> Index(int? id, int? sectionId)
          {
              PageID = ViewBag.PageID = id?? default(int);
+             Page page = null;
+             if (id != null)
+             {
+                 page = await _mLearningService.GetObjectWithId<Page>(id ?? default(int));
+                 sectionId = page.LOsection_id;
+             }
              if(sectionId != null)
              {
                   var currentLOsection = await _mLearningService.GetObjectWithId<LOsection>(sectionId?? default(int));
                   ViewBag.currentLO = await _mLearningService.GetObjectWithId<LearningObject>(currentLOsection.LO_id);
                   ViewBag.currentLOsection = currentLOsection;
              }
-             return View();
+             return View(page);
          }
 
-         public async Task<ActionResult> SavePage(Page page)
+        [HttpPost]
+         public async Task<ActionResult> Create(Page page)
          {
              page.created_at = DateTime.UtcNow;
              page.updated_at = DateTime.UtcNow;
              int id = await _mLearningService.CreateObject<Page>(page, p => p.id);
-             return Json(new JsonActionResult { resultId = id });
+             return Json(new JsonActionResult { resultId = id, url = Url.Action("", new { id = id }) });
          }
 
+        [HttpPost]
+        public async Task<ActionResult> Update(Page page)
+        {
+            page.updated_at = DateTime.UtcNow;
+            await _mLearningService.UpdateObject<Page>(page);
+            return Json(new JsonActionResult());
+        }
 
         [Authorize(Roles = Constants.PublisherRole)]
         public ActionResult Create(int lo_id)
@@ -75,7 +89,7 @@ namespace MLearning.Web.Controllers
         // Post: /Page/Create
         [HttpPost]
         [ValidateInput(false)]
-        async public Task<ActionResult> Create(Page page/*JsonPage page*/)
+        async public Task<ActionResult> Create_(Page page/*JsonPage page*/)
         {
             try
             {

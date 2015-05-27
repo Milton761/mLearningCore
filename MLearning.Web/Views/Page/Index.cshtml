@@ -9,10 +9,11 @@
 
 <h2>PageDetail</h2>
 
+<script>var saveImageURL = '@Url.Action("UploadImage", "Resources")';</script>
+
+
 @section Scripts
 {
-<script src="@Url.Content("~/Scripts/app/pagina/paginaService.js")"></script>
-<script src="@Url.Content("~/Scripts/app/pagina/paginaController.js")"></script>
 <script>
     home = false;
     contraer_menu();
@@ -23,7 +24,12 @@
     var currentLOSection = @(Html.Raw(JsonConvert.SerializeObject(ViewBag.currentLOsection)));
     var currentLO = @(Html.Raw(JsonConvert.SerializeObject(ViewBag.currentLO)));
     var currentPage = @(Html.Raw(JsonConvert.SerializeObject(Model)));
+
 </script>
+
+<script src="@Url.Content("~/Scripts/app/pagina/paginaService.js")"></script>
+<script src="@Url.Content("~/Scripts/app/pagina/paginaController.js")"></script>
+
 }
 <div class="container" ng-controller="paginaController">
     <div class="row"><br></div>
@@ -37,83 +43,83 @@
     <div class="row"><br></div>
     <div class="row">
         <div class="col-xs-12">
+            <form name="pageForm" >
+                <div class="row cont_Principal">
+                    <div class="col-xs-12">
 
-            <div class="row cont_Principal">
-                <div class="col-xs-12">
+                        <div class="row">
+                            <div class=" col-xs-8">
 
-                    <div class="row">
-                        <div class=" col-xs-8">
-
-                            <div class="row padding_text">
-                                <div class=" col-xs-12">
-                                    <label for="nombre"> *Titulo de la Pagina</label>
-                                </div>
-                            </div>
-                            <div class="row padding_text">
-
-                                <div class="col-xs-12">
-                                    <input ng-model="currentPage.title" class="form-control" type="text" placeholder="Titulo de la Pagina">
-                                </div>
-                            </div>
-
-
-                            <div class="row padding_text">
-                                <div class=" col-xs-12">
-                                    <label for="descripcion"> *Descripcion</label>
-                                </div>
-                            </div>
-                            <div class="row padding_text">
-
-                                <div class="col-xs-12">
-
-                                    <textarea class="form-control"
-                                              ng-model="currentPage.description" type="text"
-                                              placeholder="Descripcion" rows="4"></textarea>
-
-                                </div>
-                            </div>
-                            <div class="row">
-                                <!-- <input type='file' id="imgInp" ng-model = 'rutaImage' />
-                        <img class="tamIconTabla img-responsive" src="images/{{rutaImage}}" >
-                        -->
-                            </div>
-                            <div class="row"><br></div>
-                            <div class="row">
-                                <!-- <input type="file" accept="images/*" image="image"/>
-                        <img ng-show="image" ng-src="images/{{image.url}}" type="{{image.file.type}}" />-->
-                            </div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="row"><br></div>
-                            <div class="row"><br></div>
-
-                            <div class="row">
-                                <div class="col-xs-offset-2 col-xs-8 text-center img_cubierta">
-                                    <div class="row"><br></div>
-                                    <input id="urlImageIn" name="urlImageIn" ng-model="currentPage.url_img" type="hidden" required />
-                                    <img id="coverImage" ng-src="{{ currentPage.url_img }}" style="max-width: 100%; height: auto;" />
-                                    <div class="row"><br></div>
-                                    <div class="row">
-                                        <input name="files"
-                                               type="file"
-                                               kendo-upload
-                                               k-async="{ saveUrl: '@Url.Action("UploadImage", "Resources")', autoUpload: true }"
-                                               k-multiple="false"
-                                               k-show-file-list="false"
-                                               k-success="onUploadSuccess" />
+                                <div class="row padding_text">
+                                    <div class=" col-xs-12">
+                                        <label for="nombre"> *Titulo de la Pagina</label>
                                     </div>
-                                    <div class="row"><br></div>
-                                    <div class="row">Imagen de Obligatoria</div>
+                                </div>
+                                <div class="row padding_text">
+
+                                    <div class="col-xs-12">
+                                        <input ng-model="currentPage.title" class="form-control" type="text" placeholder="Titulo de la Pagina" required>
+                                    </div>
                                 </div>
 
 
-                            </div>
+                                <div class="row padding_text">
+                                    <div class=" col-xs-12">
+                                        <label for="descripcion"> *Descripcion</label>
+                                    </div>
+                                </div>
+                                <div class="row padding_text">
 
+                                    <div class="col-xs-12">
+
+                                        <textarea class="form-control"
+                                                  ng-model="currentPage.description" type="text"
+                                                  placeholder="Descripcion" rows="4" required></textarea>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- <input type='file' id="imgInp" ng-model = 'rutaImage' />
+                            <img class="tamIconTabla img-responsive" src="images/{{rutaImage}}" >
+                            -->
+                                </div>
+                                <div class="row"><br></div>
+                                <div class="row">
+                                    <!-- <input type="file" accept="images/*" image="image"/>
+                            <img ng-show="image" ng-src="images/{{image.url}}" type="{{image.file.type}}" />-->
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="row"><br></div>
+                                <div class="row"><br></div>
+
+                                <div class="row">
+                                    <div class="col-xs-offset-2 col-xs-8 text-center img_cubierta" style="width: 100%; margin-left: 0%;">
+                                        <div class="row"><br></div>
+                                        <input id="urlImageIn" name="urlImageIn" ng-model="currentPage.url_img" type="hidden" required />
+                                        <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ currentPage.url_img }}" style="max-width: 100%; height: auto;" />
+                                        <div class="row"><br></div>
+                                        <div class="row">
+                                            <input name="files"
+                                                   type="file"
+                                                   kendo-upload
+                                                   k-async="{ saveUrl: '/Resources/UploadImage', autoUpload: true }"
+                                                   k-multiple="false"
+                                                   k-show-file-list="false"
+                                                   k-success="onUploadPageCoverSuccess" />
+                                        </div>
+                                        <div class="row"><br></div>
+                                        <div class="row">Imagen de Obligatoria</div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </form>
 
             <pg-editor></pg-editor>
 
