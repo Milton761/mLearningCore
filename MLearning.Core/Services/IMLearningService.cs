@@ -239,6 +239,7 @@ namespace MLearning.Core.Services
         Task<List<tag_by_circle>> GetTagsByCircle(int circle_id);
 
         Task<List<tag_by_page>> GetTagsByLO(int lo_id);
+        Task<List<tag_by_lo>> GetLOTags(int lo_id);
 
         Task<List<tag_by_page>> GetTagsByPage(int page_id);
 
@@ -247,6 +248,8 @@ namespace MLearning.Core.Services
 
 
         Task AddTagToPage(int tag_id, int page_id);
+
+        Task AddTagToLO(int tag_id, int lo_id);
 
         Task<List<quiz_by_circle>> GetQuizzesByCircle(int circle_id);
 
@@ -305,6 +308,8 @@ namespace MLearning.Core.Services
         Task<string> UploadResource(Stream s,string filename);
 
         Task DeleteTagFromPage(int tag_id, int page_id);
+
+        Task DeleteTagFromLO(int tag_id, int lo_id);
 
         Task<List<LOsection>> GetSectionsByLO(int lo_id);
 

@@ -87,12 +87,15 @@ namespace MLearning.Web.Controllers
                 LOID = ViewBag.LOID = id ?? default(int);
                 LearningObject model = await _mLearningService.GetObjectWithId<LearningObject>(LOID);
                 ViewBag.CircleID = CircleID;
+                //ViewBag.tagList = await _mLearningService.GetTagsByLO(LOID);
+                ViewBag.tagList = await _mLearningService.GetLOTags(LOID);
+                //ViewBag.tagList = tagList.Select(t => t.tag_id);
                 return View(model);
             }
             if (circleId != null)
                 CircleID = ViewBag.CircleID = circleId ?? default(int);
 
-            ViewBag.tagList = await _mLearningService.GetAllTags();
+            
 
             return View();
         }
@@ -117,7 +120,7 @@ namespace MLearning.Web.Controllers
         //Not used
         //Upload controller used instead
         [AcceptVerbs(HttpVerbs.Post)]
-        async public Task<ActionResult> CreateLO(LearningObject obj)
+        async public Task<ActionResult> CreateLO(LearningObject obj, List<Tag> tags )
         {
 
             if (PublisherID == default(int))
@@ -134,22 +137,46 @@ namespace MLearning.Web.Controllers
                 int LO_id = await _mLearningService.CreateObject<LearningObject>(obj, lo => lo.id);
 
                 await _mLearningService.PublishLearningObjectToCircle(CircleID, LO_id);
+                
+                foreach(Tag t in tags)
+                {
+                    await _mLearningService.AddTagToLO(t.id, LO_id);
+                }
 
                 return Json(new JsonActionResult { url = Url.Action("LODetail", new { id = LO_id }) });
             }
             catch (Exception e)
             {
-                return Json(new { errors = new String[] { e.Message } });
+                return Json(new { errors = new Object[] { e} });
             }
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        async public Task<ActionResult> UpdateLO(LearningObject obj)
+        async public Task<ActionResult> UpdateLO(LearningObject obj, List<Tag> tags)
         {
             try
             {
                 obj.updated_at = DateTime.UtcNow;
                 await _mLearningService.UpdateObject<LearningObject>(obj);
+
+                ///Update tag list
+                var curtags = await _mLearningService.GetLOTags(obj.id);
+                var curtagsids = curtags.Select(t => t.id);
+                var tagids = tags.Select(t => t.id);
+
+                var toDelete = curtagsids.Except(tagids).ToList();
+                var toAdd = tagids.Except(curtagsids).ToList();
+
+                foreach(int id in toDelete)
+                {
+                    await _mLearningService.DeleteTagFromLO(id, obj.id);
+                }
+
+                foreach (int id in toAdd)
+                {
+                    await _mLearningService.AddTagToLO(id, obj.id);
+                }
+
                 return Json(new JsonActionResult());
             }
             catch (Exception e)

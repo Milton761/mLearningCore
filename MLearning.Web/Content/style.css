@@ -37,7 +37,7 @@ a:hover, a:active, a:focus {
 .row span {
       display: inline-block;
       vertical-align: middle;
-	  top:50%;
+	  /*top:50%;*/
       line-height: normal;
 	  position: relative;
 	  color:#9b9c9e;

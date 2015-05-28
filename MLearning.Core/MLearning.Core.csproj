@@ -52,6 +52,7 @@
     <Compile Include="Entities\json\JsonActionResult.cs" />
     <Compile Include="Entities\json\QuestionAnswer.cs" />
     <Compile Include="Entities\json\LOContent.cs" />
+    <Compile Include="Entities\LearningObjectTag.cs" />
     <Compile Include="Entities\LOsection.cs" />
     <Compile Include="Entities\lo_in_circle.cs" />
     <Compile Include="Entities\lo_by_owner.cs" />

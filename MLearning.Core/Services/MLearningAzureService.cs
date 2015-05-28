@@ -428,6 +428,10 @@ namespace MLearning.Core.Services
 #endif
         }
 
+        async public Task<List<tag_by_lo>> GetLOTags(int lo_id)
+        {
+            return await _repositoryService.SearchForAsync<tag_by_lo>(t => t.lo_id == lo_id, t => t.updated_at, t => t.id, false);
+        }
 
         async public Task<List<tag_by_page>> GetTagsByPage(int page_id)
         {
@@ -663,6 +667,10 @@ namespace MLearning.Core.Services
             await _repositoryService.InsertAsync<PageTag>(new PageTag { page_id = page_id, tag_id = tag_id, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow });
         }
 
+        public async Task AddTagToLO(int tag_id, int lo_id)
+        {
+            await _repositoryService.InsertAsync<LearningObjectTag>(new LearningObjectTag { lo_id = lo_id, tag_id = tag_id, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow });
+        }
 
         public async Task DeleteTagFromPage(int tag_id, int page_id)
         {
@@ -673,7 +681,14 @@ namespace MLearning.Core.Services
 
         }
 
+        public async Task DeleteTagFromLO(int tag_id, int lo_id)
+        {
 
+            var list = await _repositoryService.SearchForAsync<LearningObjectTag>(lot => lot.tag_id == tag_id && lot.lo_id == lo_id, pt => pt.updated_at, pt => pt.id, false);
+
+            await _repositoryService.DeleteAsync<LearningObjectTag>(list.FirstOrDefault());
+
+        }
 
         public async Task<List<Question>> GetQuestionsByQuiz(int quiz_id)
         {

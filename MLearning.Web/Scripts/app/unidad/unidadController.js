@@ -3,20 +3,24 @@ angular.module('mlearningApp').controller('unidadController', function ($scope, 
     $scope.unidades = [];
     $scope.pags = [];
     $scope.statusMsg = "";
-    if (typeof currentLO != null)
+    if (currentLO != null)
     {
         $scope.unidadActual = currentLO;
         $scope.message = "EDITANDO ";
+        $scope.unidadActual.tags = LOtagsIds;
     }
     else
     {
         $scope.unidadActual = {};
         $scope.unidadActual.id = null;
         $scope.message = "CREAR UNA NUEVA ";
+        $scope.unidadActual.tags = [];
     }
     
+    
+
     ///////combobox/////////
-    $scope.etiquetas = [];
+    //$scope.etiquetas = [];
   
     ///funciones
     
@@ -33,12 +37,19 @@ angular.module('mlearningApp').controller('unidadController', function ($scope, 
         });
     }
 
+    $scope.onAdditionalData = function(){
+        return {
+            text: $("#loTags").val()
+        };
+    }
+
     $scope.crearUnidad = function () {  
         //$scope.statusMsg = "Enviando...";
         if (!$scope.unitForm.$valid) {
             console.log("Invalid fields in form!");
             return;
         }
+        console.log($scope.unidadActual.tags);
         loService.createLO($scope.unidadActual)
         .success(function (data) {
             if (data.errors == null) {

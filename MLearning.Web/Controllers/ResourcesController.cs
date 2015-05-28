@@ -42,5 +42,13 @@ namespace MLearning.Web.Controllers
             }
         }
 
+        public async Task<ActionResult> Read_tags()
+        {
+            //TODO filter values in sql server            
+            //string value = text?? default(String);
+            var tags = await _mLearningService.GetAllTags();
+            return Json(tags);
+        }
+
     }
 }
