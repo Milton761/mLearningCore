@@ -14,7 +14,6 @@
     //setItemActual('#institucion');
     hacerHome(false);
 </script>
-
 @(Html.Kendo().Grid<MLearningDB.lo_in_circle>()
     .Name("unitsGrid")
     .Columns(columns =>
@@ -29,7 +28,7 @@
             "# } #"
             );*/
         columns.Bound(c => c.fullname).Title("Autor");//.Width(100);
-        columns.Bound(c => c.created_at).Title("Fecha de creacion").Format("{0:MM/dd/yyyy}");//.Width(100);
+        columns.Bound(c => c.created_at).Title("Fecha de creacion").Format("{0:dd/MM/yyyy}");//.Width(100);
         columns.Command(command => command.Custom("Ver").Click("showDetails")).Width(100).HeaderTemplate("Acciones");
 
     })
@@ -65,7 +64,6 @@
     .Draggable(true)
     .Width(400)
 )
-
 <script type="text/x-kendo-template" id="template">
     <div id="details-container" div class="form-horizontal">
         <div class="row">
@@ -82,8 +80,9 @@
                 <dt>Descripción:</dt>
                 <dd>#=description #</dd>
             </dl>
-
-        </div>
+        <a href="@Url.Action("LO")/#=id #" class="k-button" style=" color: black; "> Editar </a>
+        <a href="@Url.Action("LODetail")/#=id #" class="k-button" style=" color: black; "> Editar Secciones </a>
+    </div>
 </script>
 <!--alt=""-->
 <script type="text/javascript">
@@ -100,4 +99,5 @@
         wnd.content(detailsTemplate(dataItem));
         wnd.center().open();
     }
+
 </script>

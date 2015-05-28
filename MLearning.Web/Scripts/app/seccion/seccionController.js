@@ -12,7 +12,7 @@ mlearningApp.controller('seccionController', function($scope,globales) {
    
     $scope.addSeccion = function (data) {
        $scope.aviso= ''; 
-        
+       data.id = null;
        $scope.sections.push(data);
         console.log( $scope.sections);
     };
@@ -36,27 +36,31 @@ mlearningApp.controller('seccionController', function($scope,globales) {
     
     //es para poder guardar el seccion actual  
     $scope.nuevaPagina = function (data) {
-     //console.log('nueva Pagina************* ',data);
+     // console.log('nueva Pagina************* ',data);
         //globales.save('seccionActual',data);
-        data.LO_id = $scope.unidadActual.id;
-        data.id = 0;
-        $.ajax(
+        if (data.id == null)
         {
-            url: saveSectionURL,
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(data),
-            success: function (data, textStatus, jqXHR) {
-                console.log(data);
-                if (data.errors.length == 0) {
-                    $scope.redireccionar(data.url);
+            data.LO_id = $scope.unidadActual.id;
+            data.id = 0;
+            $.ajax(
+            {
+                url: saveSectionURL,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                success: function (data, textStatus, jqXHR) {
+                    console.log(data);
+                    if (data.errors.length == 0) {
+                        $scope.redireccionar(data.url);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
                 }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-            }
-        });
-
+            });
+        }
+        else
+            $scope.redireccionar('/Page/?sectionId=' + data.id);
     };
     
     

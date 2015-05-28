@@ -86,7 +86,7 @@ mlearningApp.controller('paginaController', function ($scope,globales,lopageServ
 
 
     $scope.cancelarPagina= function () {
-        console.log('cancelar pagina');
+        $scope.redireccionar('/Publisher/LODetail/'+ $scope.seccionActual.LO_id);
     };
 
 
