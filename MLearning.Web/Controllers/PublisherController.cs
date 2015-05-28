@@ -13,22 +13,23 @@ using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using MLearning.Core.Entities;
+using MLearning.Core.Entities.json;
 
 namespace MLearning.Web.Controllers
 {
-    [Authorize] 
+    [Authorize]
     public class PublisherController : MLController
     {
-         
+
 
         //
         // GET: /Publisher/
-         [Authorize(Roles = Constants.PublisherRole)]
-        async public Task<ActionResult> Index(int ?id)
+        [Authorize(Roles = Constants.PublisherRole)]
+        async public Task<ActionResult> Index(int? id)
         {
 
 
-            if (id != null)            
+            if (id != null)
             {
                 int nonull_id = id ?? default(int);
                 UserID = nonull_id;
@@ -42,22 +43,22 @@ namespace MLearning.Web.Controllers
                     // NO user authenticated
                     return RedirectToAction("Index", "Home");
                 }
-                
+
             }
 
 
-                InstitutionID = await _mLearningService.GetPublisherInstitutionID(UserID);
+            InstitutionID = await _mLearningService.GetPublisherInstitutionID(UserID);
 
-                var list = await _mLearningService.GetPublishersByInstitution(InstitutionID);
+            var list = await _mLearningService.GetPublishersByInstitution(InstitutionID);
 
-                PublisherID = list.Where(p => p.id == UserID).ToList().FirstOrDefault().publisher_id;
+            PublisherID = list.Where(p => p.id == UserID).ToList().FirstOrDefault().publisher_id;
 
-                //var circlesList = await _mLearningService.GetCirclesByOwner(UserID);
+            //var circlesList = await _mLearningService.GetCirclesByOwner(UserID);
 
-                var loList = await _mLearningService.GetLOByUserOwner(UserID);
-                //viewData["totalCircles"] = 
-                //return View("ConsumerLOList", new AdminPublisherViewModel { Circles=circlesList, LearningObjects =loList});
-                return View("AssignedCircles");
+            var loList = await _mLearningService.GetLOByUserOwner(UserID);
+            //viewData["totalCircles"] = 
+            //return View("ConsumerLOList", new AdminPublisherViewModel { Circles=circlesList, LearningObjects =loList});
+            return View("AssignedCircles");
         }
 
         public async Task<ActionResult> Circle_Read([DataSourceRequest] DataSourceRequest request)
@@ -79,18 +80,20 @@ namespace MLearning.Web.Controllers
             return View();
         }
 
-        public async Task<ActionResult> LO(int? id,int? circleId)
+        public async Task<ActionResult> LO(int? id, int? circleId)
         {
-             ViewBag.CircleID = circleId;
-             if (id != null)
-                 CircleID = circleId ?? default(int);
-            ViewBag.LOID = id;
-            if(id!=null)
+            if (id != null)
             {
-                LOID = id?? default(int);
+                LOID = ViewBag.LOID = id ?? default(int);
                 LearningObject model = await _mLearningService.GetObjectWithId<LearningObject>(LOID);
+                ViewBag.CircleID = CircleID;
                 return View(model);
             }
+            if (circleId != null)
+                CircleID = ViewBag.CircleID = circleId ?? default(int);
+
+            ViewBag.tagList = await _mLearningService.GetAllTags();
+
             return View();
         }
 
@@ -116,31 +119,44 @@ namespace MLearning.Web.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         async public Task<ActionResult> CreateLO(LearningObject obj)
         {
+
+            if (PublisherID == default(int))
+                return Json(new JsonActionResult { errors = new Object[] { "No publisher defined" } });
             try
             {
                 //Create LO
+
                 obj.created_at = DateTime.UtcNow;
                 obj.updated_at = DateTime.UtcNow;
 
                 obj.Publisher_id = PublisherID;
-                obj.url_cover = "NULL";
 
                 int LO_id = await _mLearningService.CreateObject<LearningObject>(obj, lo => lo.id);
 
                 await _mLearningService.PublishLearningObjectToCircle(CircleID, LO_id);
 
                 return Json(new JsonActionResult { url = Url.Action("LODetail", new { id = LO_id }) });
-                //return RedirectToAction("Index", new { id = UserID });
-
             }
             catch (Exception e)
             {
-                return Json(new {errors = new String[]{e.Message} });
+                return Json(new { errors = new String[] { e.Message } });
             }
-
-
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        async public Task<ActionResult> UpdateLO(LearningObject obj)
+        {
+            try
+            {
+                obj.updated_at = DateTime.UtcNow;
+                await _mLearningService.UpdateObject<LearningObject>(obj);
+                return Json(new JsonActionResult());
+            }
+            catch (Exception e)
+            {
+                return Json(new { errors = new String[] { e.Message } });
+            }
+        }
 
         async public Task<ActionResult> createLOSection(LOsection data)
         {
@@ -151,7 +167,7 @@ namespace MLearning.Web.Controllers
                 id = await _mLearningService.CreateObject<LOsection>(data, o => o.id);
                 _errors = new String[] { };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _errors = new String[] { e.Message };
             }
@@ -294,10 +310,10 @@ namespace MLearning.Web.Controllers
             }
         }
 
-/*********************************************************************************************************/
-#region OLD cruds
+        /*********************************************************************************************************/
+        #region OLD cruds
         // GET: /Publisher/CreateCircle
-         [Authorize(Roles = Constants.PublisherRole)]
+        [Authorize(Roles = Constants.PublisherRole)]
         public ActionResult CreateCircle()
         {
             return View("CircleCreate");
@@ -309,7 +325,7 @@ namespace MLearning.Web.Controllers
             try
             {
                 int circle_id = await _mLearningService.CreateCircle(UserID, circleObj.name, circleObj.type);
-              
+
                 //Register the Publisher as a user in a Circle
                 await _mLearningService.CreateObject<CircleUser>(new CircleUser { Circle_id = circle_id, User_id = UserID, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow }, c => c.id);
 
@@ -321,7 +337,7 @@ namespace MLearning.Web.Controllers
             }
         }
 
-         [Authorize(Roles = Constants.PublisherRole)]
+        [Authorize(Roles = Constants.PublisherRole)]
         async public Task<ActionResult> ManageCircle(int circle_id)
         {
 
@@ -336,19 +352,19 @@ namespace MLearning.Web.Controllers
 
             var lospublic = await _mLearningService.GetPublicLOs();
 
-            return View("CircleManage", new ManageCircleViewModel { LOInCircle = losInCircle,LOPublic = lospublic, ConsumerInCircle = consumersInCircle, ConsumerInInst = consumersInInst });
+            return View("CircleManage", new ManageCircleViewModel { LOInCircle = losInCircle, LOPublic = lospublic, ConsumerInCircle = consumersInCircle, ConsumerInInst = consumersInInst });
 
 
         }
 
 
 
-         [Authorize(Roles = Constants.PublisherRole)]
+        [Authorize(Roles = Constants.PublisherRole)]
         async public Task<ActionResult> EditCircle(int circle_id)
         {
 
             var circle = await _mLearningService.GetObjectWithId<Circle>(circle_id);
-            
+
 
 
             return View("CircleEdit", circle);
@@ -359,13 +375,13 @@ namespace MLearning.Web.Controllers
 
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public async Task<ActionResult> EditCircle(int circle_id,  Circle circleObj)
+        public async Task<ActionResult> EditCircle(int circle_id, Circle circleObj)
         {
             try
             {
 
-                
-              
+
+
                 //Update DB
                 await _mLearningService.UpdateObject<Circle>(circleObj);
 
@@ -380,7 +396,7 @@ namespace MLearning.Web.Controllers
 
         }
 
-         [Authorize(Roles = Constants.PublisherRole)]
+        [Authorize(Roles = Constants.PublisherRole)]
         public async Task<ActionResult> DeleteCircle(int circle_id)
         {
             var circle = await _mLearningService.GetObjectWithId<Circle>(circle_id);
@@ -401,12 +417,12 @@ namespace MLearning.Web.Controllers
 
 
                 _mLearningService.DeleteObject<Circle>(new Circle { id = circle_id });
-                
+
 
 
                 return RedirectToAction("Index", new { id = UserID });
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return RedirectToAction("Index", new { id = UserID });
             }
@@ -415,7 +431,7 @@ namespace MLearning.Web.Controllers
 
 
         // GET: /Publisher/CreateLO
-         [Authorize(Roles = Constants.PublisherRole)]
+        [Authorize(Roles = Constants.PublisherRole)]
         public ActionResult CreateLO()
         {
 
@@ -423,7 +439,7 @@ namespace MLearning.Web.Controllers
             return View("LOCreate");
         }
 
-         [Authorize(Roles = Constants.PublisherRole)]
+        [Authorize(Roles = Constants.PublisherRole)]
         public async Task<ActionResult> Remove(int user_id)
         {
 
@@ -432,12 +448,12 @@ namespace MLearning.Web.Controllers
             {
                 await _mLearningService.UnSubscribeConsumerFromCircle(user_id, CircleID);
             }
-            
+
 
             return RedirectToAction("ManageCircle", new { circle_id = CircleID });
         }
 
-         [Authorize(Roles = Constants.PublisherRole)]
+        [Authorize(Roles = Constants.PublisherRole)]
         public async Task<ActionResult> Add(int user_id)
         {
 
@@ -453,19 +469,19 @@ namespace MLearning.Web.Controllers
 
 
 
-         [Authorize(Roles = Constants.PublisherRole)]
-         public async Task<ActionResult> AddLOToCircle(int lo_id)
-         {
+        [Authorize(Roles = Constants.PublisherRole)]
+        public async Task<ActionResult> AddLOToCircle(int lo_id)
+        {
 
 
-             if (CircleID != null)
-             {
-                 await _mLearningService.PublishLearningObjectToCircle(CircleID,lo_id);
-             }
+            if (CircleID != null)
+            {
+                await _mLearningService.PublishLearningObjectToCircle(CircleID, lo_id);
+            }
 
 
-             return RedirectToAction("ManageCircle", new { circle_id = CircleID });
-         }
+            return RedirectToAction("ManageCircle", new { circle_id = CircleID });
+        }
 
 
 

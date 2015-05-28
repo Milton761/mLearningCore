@@ -10,21 +10,17 @@
 
 @section Scripts
 {
-<script src="@Url.Content("~/Scripts/app/unidad/unidadController.js")"></script>
-<script src="@Url.Content("~/Scripts/app/unidad/unidadService.js")"></script>    
+    <script src="@Url.Content("~/Scripts/app/unidad/unidadController.js")"></script>
+    <script src="@Url.Content("~/Scripts/app/unidad/unidadService.js")"></script>
     <script>
         home = false;
         contraer_menu();
         agregarClickItem();
         hacerHome(false);
-        var saveUnitURL = '@Url.Action("CreateLO", "Publisher")';
-        var url_cover = null;
-        @if (ViewBag.LOID != null)
-        {
-    <text>
+        @*var saveUnitURL = '@Url.Action("CreateLO", "Publisher")';*@
+        //var url_cover = null;
+        var circleID = @ViewBag.CircleID;
         var currentLO = @Html.Raw(JsonConvert.SerializeObject(Model));
-    </text>
-        }
     </script>
 }
 <div ng-controller="unidadController">
@@ -36,7 +32,7 @@
             <div class="row"><br></div>
             <div class="row"><br></div>
             <div class="row"><br></div>
-            <div class='titulo_Prin'>CREAR UNA NUEVA UNIDAD</div>
+            <div class='titulo_Prin'>{{message}} UNIDAD</div>
             <div class="row"><br></div>
         </div>
         <div class="container cont_Principal">
@@ -107,7 +103,6 @@
                         <div class="col-xs-offset-4 col-xs-4 text-center img_cubierta" style="width: 100%; margin-left: 0%;">
                             <div class="row"><br></div>
                             <input id="coverImageIn" name="coverImageIn" ng-model="unidadActual.url_cover" type="hidden" required />
-                            <!--<input id="coverImage" src="/images/029_icon_imagen.png" type="image" ng-model="unidadActual.url_cover" required />-->
                             <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ unidadActual.url_cover }}" style="max-width: 100%; height: auto;" />
                             <div class="row"><br></div>
                             <div class="row">
@@ -131,24 +126,35 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-offset-3 col-xs-6 text-center img_optional">
+                        <div class="col-xs-offset-3 col-xs-6 text-center img_optional" style="width: 100%; margin-left: 0%;">
                             <div class="row"><br></div>
 
                             <div class="row">
                                 <div class="col-xs-offset-1 col-xs-10 text-center img_cubierta">
                                     <div class="row"><br></div>
-                                    <input src="/images/029_icon_imagen.png" type="image" ng-model="pagina.loimage" height='50px' width='50px' />
+                                    <input id="backgroundImageIn" name="backgroundImageIn" ng-model="unidadActual.url_background" type="hidden"/>
+                                    <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ unidadActual.url_background }}" style="max-width: 100%; height: auto;" />
                                     <div class="row"><br></div>
+                                    <div class="row">
+                                        <input id="kendoCoverImage" name="files"
+                                               type="file"
+                                               kendo-upload
+                                               k-async="{ saveUrl: '@Url.Action("UploadImage", "Resources")', autoUpload: true }"
+                                               k-multiple="false"
+                                               k-show-file-list="false"
+                                               k-success="onBackgroundUploadSuccess" />
+                                    </div>
 
                                 </div>
 
                             </div>
                             <div class="row"><br></div>
                             <div class="row">
-                                <div class="col-xs-offset-1 col-xs-2">col1</div>
-                                <div class="col-xs-2">col2</div>
-                                <div class="col-xs-2">col3</div>
-                                <div class="col-xs-2">col4</div>
+                                Imagen de fondo
+                                @*<div class="col-xs-offset-1 col-xs-2">col1</div>
+                <div class="col-xs-2">col2</div>
+                <div class="col-xs-2">col3</div>
+                <div class="col-xs-2">col4</div>*@
                             </div>
                             <div class="row"><br></div>
                         </div>
@@ -163,8 +169,11 @@
     <div class="container">
         <div class="row"><br></div>
         <div class="row">
-            <div id="okButton" class="col-xs-offset-7 col-xs-2  col-sm-offset-8 col-sm-2 col-md-offset-10 col-md-1">
-                <a ng-click="crearUnidad()" href="#">
+            <div id="okButton" class="col-xs-offset-4 col-xs-2  col-sm-offset-5 col-sm-2 col-md-offset-9 col-md-1">
+                <a ng-click="updateLO()" href="#" ng-show="unidadActual.id!=null">
+                    <img class="btn_med" src="/images/035_btn_guardar.png">
+                </a>
+                <a ng-click="crearUnidad()" href="#" ng-show="unidadActual.id==null">
                     <img class="btn_med" src="/images/030_btn_crear.png">
                 </a>
             </div>
@@ -199,10 +208,6 @@
         //angular.element($('#coverImageIn')).triggerHandler('input')
         //scope.unidadActual.url_cover = e.response.url;
         console.log(url_cover);
-    }
-
-    function onUpload(e) {
-        $("#okButton *").attr("disabled", "disabled").off('click');
     }
 </script>
 
