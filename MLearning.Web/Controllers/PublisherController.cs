@@ -95,7 +95,7 @@ namespace MLearning.Web.Controllers
             if (circleId != null)
                 CircleID = ViewBag.CircleID = circleId ?? default(int);
 
-            
+
 
             return View();
         }
@@ -116,11 +116,18 @@ namespace MLearning.Web.Controllers
             return View(model);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        async public Task<ActionResult> Read_SectionPages(int id)
+        {
+            var Sections = await _mLearningService.GetPagesByLOSection(id);
+            return Json(Sections);
+        }
+
 
         //Not used
         //Upload controller used instead
         [AcceptVerbs(HttpVerbs.Post)]
-        async public Task<ActionResult> CreateLO(LearningObject obj, List<Tag> tags )
+        async public Task<ActionResult> CreateLO(LearningObject obj, List<Tag> tags)
         {
 
             if (PublisherID == default(int))
@@ -137,8 +144,8 @@ namespace MLearning.Web.Controllers
                 int LO_id = await _mLearningService.CreateObject<LearningObject>(obj, lo => lo.id);
 
                 await _mLearningService.PublishLearningObjectToCircle(CircleID, LO_id);
-                
-                foreach(Tag t in tags)
+
+                foreach (Tag t in tags)
                 {
                     await _mLearningService.AddTagToLO(t.id, LO_id);
                 }
@@ -147,7 +154,7 @@ namespace MLearning.Web.Controllers
             }
             catch (Exception e)
             {
-                return Json(new { errors = new Object[] { e} });
+                return Json(new { errors = new Object[] { e } });
             }
         }
 
@@ -160,23 +167,25 @@ namespace MLearning.Web.Controllers
                 await _mLearningService.UpdateObject<LearningObject>(obj);
 
                 ///Update tag list
-                var curtags = await _mLearningService.GetLOTags(obj.id);
-                var curtagsids = curtags.Select(t => t.id);
-                var tagids = tags.Select(t => t.id);
-
-                var toDelete = curtagsids.Except(tagids).ToList();
-                var toAdd = tagids.Except(curtagsids).ToList();
-
-                foreach(int id in toDelete)
+                if (tags != null)
                 {
-                    await _mLearningService.DeleteTagFromLO(id, obj.id);
-                }
+                    var curtags = await _mLearningService.GetLOTags(obj.id);
+                    var curtagsids = curtags.Select(t => t.id);
+                    var tagids = tags.Select(t => t.id);
 
-                foreach (int id in toAdd)
-                {
-                    await _mLearningService.AddTagToLO(id, obj.id);
-                }
+                    var toDelete = curtagsids.Except(tagids).ToList();
+                    var toAdd = tagids.Except(curtagsids).ToList();
 
+                    foreach (int id in toDelete)
+                    {
+                        await _mLearningService.DeleteTagFromLO(id, obj.id);
+                    }
+
+                    foreach (int id in toAdd)
+                    {
+                        await _mLearningService.AddTagToLO(id, obj.id);
+                    }
+                }
                 return Json(new JsonActionResult());
             }
             catch (Exception e)

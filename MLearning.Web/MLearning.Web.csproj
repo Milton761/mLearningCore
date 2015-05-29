@@ -703,6 +703,7 @@
     <Content Include="Scripts\app\directives\cero.html" />
     <Content Include="Scripts\app\directives\cuarto.html" />
     <Content Include="Scripts\app\directives\examen-editor.html" />
+    <Content Include="Scripts\app\directives\pagePreview.html" />
     <Content Include="Scripts\app\directives\pagina-editor.html" />
     <Content Include="Scripts\app\directives\pagina-slide.html" />
     <Content Include="Scripts\app\directives\pregCero.html" />

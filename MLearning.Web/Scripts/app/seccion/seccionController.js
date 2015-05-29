@@ -1,4 +1,4 @@
-mlearningApp.controller('seccionController', function($scope,globales) {
+mlearningApp.controller('seccionController', function ($scope, sectionService) {
 
     $scope.aviso = 'no se a Añadido Ninguna Seccion';
     $scope.sections = [];
@@ -35,14 +35,24 @@ mlearningApp.controller('seccionController', function($scope,globales) {
     };
     
     //es para poder guardar el seccion actual  
-    $scope.nuevaPagina = function (data) {
+    $scope.nuevaPagina = function (section) {
      // console.log('nueva Pagina************* ',data);
         //globales.save('seccionActual',data);
-        if (data.id == null)
+        if (section.id == null)
         {
-            data.LO_id = $scope.unidadActual.id;
-            data.id = 0;
-            $.ajax(
+            section.LO_id = $scope.unidadActual.id;
+            section.id = 0;
+
+            sectionService.createSection(section).
+                success(function (data) {
+                    if (data.errors.length == 0) {
+                        $scope.redireccionar(data.url);
+                    }
+                });
+
+
+
+            /*$.ajax(
             {
                 url: saveSectionURL,
                 type: "POST",
@@ -57,17 +67,28 @@ mlearningApp.controller('seccionController', function($scope,globales) {
                 error: function (jqXHR, textStatus, errorThrown) {
 
                 }
-            });
+            });*/
         }
         else
-            $scope.redireccionar('/Page/?sectionId=' + data.id);
+            $scope.redireccionar('/Page/?sectionId=' + section.id);
     };
     
     
+    $scope.collapseSection = function (section, expanded) {
+        if (!expanded || section.id==null) return;
+        //console.log(section);
+        sectionService.getSectionPages(section)
+            .success(function (response) {
+                console.log("Response sectionPages => ", response);
+                section.pages = response;
+            }).error(function (error){
+                console.log(error);
+            });
+    }
+
     ///funciones q se ejecutan primero 
     
     $scope.getUnidad();
-    
     
     
 }).directive('seDirective', function () {
@@ -78,5 +99,10 @@ mlearningApp.controller('seccionController', function($scope,globales) {
     return {
         templateUrl: '/Scripts/app/directives/seccionDirective.html'
       
+    };
+}).directive('pagePreview', function () {
+    return {
+        scope: true,
+        templateUrl: '/Scripts/app/directives/pagePreview.html'
     };
 });
