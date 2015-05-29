@@ -33,11 +33,8 @@ mlearningApp.controller('seccionController', function ($scope, sectionService) {
      $scope.eliminarSeccion =  function () {
         console.log('eliminar seccion ');
     };
-    
-    //es para poder guardar el seccion actual  
+      
     $scope.nuevaPagina = function (section) {
-     // console.log('nueva Pagina************* ',data);
-        //globales.save('seccionActual',data);
         if (section.id == null)
         {
             section.LO_id = $scope.unidadActual.id;
@@ -49,31 +46,15 @@ mlearningApp.controller('seccionController', function ($scope, sectionService) {
                         $scope.redireccionar(data.url);
                     }
                 });
-
-
-
-            /*$.ajax(
-            {
-                url: saveSectionURL,
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(data),
-                success: function (data, textStatus, jqXHR) {
-                    console.log(data);
-                    if (data.errors.length == 0) {
-                        $scope.redireccionar(data.url);
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-
-                }
-            });*/
         }
         else
             $scope.redireccionar('/Page/?sectionId=' + section.id);
     };
     
-    
+    $scope.removePage = function (page) {
+        console.log("removing Page");
+    }
+
     $scope.collapseSection = function (section, expanded) {
         if (!expanded || section.id==null) return;
         //console.log(section);
