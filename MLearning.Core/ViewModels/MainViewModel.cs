@@ -529,10 +529,10 @@ namespace MLearning.Core.ViewModels
             try
             {
                 var watch = Stopwatch.StartNew();
-                //await LoadCircleTags(CircleID);
-                //await LoadPostsInCircle(CircleID);
-                //await LoadUsersInCircle(CircleID);
-                //await LoadLearningObjects(CircleID);
+                await LoadCircleTags(CircleID);
+                await LoadPostsInCircle(CircleID);
+                await LoadUsersInCircle(CircleID);
+                await LoadLearningObjects(CircleID);
                 await LoadQuizzes(CircleID);
 
                 watch.Stop();

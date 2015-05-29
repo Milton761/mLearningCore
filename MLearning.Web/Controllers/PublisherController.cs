@@ -119,10 +119,16 @@ namespace MLearning.Web.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         async public Task<ActionResult> Read_SectionPages(int id)
         {
-            var Sections = await _mLearningService.GetPagesByLOSection(id);
-            return Json(Sections);
+            var pages = await _mLearningService.GetPagesByLOSection(id);
+            return Json(pages);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        async public Task<ActionResult> Read_LOPages(int id)
+        {
+            var pages = await _mLearningService.GetPagesByLO(id);
+            return Json(pages);
+        }
 
         //Not used
         //Upload controller used instead

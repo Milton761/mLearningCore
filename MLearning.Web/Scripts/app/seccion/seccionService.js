@@ -9,4 +9,8 @@ mlearningApp.service('sectionService', ['$http', function ($http) {
         return $http.post(urlBase + '/CreateLOsection',section);
     };
 
+    this.getLOPages = function (lo_id) {
+        return $http.post(urlBase + '/Read_LOPages/'+lo_id);
+    }
+
 }]);

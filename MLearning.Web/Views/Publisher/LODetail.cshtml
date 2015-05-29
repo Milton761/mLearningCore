@@ -43,6 +43,11 @@
         <div class="col-xs-12">
             <se-directive> </se-directive>
         </div>
+
+        <div ng-show='unidadActual.pages' ng-repeat="page in unidadActual.pages">
+            <page-preview></page-preview>
+        </div>
+
     </div>
     <div class="row"><br></div>
 

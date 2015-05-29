@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLearning.Core", "MLearning.Core\MLearning.Core.csproj", "{B1C6AA81-1532-477B-BDA1-2ADD36344699}"
 EndProject
@@ -215,9 +215,9 @@ Global
 		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|ARM.Deploy.0 = Debug|ARM
 		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
-		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|Mixed Platforms.Build.0 = Debug|x64
-		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|Mixed Platforms.Deploy.0 = Debug|x64
+		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
 		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|x64.ActiveCfg = Debug|x64
 		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|x64.Build.0 = Debug|x64
 		{60CF62CA-5D26-4B35-9559-08D3B2398A75}.Debug|x64.Deploy.0 = Debug|x64

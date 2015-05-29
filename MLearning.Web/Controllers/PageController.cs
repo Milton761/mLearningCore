@@ -48,13 +48,12 @@ namespace MLearning.Web.Controllers
              if (id != null)
              {
                  page = await _mLearningService.GetObjectWithId<Page>(id ?? default(int));
+                 ViewBag.currentLO = await _mLearningService.GetObjectWithId<LearningObject>(page.lo_id);
                  sectionId = page.LOsection_id;
              }
-             if(sectionId != null)
+             if(sectionId != null && sectionId != default(int))
              {
-                  var currentLOsection = await _mLearningService.GetObjectWithId<LOsection>(sectionId?? default(int));
-                  ViewBag.currentLO = await _mLearningService.GetObjectWithId<LearningObject>(currentLOsection.LO_id);
-                  ViewBag.currentLOsection = currentLOsection;
+                  ViewBag.currentLOsection = await _mLearningService.GetObjectWithId<LOsection>(sectionId ?? default(int));
              }
              return View(page);
          }

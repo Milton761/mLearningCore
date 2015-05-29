@@ -12,11 +12,12 @@ mlearningApp.controller('paginaController', function ($scope,globales,lopageServ
         if(currentPage != null){
             $scope.currentPage = currentPage;
             $scope.loslide = JSON.parse(currentPage.content).lopage.loslide;
+            console.log($scope.loslide);
         }
         else {
             $scope.isNew = true;
             $scope.currentPage = {};
-            $scope.loslide = [];
+            $scope.loslide = [{lotype:0}];
         }
         console.log('actual seccion::',$scope.seccionActual);
 
@@ -47,14 +48,24 @@ mlearningApp.controller('paginaController', function ($scope,globales,lopageServ
         console.log('isNew? =>', $scope.isNew);
 
 
-        if (!$scope.pageForm.$valid) {
-            // Submit as normal
-            console.log("Invalid fields in form!");
-            return;
-        }
+        //if (!$scope.pageForm.$valid) {
+        //    // Submit as normal
+        //    console.log("Invalid fields in form!");
+        //    return;
+        //}
 
-        $scope.currentPage.lo_id = $scope.seccionActual.LO_id;
-        $scope.currentPage.LOsection_id = $scope.seccionActual.id;
+        $scope.currentPage.title = $scope.loslide[0].lotitle;
+        $scope.currentPage.description = $scope.loslide[0].loparagraph;
+        $scope.currentPage.url_img = $scope.loslide[0].loimage;
+
+        if ($scope.seccionActual != null)
+        {
+            $scope.currentPage.lo_id = $scope.seccionActual.LO_id;
+            $scope.currentPage.LOsection_id = $scope.seccionActual.id;
+        }
+        /*else {
+
+        }*/
 
         var content = {};
         content.lopage = {};
@@ -138,7 +149,7 @@ mlearningApp.directive('pgSlide', function () {
 
 mlearningApp.directive('ngEnter', function () {
     return function (scope, element, attrs) {
-        console.log(attrs);
+        //console.log(attrs);
         element.bind("keydown keypress", function (event) {
 
             if(event.which === 13 && scope.newItem.length>0) {
