@@ -9,104 +9,48 @@
             <div class=" col-xs-10">
                 <div class="row">                     
                     <div class="col-xs-offset-1 col-xs-9 " >
-                        <input ng-model="slide.titulo" class="form-control" type="text" placeholder="Titulo (Opcional)">
+                        <input ng-model="slide.lotitle" class="form-control" type="text" placeholder="Titulo (Opcional)">
                     </div> 
                 </div>
             </div>
 
         </div> 
 
-        <div class="row padding_text">
-            <div class="col-xs-3">
-                <div class="row">                     
-                    <div class="col-xs-offset-2 col-xs-8 text-center img_cubierta" > 
-                        <div class="row"><br></div>   
-                        <input name="urlImageIn" ng-model="slide.loimage" type="hidden" />
-                        <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ slide.loimage }}" style="max-width: 100%; height: auto;" />
-                        <div class="row"><br></div>
+        <div class="row padding_text" >
+            <div class="col-xs-4" ng-repeat="item in slide.loitemize.loitem">
+                <div class="row">
+                    <div class="col-xs-12 text-center img_cubierta">
+                        <div class="row"><br/></div>
+                        <input name="urlImageIn" ng-model="item.loimage" type="hidden" />
+                        <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ item.loimage }}" style="max-width: 100%; height: auto;" />
+                        <div class="row"><br/></div>
                         <div class="row">
                             <input name="files"
                                    type="file"
                                    kendo-upload
                                    k-async="{ saveUrl: '/Resources/UploadImage', autoupload: true }"
                                    k-multiple="false"
-                                   k-show-file-list="false"
-                                   k-success="onUploadSlideImageSuccess" />
+                                   k-show-file-list="false" />
+                            <!-- k-success="onUploadSlideImageSuccess" -->
                         </div>
                         <div class="row"><br></div>
-                        <div class="row">Imagen</div> 
-                    </div> 
-
-
+                        <div class="row">Imagen</div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-3">
-                <div class="row">                     
-                    <div class="col-xs-offset-2 col-xs-8 text-center img_cubierta" > 
-                        <div class="row"><br></div>   
-                        <input name="urlImageIn" ng-model="slide.loimage" type="hidden" />
-                        <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ slide.loimage }}" style="max-width: 100%; height: auto;" />
-                        <div class="row"><br></div>
-                        <div class="row">
-                            <input name="files"
-                                   type="file"
-                                   kendo-upload
-                                   k-async="{ saveUrl: '/Resources/UploadImage', autoupload: true }"
-                                   k-multiple="false"
-                                   k-show-file-list="false"
-                                   k-success="onUploadSlideImageSuccess" />
-                        </div>
-                        <div class="row"><br></div>
-                        <div class="row">Imagen</div> 
-                    </div> 
-
-
+                <div class="row"><br/></div>
+                <div class="row">
+                    <!--<input ng-model="item.lotext" class="form-control" type="text" placeholder="Titulo de Imagen">-->
+                    <textarea ng-model="item.lotext" class="form-control" placeholder="Titulo de Imagen"></textarea>
                 </div>
-            </div>
-            <div class="col-xs-3">
-                <div class="row">                     
-                    <div class="col-xs-offset-2 col-xs-8 text-center img_cubierta" > 
-                        <div class="row"><br></div>   
-                        <input name="urlImageIn" ng-model="slide.loimage" type="hidden" />
-                        <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ slide.loimage }}" style="max-width: 100%; height: auto;" />
-                        <div class="row"><br></div>
-                        <div class="row">
-                            <input name="files"
-                                   type="file"
-                                   kendo-upload
-                                   k-async="{ saveUrl: '/Resources/UploadImage', autoupload: true }"
-                                   k-multiple="false"
-                                   k-show-file-list="false"
-                                   k-success="onUploadSlideImageSuccess" />
-                        </div>
-                        <div class="row"><br></div>
-                        <div class="row">Imagen</div> 
-                    </div> 
-
-
-                </div>
-            </div>
         </div>
-        <div class="row padding_text">
+        <!--<div class="row padding_text" ng-repeat="item in slide.loitemize.loitem">
             <div class="col-xs-3">
-                <div class="col-xs-12" >
-                    <input ng-model="slide.imagen1" class="form-control" type="text" placeholder="Titulo de Imagen">
+                <div class="col-xs-12">
+                    <input ng-model="item.lotext" class="form-control" type="text" placeholder="Titulo de Imagen">
                 </div>
 
             </div>
-
-            <div class="col-xs-3">
-                <div class="col-xs-12" >
-                    <input ng-model="slide.imagen2" class="form-control" type="text" placeholder="Titulo de Imagen"> 
-                </div>
-            </div>
-
-            <div class="col-xs-3">
-                <div class="col-xs-12" >
-                    <input ng-model="slide.imagen3" class="form-control" type="text" placeholder="Titulo de Imagen">
-                </div>
-            </div>
-        </div>
+        </div>-->
 
         <div class="row"><br></div>
     </div>

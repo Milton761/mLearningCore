@@ -11,8 +11,15 @@ mlearningApp.controller('paginaController', function ($scope,globales,lopageServ
         $scope.seccionActual = currentLOSection;
         if(currentPage != null){
             $scope.currentPage = currentPage;
-            $scope.loslide = JSON.parse(currentPage.content).lopage.loslide;
-            console.log($scope.loslide);
+            try {
+                $scope.loslide = JSON.parse(currentPage.content).lopage.loslide;
+            }
+            catch (err) {
+                $scope.loslide = [];
+                console.log(err.message);
+                alert('JSON invalido');
+            }
+            
         }
         else {
             $scope.isNew = true;
@@ -48,11 +55,11 @@ mlearningApp.controller('paginaController', function ($scope,globales,lopageServ
         console.log('isNew? =>', $scope.isNew);
 
 
-        //if (!$scope.pageForm.$valid) {
+        if (!$scope.pageForm.$valid) {
         //    // Submit as normal
-        //    console.log("Invalid fields in form!");
-        //    return;
-        //}
+            console.log("Invalid fields in form!");
+            return;
+        }
 
         $scope.currentPage.title = $scope.loslide[0].lotitle;
         $scope.currentPage.description = $scope.loslide[0].loparagraph;
@@ -122,6 +129,7 @@ mlearningApp.directive('pgEditor', function () {
         }
     };
 });
+    
 mlearningApp.directive('pgSlide', function () {
     return {
         scope: true,
