@@ -13,6 +13,8 @@ mlearningApp.controller('paginaController', function ($scope,globales,lopageServ
             $scope.currentPage = currentPage;
             try {
                 $scope.loslide = JSON.parse(currentPage.content).lopage.loslide;
+                currentPageTag.id = currentPageTag.tag_id;
+                $scope.loslide[0].pagetag = currentPageTag;
             }
             catch (err) {
                 $scope.loslide = [];
@@ -43,6 +45,10 @@ mlearningApp.controller('paginaController', function ($scope,globales,lopageServ
         });
     }
 
+    $scope.addImageItem = function(slide)
+    {
+        slide.loitemize.loitem.push({});
+    }
     /*$scope.onUploadSlideImageSuccess = function (e) {
         $scope.$apply(function () {
             $scope.slide.loimage =  e.response.url;
@@ -64,6 +70,9 @@ mlearningApp.controller('paginaController', function ($scope,globales,lopageServ
         $scope.currentPage.title = $scope.loslide[0].lotitle;
         $scope.currentPage.description = $scope.loslide[0].loparagraph;
         $scope.currentPage.url_img = $scope.loslide[0].loimage;
+        $scope.currentPage.tag = $scope.loslide[0].pagetag;
+
+        delete $scope.loslide[0].pagetag;
 
         if ($scope.seccionActual != null)
         {
@@ -100,6 +109,7 @@ mlearningApp.controller('paginaController', function ($scope,globales,lopageServ
         }
 
         console.log('saving page:::', $scope.currentPage);
+        $scope.loslide[0].pagetag = $scope.currentPage.tag;
     };
 
 

@@ -136,18 +136,24 @@ namespace MLearning.Store.Components
 
         TextBlock getTextBlock( double x, double y, double width, double height, string text )
         {
-            TextBlock tb = new TextBlock() { Width =  width, Height =  height, FontWeight = FontWeights.Light,
+            TextBlock tb = new TextBlock() { Width =  width, Height =  height, FontWeight = FontWeights.SemiLight,
                 VerticalAlignment = VerticalAlignment.Top, HorizontalAlignment = HorizontalAlignment.Left ,
-            TextWrapping = TextWrapping.Wrap, Foreground = new SolidColorBrush(ColorHelper.FromArgb(255,147,147,147)), Text = text , FontSize = 22};
+                                             TextWrapping = TextWrapping.Wrap,
+                                             Foreground = new SolidColorBrush(ColorHelper.FromArgb(255, 90, 90, 90)),
+                                             Text = text,
+                                             FontSize = 22
+            };
             tb.RenderTransform = new CompositeTransform() { TranslateX = x, TranslateY =  y };
             return tb;
         }
 
         TextBox getTextBox(double x, double y , double width, double height, string pholder)
         {
-            TextBox textbox = new TextBox() { Width =  width, Height =  height, FontWeight = FontWeights.Light, 
+            TextBox textbox = new TextBox() { Width =  width, Height =  height, FontWeight = FontWeights.SemiLight, 
                 VerticalAlignment = VerticalAlignment.Top, HorizontalAlignment = HorizontalAlignment.Left ,
-            Foreground = new SolidColorBrush(ColorHelper.FromArgb(255,179,179,179)), FontSize=16, PlaceholderText =  pholder,
+                                              Foreground = new SolidColorBrush(ColorHelper.FromArgb(255, 120, 120, 120)),
+                                              FontSize = 16,
+                                              PlaceholderText = pholder,
             Background = new SolidColorBrush(Colors.Transparent),BorderBrush= new SolidColorBrush(Colors.Transparent)
             };
             textbox.RenderTransform = new CompositeTransform() { TranslateX = x, TranslateY = y };
@@ -232,35 +238,38 @@ namespace MLearning.Store.Components
             _text_lt = new TextBlock()
             {
                 FontSize = 18,
-                Text = "Aplicación",
+                Text = "EDuTic",
                 Width = 120,
                 Height = 50,
                 TextAlignment = TextAlignment.Left,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(16) 
+                Margin = new Thickness(16) ,
+                Foreground = new SolidColorBrush(ColorHelper.FromArgb(255, 200, 200, 200))
             };
             _text_rt = new TextBlock()
             {
                 FontSize = 18,
-                Text = "Learn More",
+                Text = "Más sobre ...",
                 Width = 140,
                 Height = 50,
                 TextAlignment = TextAlignment.Right,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(16) 
+                Margin = new Thickness(16) ,
+                Foreground = new SolidColorBrush(ColorHelper.FromArgb(255, 200, 200, 200))
             };
             _text_rb = new TextBlock()
             {
                 FontSize = 14,
-                Text = "Forgot your Apple ID or password | Privacy policy | Copyrigth 2014",
+                Text = "EDuTic en la educación para personalizar y maximizar el aprendizaje",
                 Width = 640,
                 Height = 30,
                 TextAlignment = TextAlignment.Right,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Bottom,
-                Margin = new Thickness(16) 
+                Margin = new Thickness(16) ,
+                Foreground = new SolidColorBrush(ColorHelper.FromArgb(255, 200, 200, 200))
             };
 
             this.Children.Add(_text_lt);

@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using DataSource;
 using System.ComponentModel;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI;
 
 namespace StackView
 {
@@ -29,6 +30,7 @@ namespace StackView
             initcontrols();
             initproperties();
             inititemanimations();
+            Background = new SolidColorBrush(Windows.UI.Colors.Transparent);
         }
 
         #region Controls
@@ -62,7 +64,7 @@ namespace StackView
             this._bordercolor.Height = _borderheight;
             _bordercolor.BorderThickness = new Thickness(10);
             _bordercolor.CornerRadius = new CornerRadius(4);
-            _bordercolor.Background = new SolidColorBrush(Windows.UI.Colors.Aqua);
+            _bordercolor.Background = new SolidColorBrush(ColorHelper.FromArgb(150,112,138,144));
 
             this.Children.Add(_bordercolor);
 
@@ -87,21 +89,23 @@ namespace StackView
             _textpanel.VerticalAlignment = VerticalAlignment.Center;
             _textpanel.HorizontalAlignment = HorizontalAlignment.Center;
             _textpanel.Orientation = Orientation.Vertical;
-            _textpanel.Height = 120;
+            _textpanel.Height = 160;
             _textpanel.Width = 140;
             _textpanel.Opacity = 0.0;
 
             _titletext = new TextBlock();
             _titletext.Height = 40;
             _titletext.Width = 140;
+            _titletext.FontSize = 16;
             _titletext.Text = "Nombre de Item";
             _titletext.TextWrapping = TextWrapping.Wrap;
             _titletext.TextAlignment = TextAlignment.Center;
             _textpanel.Children.Add(_titletext);
 
             _descriptiontext = new TextBlock();
-            _descriptiontext.Height = 80;
+            _descriptiontext.Height = 120;
             _descriptiontext.Width = 140;
+            _descriptiontext.FontSize =12 ;
             _descriptiontext.Text = "Descripcion del Item";
             _descriptiontext.TextWrapping = TextWrapping.Wrap;
             _descriptiontext.TextAlignment = TextAlignment.Center;
@@ -213,7 +217,7 @@ namespace StackView
 
         public double MaxScale
         {
-            set { _maxscale = value; }
+            set { _maxscale = value + 0.01 ; }
             get { return _maxscale; }
         }
 
@@ -580,6 +584,7 @@ namespace StackView
             if (_touches > 1 && _isopen)
             {
                 StackItemSelected(this, _itemnumber);
+                _textpanel.Opacity = 0.0;
             }
         }
 
@@ -594,6 +599,7 @@ namespace StackView
             {
                 StackItemTapped(this, _itemnumber);
                 ZIndex = _maxthreshold;
+                _textpanel.Opacity = 0.0;
                 //LoadFullSource();
             }
             _touches = 0;
@@ -623,12 +629,14 @@ namespace StackView
                     ZIndex = _maxthreshold;
                     _isfull = true;
                     StackItemFullAnimationCompleted(this, _chapter, _section, _itemnumber);
+                    _textpanel.Opacity = 0.0;
                 }
                 else
                 {
                     ZIndex = _maxthreshold - _itemnumber;
                     _isfull = false;
                     StackItemThumbAnimationCompleted(this, _chapter, _section, _itemnumber);
+                    _textpanel.Opacity = 1.0;
                     DeleteFullSource();
                     //_borderimage.Opacity = 1.0;
                 }

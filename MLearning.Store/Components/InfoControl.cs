@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Animation;
+using MLReader;
 
 namespace MLearning.Store.Components
 {
@@ -146,9 +147,21 @@ namespace MLearning.Store.Components
             }
         }
 
+
+        private Color _infocolor;
+
+        public Color InfoColor
+        {
+            get { return _infocolor; }
+            set { _infocolor = value; if (IsSelected) this.Background = new SolidColorBrush(_infocolor); }
+        }
+        
+
         void select()
         {
-            this.Background = new SolidColorBrush(ColorHelper.FromArgb(255,78,177,223));
+            StyleConstants styles = new StyleConstants();
+
+            this.Background = new SolidColorBrush(_infocolor);//ColorHelper.FromArgb(255,78,177,223));
             switch (IsOn)
             {
                 case true:

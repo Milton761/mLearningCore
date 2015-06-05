@@ -10,8 +10,9 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Viewbox>
+            
             <Grid x:Name="MainGrid" Width="1600" Height="900" >
-                
+                <Image Canvas.ZIndex="-100" ImageOpened="Image_ImageOpened" Stretch="UniformToFill" Source="/Resources/brackgroundlogin.jpg" ></Image>
             </Grid>
         </Viewbox>
     </Grid>

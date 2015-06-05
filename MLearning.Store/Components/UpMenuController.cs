@@ -18,10 +18,11 @@ using Windows.UI;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Text;
 using Windows.Storage.Streams;
+using System.ComponentModel;
 
 namespace MLearning.Store.Components
 {
-    public sealed partial class UpMenuController : Grid
+    public sealed partial class UpMenuController : Grid , INotifyPropertyChanged
     {
         public UpMenuController()
         {
@@ -44,6 +45,8 @@ namespace MLearning.Store.Components
         public void SEtColor(Color c)
         {
             _border.Background = new SolidColorBrush(c);
+            animate2double(new Storyboard(), 1.0, "Opacity", this);
+            
         }
 
         Border _border;
@@ -51,6 +54,7 @@ namespace MLearning.Store.Components
         Grid _buttonsgrid;
         void init()
         {
+            Opacity = 0.0;
             Height = 64.0;
             Width = 1038.0;
             VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Top;
@@ -62,7 +66,7 @@ namespace MLearning.Store.Components
                 Height = 64.0,
                 Width = 1038.0,
                 CornerRadius = new CornerRadius(16),
-                Background = new SolidColorBrush(Colors.Gray),
+                Background = new SolidColorBrush(Colors.Transparent),
                 HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left
             };
 
@@ -187,7 +191,8 @@ namespace MLearning.Store.Components
 
         void _homegrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs("Home"));
         }
 
         void _controlgrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -207,7 +212,7 @@ namespace MLearning.Store.Components
         }
 
 
-        void animate2open()
+        public void animate2open()
         {
             Storyboard s = new Storyboard();
             s.Completed += s_Completed_1;
@@ -227,7 +232,7 @@ namespace MLearning.Store.Components
             animate2double(new Storyboard(), 1.0, "Opacity", _buttonsgrid);
         }
 
-        void animate2close()
+        public void animate2close()
         {
             Storyboard s = new Storyboard();
             s.Completed += s_Completed_2;
@@ -261,5 +266,7 @@ namespace MLearning.Store.Components
             story.Begin();
         }
 
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

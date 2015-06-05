@@ -24,7 +24,7 @@
     var currentLOSection = @(Html.Raw(JsonConvert.SerializeObject(ViewBag.currentLOsection)));
     var currentLO = @(Html.Raw(JsonConvert.SerializeObject(ViewBag.currentLO)));
     var currentPage = @(Html.Raw(JsonConvert.SerializeObject(Model)));
-
+    var currentPageTag = @Html.Raw(JsonConvert.SerializeObject(ViewBag.pageTag));
 </script>
 
 <script src="@Url.Content("~/Scripts/app/pagina/paginaService.js")"></script>

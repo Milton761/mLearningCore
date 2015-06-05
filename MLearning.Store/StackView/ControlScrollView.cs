@@ -203,12 +203,27 @@ namespace StackView
                 img.Height = 900.0;
                 img.Stretch = Stretch.Fill;
                 img.Opacity = 0.0;
+                _source.Chapters[i].PropertyChanged += (s, e) =>
+                    {
+                        if (e.PropertyName == "BackgroundImage")
+                        {
+                            var ch_source = s as ChapterDataSource;
+                            img.Source = ch_source.BackgroundImage;
+                        }
+                    };
                 _elementspanel.Children.Add(img);
                 _imagelist.Add(img);
             }
-
-            _imagelist[0].Opacity = 1.0;
+            animateimage(1.0, 0);
+           // _imagelist[0].Opacity = 1.0;
         }
+
+        void ControlScrollView_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            
+        }
+
+        
 
         void loadimages()
         {

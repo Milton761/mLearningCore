@@ -7,23 +7,23 @@
         <div class="row padding_text">
 
             <div class=" col-xs-10">
-                <div class="row">                     
-                    <div class="col-xs-offset-1 col-xs-9 " >
+                <div class="row">
+                    <div class="col-xs-offset-1 col-xs-9 ">
                         <input ng-model="slide.lotitle" class="form-control" type="text" placeholder="Titulo (Opcional)">
-                    </div> 
+                    </div>
                 </div>
             </div>
 
-        </div> 
+        </div>
 
-        <div class="row padding_text" >
+        <div class="row padding_text">
             <div class="col-xs-4" ng-repeat="item in slide.loitemize.loitem">
                 <div class="row">
                     <div class="col-xs-12 text-center img_cubierta">
-                        <div class="row"><br/></div>
+                        <div class="row"><br /></div>
                         <input name="urlImageIn" ng-model="item.loimage" type="hidden" />
                         <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ item.loimage }}" style="max-width: 100%; height: auto;" />
-                        <div class="row"><br/></div>
+                        <div class="row"><br /></div>
                         <div class="row">
                             <input name="files"
                                    type="file"
@@ -37,35 +37,34 @@
                         <div class="row">Imagen</div>
                     </div>
                 </div>
-                <div class="row"><br/></div>
+                <div class="row"><br /></div>
                 <div class="row">
                     <!--<input ng-model="item.lotext" class="form-control" type="text" placeholder="Titulo de Imagen">-->
                     <textarea ng-model="item.lotext" class="form-control" placeholder="Titulo de Imagen"></textarea>
                 </div>
-        </div>
-        <!--<div class="row padding_text" ng-repeat="item in slide.loitemize.loitem">
-            <div class="col-xs-3">
-                <div class="col-xs-12">
-                    <input ng-model="item.lotext" class="form-control" type="text" placeholder="Titulo de Imagen">
-                </div>
-
             </div>
-        </div>-->
+            <div class="col-xs-4" ng-click="addImageItem(slide);">
+                Agregar
+            </div>
+            <!--<div class="row padding_text" ng-repeat="item in slide.loitemize.loitem">
+                <div class="col-xs-3">
+                    <div class="col-xs-12">
+                        <input ng-model="item.lotext" class="form-control" type="text" placeholder="Titulo de Imagen">
+                    </div>
 
-        <div class="row"><br></div>
+                </div>
+            </div>-->
+
+            <div class="row"><br></div>
+        </div>
+
+        <div class="col-xs-2 padding_eliminar_cuarto">
+            <a href="" ng-click="loslide.splice($index,1); ">
+                <span class="glyphicon  glyphicon-remove" aria-hidden="true"></span>
+            </a>
+        </div>
     </div>
-
-    <div class="col-xs-2 padding_eliminar_cuarto" >
-        <a href="" ng-click="loslide.splice($index,1); ">
-            <span class="glyphicon  glyphicon-remove" aria-hidden="true"></span>
-        </a>
-    </div>
-    
-    
-    
-
 </div>
-
 
 
 

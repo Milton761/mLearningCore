@@ -10,7 +10,8 @@
 
     <Grid>        
         <Viewbox>
-            <Grid x:Name="MainGrid" >  
+            <Grid x:Name="MainGrid" > 
+                
             </Grid>
         </Viewbox>
     </Grid>

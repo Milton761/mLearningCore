@@ -50,6 +50,9 @@ namespace MLearning.Store
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
+                // TODO: Cambiar este valor a un tamaño de caché adecuado para la aplicación
+                rootFrame.CacheSize = 1;
+
                 if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application

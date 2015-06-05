@@ -8,6 +8,7 @@ angular.module('mlearningApp').controller('unidadController', function ($scope, 
         $scope.unidadActual = currentLO;
         $scope.message = "EDITANDO ";
         $scope.unidadActual.tags = LOtagsIds;
+        
     }
     else
     {

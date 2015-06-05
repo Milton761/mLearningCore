@@ -41,27 +41,44 @@ namespace MLearning.Store.Components
 
         public GridResource()
         {
-            this.Background = new SolidColorBrush(Windows.UI.Colors.Transparent);
+            this.Background = new SolidColorBrush(Windows.UI.Colors.Black);
                         
             aRectangle.Width = 1366;
             aRectangle.Height = 768;
-            this.Children.Add(aRectangle);            
+           
+            
+            aRectangle.Opacity = 0.6;
             initcolors();
             initanimations();
             initbrush();
             animate_to(_indexcolor);
-              
+            this.Children.Add(aRectangle);
+
+
+            Children.Add(new Image()
+            {
+                Width = 1366,
+                Height = 768,
+                Source = new BitmapImage(new Uri("ms-appx:///Resources/brackgroundlogin.jpg")),
+                Stretch = Stretch.UniformToFill
+                , Opacity =0.15
+            });
+
+           
 
             Image img = new Image();
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.UriSource = new Uri("ms-appx:///Resources/grilla.png",UriKind.Absolute);
+            img.Opacity = .25;
             img.Source = bitmapImage;
             this.Children.Add(img);
+
+            //this.Children.Add(aRectangle);
         }
 
         void initanimations()
         {  
-            topanimation.Duration = TimeSpan.FromSeconds(6);
+            topanimation.Duration = TimeSpan.FromSeconds(10);
             story.Children.Add(topanimation);
             topanimation.EnableDependentAnimation = true;
             Storyboard.SetTarget(topanimation, stop1);

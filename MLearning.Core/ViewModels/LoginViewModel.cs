@@ -382,6 +382,12 @@ namespace Core.ViewModels
             set { _uploadFinished = value; RaisePropertyChanged("UploadFinished"); }
         }
 
+
+        
+
+
+
+
         MvxCommand _loginCommand;
         public System.Windows.Input.ICommand LoginCommand
         {

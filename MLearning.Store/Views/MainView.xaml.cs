@@ -20,6 +20,8 @@ using MLearning.Store.Components;
 using Core.ViewModels;
 using MLearning.Core.ViewModels;
 using Windows.UI;
+using Windows.UI.Xaml.Media.Animation;
+using MLearning.Store.MLStyles;
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace MLearning.Store.Views
@@ -33,6 +35,7 @@ namespace MLearning.Store.Views
         bool _isCircleSelected = true;
         int _loIndexSelected = 0;
         LOContainer _lo_container;
+        LoadingView _loadingview;
         public MainView()
         {
             this.InitializeComponent();
@@ -40,7 +43,15 @@ namespace MLearning.Store.Views
         }
 
         void MainView_Loaded(object sender, RoutedEventArgs e)
-        {            
+        {
+            ListGrid.Background = new SolidColorBrush(ColorHelper.FromArgb(220,246,240,234));
+            DetailGrid.Background = new SolidColorBrush(ColorHelper.FromArgb(200, 255, 255, 255));
+            
+            BackgroundImage.BackSource = new BitmapImage(new Uri(StaticStyles.DefaultMuroBackground));
+            BackgroundImage.BrushOpacity = 0.1;
+
+            LogoFadeImage.BackSource = new BitmapImage(new Uri(StaticStyles.DefaultLogoUri));
+
             inituserproperties();
             initCircleScroll();
             initPeopleScroll();
@@ -52,7 +63,11 @@ namespace MLearning.Store.Views
             if ((ViewModel as MainViewModel).PendingQuizzesList != null)
                 resetPendingQuizzes();
             if ((ViewModel as MainViewModel).CompletedQuizzesList != null)
-                resetCompleteQuizzes(); 
+                resetCompleteQuizzes();
+
+            _loadingview = new LoadingView();
+            MainGrid.Children.Add(_loadingview);
+            Canvas.SetZIndex(_loadingview, -10);
         }
 
         void inituserproperties()
@@ -111,9 +126,19 @@ namespace MLearning.Store.Views
                 case "CompletedQuizzesList":
                     resetCompleteQuizzes();
                     break;
+                case "BackgroundImage":
+                    resetbackground() ;
+                    break;
                 default:
                     break;
             }
+        }
+
+
+        void resetbackground()
+        {
+            BackgroundImage.NewSource = Constants.ByteArrayToImageConverter.Convert((ViewModel as MainViewModel).BackgroundImage);
+            BackgroundImage.BrushOpacity = 0.7;
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -121,6 +146,8 @@ namespace MLearning.Store.Views
             (this.ViewModel as MainViewModel).CircleFilterString = SearchBox.Text;
             
         }
+
+ 
 
 
 
@@ -170,7 +197,8 @@ namespace MLearning.Store.Views
                         SelectOffImage = "ms-appx:///Resources/muro/whitepop.png",
                         IsSelected = false,
                         ContentBlock = vm.CirclesList[i].name,
-                        IsOn = true 
+                        IsOn = true ,
+                        InfoColor = StaticStyles.DefaultColor 
                     };
                     if (i == 0)
                     {
@@ -255,7 +283,8 @@ namespace MLearning.Store.Views
                         SelectOffImage = "ms-appx:///Resources/muro/whitecircle.png",
                         IsSelected = false,
                         ContentBlock = vm.UsersList[i].user.name +" "+  vm.UsersList[i].user.lastname,
-                        IsOn = true
+                        IsOn = true,
+                        InfoColor = StaticStyles.DefaultColor
                     };
                     peoplepanel.Children.Add(newinfo); 
                 }
@@ -287,6 +316,14 @@ namespace MLearning.Store.Views
             UnidadNumber.Text = "?";
             if (vm.PendingQuizzesList != null)
                 CursoNumber.Text = "" + vm.PendingQuizzesList.Count;
+
+            BackgroundImage.NewSource = new BitmapImage(new Uri(StaticStyles.DefaultMuroBackground));
+            BackgroundImage.BrushOpacity = 0.1;
+
+            //reset los colors and logo image
+            for (int i = 0; i < _currentCircles.Count; i++) 
+                _currentCircles[i].InfoColor = StaticStyles.DefaultColor;
+            LogoFadeImage.NewSource = new BitmapImage(new Uri("ms-appx:///Resources/muro/logo.png"));
         }
 
         void lo_container_LOLiked(object sender, int index)
@@ -309,11 +346,19 @@ namespace MLearning.Store.Views
 
             var vm = ViewModel as MainViewModel;
 
-            UnidadNumber.Text = "" + vm.PendingQuizzesList.Count; 
+            if (vm.PendingQuizzesList != null)
+                UnidadNumber.Text = "" + vm.PendingQuizzesList.Count;
             CursoNumber.Text = "?";
             setUnidadVisible(index);
             //execute
             vm.SelectLOCommand.Execute(vm.LearningOjectsList[index]);
+            //set color of lo
+            OpenLOImage.Source = new BitmapImage(new Uri(StaticStyles.OpenLOUrls[index%4]));
+            //reset color of circle
+            for (int i = 0; i < _currentCircles.Count; i++) 
+                _currentCircles[i].InfoColor = StaticStyles.Colors[index % 4].SecondColorA; 
+            //set logo image
+            LogoFadeImage.NewSource = new BitmapImage(new Uri(StaticStyles.LogosMuro[index%4]));
 
             _isCircleSelected = false;
             _loIndexSelected = index;
@@ -393,12 +438,13 @@ namespace MLearning.Store.Views
 
         private void Open_Tapped(object sender, TappedRoutedEventArgs e)
         {
+
+            Canvas.SetZIndex(_loadingview, 100);
+
             var vm = ViewModel as MainViewModel;
             vm.OpenLOCommand.Execute(vm.LearningOjectsList[_loIndexSelected]);
             //loading view
-
             
-
         }
 
         private void CircleNameText_Tapped(object sender, TappedRoutedEventArgs e)

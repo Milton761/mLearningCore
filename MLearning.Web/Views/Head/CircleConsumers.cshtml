@@ -78,12 +78,12 @@
 <script>
     $(document).ready(function () {
         var consumers = $("#consumers").data("kendoMultiSelect");
-        var postData = {
-            ids : consumers.value(),
-            circleId : @(ViewBag.circleId)
-            };
 
         $("#get").click(function () {
+            var postData = {
+                ids : consumers.value(),
+                circleId : @(ViewBag.circleId)
+            };
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("AddConsumers","Head")",

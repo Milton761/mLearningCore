@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using DataSource;
 using System.ComponentModel;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI;
 
 namespace StackView
 {
@@ -22,7 +23,7 @@ namespace StackView
     public delegate void StackListScrollDeltaEventHandler(object sender, double delta);
     public delegate void StackListScrollCompletedEventHandler(object sender, int nextitem);
 
-    public sealed partial class IGroupList : Grid
+    public sealed partial class IGroupList : Grid, INotifyPropertyChanged
     {
         //public:
         public IGroupList()
@@ -34,11 +35,14 @@ namespace StackView
             _texto.Height = 200;
             _texto.VerticalAlignment = VerticalAlignment.Top;
             _texto.Foreground = new SolidColorBrush(Windows.UI.Colors.Black);
-            Children.Add(_texto);
+            //Children.Add(_texto);
             initcontrols();
             initproperties();
             initanimationproperties();
+            Background = new SolidColorBrush(Colors.Transparent);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public event StackItemFullAnimationStartedEventHandler StackItemFullAnimationStarted;
         public event StackItemFullAnimationCompletedEventHandler StackItemFullAnimationCompleted;
@@ -385,7 +389,7 @@ namespace StackView
         {
             if (_datasource != null)
             {
-                Background = new SolidColorBrush(Windows.UI.Colors.Transparent);
+
                 Width = _controlwidth;
                 Height = _controlheight;
                 _numberofitems = _datasource.Chapters.Count;
@@ -535,12 +539,18 @@ namespace StackView
             {
                 _touches = 0;
                 updatelistproperties();
+
             }
+
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs("Unlock"));
         }
 
         void Panel_PointerPressed_1(object sender, PointerRoutedEventArgs e)
         {
             _touches += 1;
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs("Lock"));
         }
 
         void Panel_ManipulationDelta_1(object sender, ManipulationDeltaRoutedEventArgs e)
@@ -602,7 +612,8 @@ namespace StackView
                     {
                         if (_typeselected == SelectionType.StackType)
                         {
-                            _listvector[_selectedchapter].SelectedStack.Proportion *= e.Delta.Scale;
+                            if (_listvector[_selectedchapter].SelectedStack != null)
+                                _listvector[_selectedchapter].SelectedStack.Proportion *= e.Delta.Scale;
                         }
                     }
                 }
@@ -680,6 +691,9 @@ namespace StackView
                     }
                 }
             }
+
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs("Unlock"));
             _touches = 0;
             _offsetdelta = 0.0;
             _forcemanipulationtoend = false;
@@ -729,14 +743,16 @@ namespace StackView
             _selectedchapter = chapter;
             _selectedpage = page;
             _selectedsection = section;
-            StackItemThumbAnimationStarted(this, chapter, section, page);
+            if (StackItemThumbAnimationStarted != null)
+                StackItemThumbAnimationStarted(this, chapter, section, page);
         }
 
         void StackItem_ThumbAnimationCompleted(object sender, int chapter, int section, int page)
         {
             _manipulationenable = true;
             _typeselected = SelectionType.StackType;
-            StackItemThumbAnimationCompleted(this, chapter, section, page);
+            if (StackItemThumbAnimationCompleted != null)
+                StackItemThumbAnimationCompleted(this, chapter, section, page);
         }
 
         void StackList_ScrollTo(object sender, double _position)
@@ -783,7 +799,7 @@ namespace StackView
 
             _panelstory = new Windows.UI.Xaml.Media.Animation.Storyboard();
             _panelanimation = new Windows.UI.Xaml.Media.Animation.DoubleAnimation();
-            _panelanimation.Duration = TimeSpan.FromMilliseconds(1000);
+            _panelanimation.Duration = TimeSpan.FromMilliseconds(600); //1000
             _panelstory.Children.Add(_panelanimation);
             Windows.UI.Xaml.Media.Animation.CubicEase ease1 = new Windows.UI.Xaml.Media.Animation.CubicEase();
             ease1.EasingMode = Windows.UI.Xaml.Media.Animation.EasingMode.EaseOut;

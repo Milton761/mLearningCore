@@ -16,6 +16,7 @@ using DataSource;
 using System.ComponentModel;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI;
+using MLReader;
 
 namespace StackView
 {
@@ -32,6 +33,7 @@ namespace StackView
         {
             initcontrols();
             initproperties();
+            Background = new SolidColorBrush(Windows.UI.Colors.Transparent);
         }
 
         public event StackItemFullAnimationStartedEventHandler StackItemFullAnimationStarted;
@@ -219,7 +221,7 @@ namespace StackView
 
         public int ListNumber
         {
-            set { _listnumber = value; }
+            set { _listnumber = value; }//if (value % 2 == 0) Background = new SolidColorBrush(Windows.UI.Colors.Blue); }
             get { return _listnumber; }
         }
 
@@ -348,8 +350,12 @@ namespace StackView
         public void OpenStack(int index)
         {
             for (int i = 0; i < _stacksvector.Count; i++)
+            {
                 if (_stacksvector[i].IsOpen)
                     _stacksvector[i].SetToClose();
+                if (_stacksvector[i].NumberOfItems == 1)
+                    _stacksvector[i].SetToOpen();
+            }
 
             _stacksvector[index].SetToOpen();
             updatewidth();
@@ -400,6 +406,8 @@ namespace StackView
                     _headercontrol.Author = _datasource.Author;
                     _headercontrol.Title = _datasource.Title;
                     _headercontrol.Description = _datasource.Description;
+                    StyleConstants styles = new StyleConstants();
+                    _headercontrol.ChapterColor = styles.SecondColors[_listnumber % 4];
 
                     stack.StackItemFullAnimationStarted += StackItem_FullAnimationStarted;
                     stack.StackItemFullAnimationCompleted += StackItem_FullAnimationCompleted;
@@ -415,6 +423,9 @@ namespace StackView
                     stack.IControlsComponentSelected += IControls_ComponentSelected;
 
                     //_startimage.Source = new BitmapImage(new Uri("ms-appx:///roadsdata/text"+(int)(i+1)+".png"));
+
+                    if (stack.NumberOfItems == 1)
+                        stack.SetToOpen();
 
                     _panel.Children.Add(stack);
                     _stacksvector.Add(stack);
@@ -503,20 +514,31 @@ namespace StackView
         {
             if (!_ismanipulating)
             {
+                Canvas.SetZIndex(_stacksvector[index], 10);
                 _selectiontype = t;
                 _selectedstack = _stacksvector[index];
                 _selectedindex = index;
                 IControlsComponentSelected(this, t, _listnumber);
+                Canvas.SetZIndex(this, 100);
             }
+        }
+
+        void resetZindexlist(int sindex)
+        {
+            for (int i = 0; i < _stacksvector.Count; i++)
+                if(i==sindex) Canvas.SetZIndex(_stacksvector[i], 10);
+                else Canvas.SetZIndex(_stacksvector[i], 0);
+            
         }
 
         void StackItem_FullAnimationStarted(object sender, int chapter, int section, int page)
         {
+            resetZindexlist(section); 
             StackItemFullAnimationStarted(sender, _listnumber, section, page);
         }
 
         void StackItem_FullAnimationCompleted(object sender, int chapter, int section, int page)
-        {
+        { 
             StackItemFullAnimationCompleted(sender, _listnumber, section, page);
         }
 
@@ -527,9 +549,11 @@ namespace StackView
 
         void StackItem_ThumbAnimationCompleted(object sender, int chapter, int section, int page)
         {
+            resetZindexlist(-1); 
             StackItemThumbAnimationCompleted(sender, _listnumber, section, page);
             _selectiontype = SelectionType.StackType;
             _ismanipulating = false;
+            Canvas.SetZIndex(this, 0);
         }
 
 

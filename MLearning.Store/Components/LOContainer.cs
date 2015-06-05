@@ -18,6 +18,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Media.Animation;
 using MLearning.Core.ViewModels;
 using System.Collections.ObjectModel;
+using MLearning.Store.MLStyles;
 
 
 namespace MLearning.Store.Components
@@ -48,7 +49,8 @@ namespace MLearning.Store.Components
                 HorizontalScrollMode = ScrollMode.Enabled,
                 VerticalScrollMode = ScrollMode.Disabled,
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
-                VerticalScrollBarVisibility = ScrollBarVisibility.Disabled
+                VerticalScrollBarVisibility = ScrollBarVisibility.Disabled,
+                ZoomMode = ZoomMode.Disabled
             };
             this.Children.Add(_mainscroll);
 
@@ -79,7 +81,24 @@ namespace MLearning.Store.Components
             if(e.NewStartingIndex >=0)
                 additems(e.NewStartingIndex);
         }
-         
+
+
+
+        private Color _likecolor;
+
+        public Color LikeColor
+        {
+            get { return _likecolor; }
+            set {
+                _likecolor = value;
+                for (int i = 0; i < _itemsList.Count; i++)
+                {
+                    _itemsList[i].LikeColor = _likecolor;
+                }
+            }
+        }
+        
+
         #endregion
 
          
@@ -99,15 +118,23 @@ namespace MLearning.Store.Components
                     },
                     Title = _learningObjectsList[i].lo.title,
                     Author = _learningObjectsList[i].lo.name + " " + _learningObjectsList[i].lo.lastname,
-                    LikeThis = _learningObjectsList[i].lo.like
+                    LikeThis = _learningObjectsList[i].lo.like,
+                    BorderColor = StaticStyles.Colors[_learningObjectsList[i].lo.color_id%4].MainColor
                 };
 
                 item.Selected += item_Selected;
                 item.DoLike += item_DoLike;
                 _itemsList.Add(item);
+                //
                 item.ImageBytes = _learningObjectsList[i].cover_bytes;
                 _learningObjectsList[i].PropertyChanged += (s, e) =>
-                {  item.ImageBytes = (s as MainViewModel.lo_by_circle_wrapper).cover_bytes;       };
+                {
+                    if (e.PropertyName == "cover_bytes")
+                        item.ImageBytes = (s as MainViewModel.lo_by_circle_wrapper).cover_bytes;
+
+                    if (e.PropertyName == "background_bytes")
+                    { }
+                };
 
                 container.Children.Add(item);
                 _mainpanel.Children.Add(container);
@@ -126,6 +153,8 @@ namespace MLearning.Store.Components
             {
                 if (i == index) _itemsList[i].IsSelected = true;
                 else _itemsList[i].IsSelected = false;
+
+                _itemsList[i].LikeColor = _itemsList[index].BorderColor;
             }
         }
 

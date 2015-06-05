@@ -34,10 +34,22 @@
 
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row"><br></div>
+                    <div class="row col-xs-12">
                         <!-- <input type='file' id="imgInp" ng-model = 'rutaImage' />
-                        <img class="tamIconTabla img-responsive" src="images/{{rutaImage}}" >
-                        -->
+        <img class="tamIconTabla img-responsive" src="images/{{rutaImage}}" >
+        -->
+                        <select kendo-combo-box
+                                k-placeholder="'Tag...'"
+                                k-data-text-field="'name'"
+                                k-data-value-field="'id'"
+                                k-filter="'contains'"
+                                k-auto-bind="false"
+                                k-min-length="3"
+                                k-data-source="{ transport: {read: { url:'/Resources/Read_tags', type:'post', datatype: 'json'} } }"
+                                k-ng-model="slide.pagetag"                                
+                                required></select>
+                        <!--style="width: 300px;"-->
                     </div>
                     <div class="row"><br></div>
                     <div class="row">

@@ -12,6 +12,29 @@ namespace MLReader
         public LOSlideStyle()
         { }
 
+        /// <summary>
+        /// style number
+        /// </summary>
+        private int _id = 0 ;
+
+        public int ID
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+        /// <summary>
+        /// main = 0 , second = 1
+        /// </summary>
+        private int _colornumber;
+
+        public int ColorNumber
+        {
+            get { return _colornumber; }
+            set { _colornumber = value; }
+        }
+        
+
         private Color _titlecolor;
 
         public Color TitleColor
