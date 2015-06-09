@@ -75,7 +75,7 @@ namespace StackView
         void initcontrols()
         {
             HorizontalAlignment = HorizontalAlignment.Left;
-            //	Background =  new SolidColorBrush(Windows.UI.Colors.SaddleBrown);
+            Background =  new SolidColorBrush(Windows.UI.Colors.Transparent);
             _itemspanel = new StackPanel();
             Children.Add(_itemspanel);
             _itemspanel.Orientation = Orientation.Horizontal;
@@ -421,6 +421,7 @@ namespace StackView
             _isopen = true;
             _proportion = _numberofitems;
             _currentstackwidth = 2 * _auxgridwidth + _itemsgrid.Width;
+            this.Width = _currentstackwidth;
             _selectiontype = SelectionType.StackType;
             Canvas.SetZIndex(this, 0);
         }
@@ -435,6 +436,7 @@ namespace StackView
             _isopen = false;
             _proportion = 1.0;
             _currentstackwidth = 2 * _auxgridwidth + _itemsgrid.Width;
+            this.Width = _currentstackwidth;
             _selectiontype = SelectionType.StackType;
             Canvas.SetZIndex(this, 0);
         }
@@ -520,6 +522,7 @@ namespace StackView
                 if (_itemsvector.Count > 0)
                     _selecteditem = _itemsvector[0];
                 _currentstackwidth = 2 * _auxgridwidth + _borderwidth + _spacebetweenitems;
+                this.Width = _currentstackwidth;
             }
         }
 
@@ -571,7 +574,7 @@ namespace StackView
 
             //Change the size of the stack . Update the positon of the stack to keep this in this initial position
             if (_isopen)
-                StackSizeChangeDelta(this, _tempposition - (_tmpproportion * Width));// _tempposition -  _tempindex * (_itemsgrid.Width  / _numberofitems)  + _auxgridwidth );
+                StackSizeChangeDelta(this, _tempposition - (_tmpproportion * Width));
             if (_proportion < _numberofitems)
             {
                 for (int i = 0; i < _itemsvector.Count; i++)
@@ -581,7 +584,7 @@ namespace StackView
 
         void updatehorizontalposition()
         {
-            double center = (_devicewidth - _auxgridwidth - _borderwidth - (_spacebetweenitems / 2)) / 2 - _distancetoscreen;
+            double center = (_devicewidth - _auxgridwidth - _borderwidth - _spacebetweenitems) / 2 - _distancetoscreen;//0=(_spacebetweenitems / 2)
             for (int i = 0; i < _itemsvector.Count; i++)
                 _itemsvector[i].FullPositionX = center;
         }
@@ -589,18 +592,29 @@ namespace StackView
         #endregion
 
         #region Events Methods
+
+        void resetzposition(int index)
+        {
+            for (int i = 0; i < _itemsvector.Count; i++)
+            {
+                if (i == index) Canvas.SetZIndex( _itemsvector[i],10);
+                else Canvas.SetZIndex(_itemsvector[i], 0);
+            }
+        }
+
         //private:
         void StackItem_Selected(object sender, int _itemnumber)
         {
             if (_selectiontype != SelectionType.ItemType && !_itemslocked)
             {
+                resetzposition(_itemnumber);
                 _selecteditem = _itemsvector[_itemnumber];
                 _selectiontype = SelectionType.ItemType;
                 _selectedindex = _itemnumber;
                 _selecteditem.ZIndex = 100;
                 _selecteditem.LoadFullSource();
                 IControlsComponentSelected(this, SelectionType.ItemType, _stacknumber);
-                Canvas.SetZIndex(this, 10);
+                Canvas.SetZIndex(this, 100);
             }
 
             _itemslocked = true;
@@ -626,6 +640,7 @@ namespace StackView
                 _itemslocked = true;
                 if (_selectiontype != SelectionType.ItemType || _touches < 2)
                 {
+                    resetzposition(_itemnumber);
                     _selecteditem = _itemsvector[_itemnumber];
                     _selectiontype = SelectionType.ItemType;
                     _selectedindex = _itemnumber;
@@ -636,8 +651,7 @@ namespace StackView
                     Canvas.SetZIndex(this, 10);
                 }
                 else
-                {
-                    //_itemsvector[_itemnumber].ZIndex -= _itemnumber ;
+                { 
                     _itemsvector[_itemnumber].DeleteFullSource();
                 }
             }
@@ -678,6 +692,7 @@ namespace StackView
         {
             StackItemFullAnimationStarted(sender, chapter, _stacknumber, page);
             _itemslocked = true;
+            Canvas.SetZIndex(this, 100);
         }
 
         void StackItem_FullAnimationCompleted(object sender, int chapter, int section, int page)
@@ -698,7 +713,8 @@ namespace StackView
             _selectiontype = SelectionType.StackType;
             _touches = 0;
             _itemslocked = false;
-
+            Canvas.SetZIndex(this, 0);
+            resetzposition(-1);
             count = 0;
         }
 
@@ -749,6 +765,7 @@ namespace StackView
             {
                 StackSizeAnimationCompleted(this, false);
             }
+            this.Width = _currentstackwidth;
             _selectiontype = SelectionType.StackType;
             _touches = 0;
             Canvas.SetZIndex(this, 0);

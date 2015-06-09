@@ -1,0 +1,50 @@
+﻿@model MLearning.Core.Entities.consumer_by_institution
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h3>Alumno</h3>
+
+    <br />
+    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.institution_id)
+    /*@Html.HiddenFor(model => model.created_at)
+    @Html.HiddenFor(model => model.updated_at)*/
+    <div class="form-horizontal">
+        <div>
+            @Html.LabelFor(model => model.name, "Nombre")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.name)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.lastname, "Apellidos")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.lastname)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.email, "Email")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.email)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.username, "Usuario")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.username)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.password, "Password")
+        </div>
+        <div>
+            @Html.PasswordFor(model => model.password)
+        </div>
+
+    </div>
+}

@@ -1,0 +1,52 @@
+<div class="container" ng-init = "expandido= false" >
+    <div class="row"><br></div>
+    <div class="row">
+        <div class="col-xs-1 cont_icon">
+
+            <a   ng-click="expandido= !expandido; collapseSection(section,expandido);" class = "btn_peq">
+                <span class="glyphicon glyphicon-menu-down" aria-hidden="true" ng-show = 'expandido'></span>
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true" ng-show = '!expandido'></span>
+
+
+            </a>
+        </div>
+
+        <div class="col-xs-7">
+            <input ng-model="section.name" class="form-control" type="text" placeholder="Titulo de la Seccion">
+        </div>
+        <div class="col-xs-4 cont_icon ">
+            <a ng-click = "visualizarSeccion()">
+                <img class="btn_peq img-responsive" src="/images/001_ver_seccion.png" >
+            </a>
+
+            <a ng-click = "editarSeccion()">
+                <img class="btn_peq img-responsive" src="/images/001_editar_seccion.png" >
+            </a>
+        
+      
+            <a ng-click = "eliminarSeccion()">
+                <img class="btn_peq img-responsive" src="/images/001_eliminar_seccion.png" >
+            </a>
+        </div>
+
+
+    </div>
+    <div class="row"><br></div>
+    <div ng-show='expandido&&section.pages' ng-repeat="page in section.pages">
+        <page-preview></page-preview>
+    </div>
+    <div class="row"><br></div>
+    <!--ng-show = '!expandido'-->
+    <div class="row" >
+        <div class="col-xs-offset-8 col-xs-2">
+            <a ng-click="nuevaPagina(section)" href="#"  >
+                <img class= "btn_gra" src="/images/034_btn_nuevapagina.png" >
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <br>
+    </div>
+</div>
+

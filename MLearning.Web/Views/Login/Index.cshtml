@@ -4,48 +4,79 @@
     ViewBag.Title = "Login";
 }
 
-<h2>Create</h2>
+<script>
+    hacerHome(true);
+</script>
 
 
-@using (Html.BeginForm("Login","Login"))
-{
-   // @Html.AntiForgeryToken()
+<h2>Inicio de Sesión</h2>
+<div class="verticalCenter">
+    @using (Html.BeginForm("Login", "Login"))
+    {
+        // @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Login</h4>
-        <hr />
-        @Html.ValidationSummary(true)
+        <div class="form-horizontal">
+            <!--<h4>Login</h4>-->
+            <!--<hr />-->
+            @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.username, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.username)
-                @Html.ValidationMessageFor(model => model.username)
+            <div class="form-group">
+                @Html.LabelFor(model => model.username,"Usuario: ", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.username)
+                    @Html.ValidationMessageFor(model => model.username)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.password, "Contraseña: ", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.password)
+                    @Html.ValidationMessageFor(model => model.password)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Login" class="btn btn-default" />
+                </div>
             </div>
         </div>
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.password, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.password)
-                @Html.ValidationMessageFor(model => model.password)
-            </div>
-        </div>
-
-       
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Login" class="btn btn-default" />
-            </div>
-        </div>
+    <div>
+        Usuarios Demo<br/>
+        <strong>Administrador</strong><br/>
+        Usuario: admin<br />
+        Contraseña: 1<br />
+        <strong>Director</strong><br />
+        Usuario: Director<br />
+        Contraseña: 1<br />
+        <strong>Profesor</strong><br />
+        Usuario: user1<br />
+        Contraseña: 1<br />
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <p style="text-align: center;"><strong>Proyecto</strong> 
+M-Learning: Middleware para la construcción de objetos de aprendizaje móviles en ambientes reactivos y adaptables al contexto, caso educación básica regular
+    <br/>
+        <strong>Contrato </strong> Nº 217 – FINCyT – IA- 2013<br />
+        <strong>Coordinador general </strong> Jose A. Herrera Quispe<br />
+        <strong>Lider del equipo de desarrollo </strong> Alexander V. Ocsa Mamani<br />
+        <strong>Coordinadora administrativa</strong> Inez O. Saenz Cajaleón<br />
+        <strong>Entidades</strong>
+</p>
+    <table>
+        <tbody>
+            <tr>
+                <td><a href="http://www.concytec.gob.pe" target="_blank"><img style="width:320px; height: auto;" src="/images/003-CONCYTEC-LOGO.png" /></a></td>
+                <td>
+                    <a href="http://citec.unsa.edu.pe" target="_blank"><img style="width:320px; height: auto;" src="/images/003-CITEC-LOGO.png" /></a>
+                </td>
+                <td>
+                    <a href="http://portal.concytec.gob.pe/index.php/fondecyt/" target="_blank"><img style="width:320px; height: auto;" src="/images/003-FONDECYT-LOGO.png" /></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

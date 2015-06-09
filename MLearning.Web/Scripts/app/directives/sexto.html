@@ -1,0 +1,70 @@
+<div class="row"><br></div>
+
+<div class="row cont_Principal padding_text">
+    <div class="col-xs-12">
+        <div class="row padding_text"> 
+            <div class="col-xs-5">
+
+                <div class="row padding_text">                     
+                    <div class="col-xs-offset-2 col-xs-10 text-center img_cubierta" > 
+                        <div class="row"><br></div>   
+                        <input name="urlImageIn" ng-model="slide.loimage" type="hidden" />
+                        <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ slide.loimage }}" style="max-width: 100%; height: auto;" />
+                        <div class="row"><br></div>
+                        <div class="row">
+                            <input name="files"
+                                   type="file"
+                                   kendo-upload
+                                   k-async="{ saveUrl: '/Resources/UploadImage', autoupload: true }"
+                                   k-multiple="false"
+                                   k-show-file-list="false"
+                                   k-success="onUploadSlideImageSuccess" />
+                        </div>
+                        <div class="row"><br></div>
+                        <div class="row">Imagen de Fondo</div> 
+                    </div> 
+
+
+                </div> 
+            </div>
+
+            <div class="col-xs-5">
+
+                <div class="row padding_text">
+
+                    <div class="col-xs-8">
+                        <input ng-model="slide.lotitle" class="form-control" type="text" placeholder="Titulo (Opcional)">
+                    </div> 
+                </div> 
+
+
+                <div class="row padding_text">
+
+                    <div class=" col-xs-8">
+
+                        <textarea class="form-control"
+                                  ng-model="slide.loparagraph" type="text"
+                                  placeholder="Texto"  rows="4">
+                        </textarea>
+
+                    </div> 
+                </div>  
+            </div>
+
+            <div class="col-xs-2 padding_eliminar" >
+                <a href="" ng-click="loslide.splice($index,1); ">
+                    <span class="glyphicon  glyphicon-remove" aria-hidden="true"></span>
+                </a>
+            </div>
+
+
+        </div>
+        <div class="row"><br></div> 
+    </div>
+</div>
+
+
+
+
+
+

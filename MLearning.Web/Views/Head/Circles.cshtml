@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Circulos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.VisibleMenus = "[{codigo: 3},{codigo: 4},{codigo: 5},{codigo: 6}]";
+    ViewBag.ActiveRole = "DIRECTOR";
+}
+
+<script>
+    home = false;
+    contraer_menu();
+    agregarClickItem();
+    setItemActual('#circulo');
+    hacerHome(false);
+</script>
+
+<h2>Circulos</h2>
+
+@(Html.Kendo().Grid<MLearning.Core.Entities.circle_by_owner>()
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.id).HeaderTemplate("Id").Width(70);
+        columns.Bound(c => c.code).HeaderTemplate("Codigo");
+        columns.Bound(c => c.name).HeaderTemplate("Nombre");
+        //columns.Bound(c => c.id); TODO Tag???
+        columns.Bound(c => c.owner_fullname).HeaderTemplate("Profesor");
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(300);
+        columns.Template(c => { }).ClientTemplate(@Html.ActionLink("Administrar", "CircleConsumers", new { id = "#=id#" }).ToHtmlString()).Width(150);
+
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Circle"))
+    .HtmlAttributes(new { style = "height:430px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(c => c.id);
+            model.Field(c => c.id).Editable(false);
+            //model.Field(c => c.created_at).Editable(false);
+            //model.Field(c => c.updated_at).Editable(false);
+        })
+        .Create(update => update.Action("Circle_create", "Head"))
+            .Read(read => read.Action("Circle_read", "Head"))
+            .Update(update => update.Action("Circle_update", "Head"))
+            .Destroy(update => update.Action("Circle_destroy", "Head"))
+    )
+)

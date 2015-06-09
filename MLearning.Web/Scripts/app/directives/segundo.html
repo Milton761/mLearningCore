@@ -1,0 +1,40 @@
+
+
+
+
+<div class="row"><br></div>
+<div class="row cont_Principal padding_text">
+    <div class="col-xs-10 padding_text">
+
+
+        <div class="row padding_text">
+
+            <div class="col-xs-offset-1 col-xs-6">
+                <input ng-model="slide.lotitle" class="form-control" type="text" placeholder="Titulo (Opcional)">
+            </div> 
+        </div> 
+
+
+
+        <div class="row padding_text">
+
+            <div class="col-xs-offset-1 col-xs-6">
+
+                <textarea class="form-control"
+                          ng-model="slide.loparagraph" type="text"
+                          placeholder="Texto"  rows="4">
+                </textarea>
+
+            </div> 
+        </div>  
+        <div class="row"><br></div>
+    </div>
+    
+    <div class="col-xs-2 padding_eliminar" >
+        <a href="" ng-click="loslide.splice($index,1); ">
+            <span class="glyphicon  glyphicon-remove" aria-hidden="true"></span>
+        </a>
+    </div>
+
+</div>
+

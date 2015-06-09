@@ -89,8 +89,8 @@ namespace MLearning.Store.Components
         {
             get { return _title; }
             set {
-                _title = value; 
-                textname.Text = _title +  " by " + Author;
+                _title = value;
+                textname.Text = _title; // +" by " + Author;
             }
         }
 
@@ -98,7 +98,7 @@ namespace MLearning.Store.Components
         public string Author
         {
             get { return _author; }
-            set { _author = value; textname.Text = Title + " by " + _author; }
+            set { _author = value;}// textname.Text = Title + " by " + _author; }
         }
 
 
@@ -112,6 +112,33 @@ namespace MLearning.Store.Components
                     _loBorder.Background = new ImageBrush() { Stretch = Stretch.UniformToFill, ImageSource = Constants.ByteArrayToImageConverter.Convert(_imagebytes) }; 
             }
         }
+
+
+        private Color  _bordercolor;
+
+        public Color  BorderColor
+        {
+            get { return _bordercolor; }
+            set { _bordercolor = value; _selectBorder.BorderBrush = new SolidColorBrush(_bordercolor); }
+        }
+
+
+        private Color _likecolor;
+
+        public Color LikeColor
+        {
+            get { return _likecolor; }
+            set { _likecolor = value;
+
+            _likeborder.BorderBrush = new SolidColorBrush(value);
+            _likeborder.Background = new SolidColorBrush(value);
+                //_commentborder
+            _commentborder.BorderBrush = new SolidColorBrush(value);
+            _commentborder.Background = new SolidColorBrush(value);
+            }
+        }
+        
+
 
         #endregion
 
@@ -175,15 +202,13 @@ namespace MLearning.Store.Components
 
 
 
-
+        Border _likeborder, _commentborder;
         void initButtons()
         {
-            Border _likeborder = new Border()
+            _likeborder = new Border()
             {
                 Width = 52,
-                Height = 18, 
-                //HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left,
-                //RenderTransform = new TranslateTransform() { Y = -10 , X = 4},
+                Height = 18,  
                 VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Bottom,
                 HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Right,
                 RenderTransform = new TranslateTransform() { Y = -6, X = -4 },
@@ -196,7 +221,7 @@ namespace MLearning.Store.Components
             _liketext = new TextBlock() { FontSize = 9, TextAlignment = TextAlignment.Center, Text = "Me Gusta", VerticalAlignment = VerticalAlignment.Center };
             _likeborder.Child = _liketext;
 
-            Border _commentborder = new Border()
+            _commentborder = new Border()
             {
                 Width =52,Height=18,
                 VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Bottom,

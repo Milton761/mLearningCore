@@ -1,0 +1,546 @@
+
+
+div.box{
+
+    height: 100%;
+    margin-left: 100px;
+}
+
+div.box-menu{
+    background: url('../images/box-menu-fondo.png') no-repeat center;
+    z-index: 100;
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    /*-webkit-transition:width 50ms ease-in-out, height 100ms ease-in-out;
+    -moz-transition:width 50ms ease-in-out, height 100ms ease-in-out;
+    -o-transition:width 50ms ease-in-out, height 100ms ease-in-out;
+    transition:width 50ms ease-in-out, height 100ms ease-in-out;*/
+}
+
+
+div.box-menu-contenido{
+    min-height: 400px;
+    flex-direction: column;
+    align-items: center;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+div.box-menu-logo{
+    width: 90%;
+    flex: 1;
+}
+
+div.box-menu-logo-contenido{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 200px;
+}
+
+div.box-menu-img{
+    flex: 3;
+    text-align: right;
+    text-align: -webkit-right;
+    text-align: -moz-right;
+    min-width: 80px;
+}
+div.box-menu-img>img{
+    width: 80px;
+}
+
+div.box-menu-titulo{
+    flex: 5;
+    color: white;
+    margin-left: 20px;
+}
+
+
+div.box-menu-items{
+    width: 80%;
+    flex: 1;
+}
+
+div.box-menu-items-contenido{
+    flex-direction: column;
+    color: white;
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;
+}
+
+div.box-menu-item{
+    flex: 1;
+    margin-top: 30px;
+    padding: 5px 5px 5px 5px;
+    cursor:pointer;
+}
+
+div.box-menu-item.menu-verde:hover {
+    background: rgb(105,183,0);
+    border-radius: 5px;
+}
+
+div.box-menu-item.menu-rojo:hover {
+    background: rgb(255,108,95);
+    border-radius: 5px;
+}
+
+div.box-menu-item.menu-amarillo:hover {
+    background: rgb(255,160,0);
+    border-radius: 5px;
+}
+
+div.box-menu-item.menu-morado:hover {
+    background: #5B5188;
+    border-radius: 5px;
+}
+
+
+/***************** ACTIVOS ***************/
+div.home-activo{
+    background: rgb(105,183,0);
+    border-radius: 5px;
+}
+div.home-activo div.home{
+    width: 40px;
+    height: 40px;
+    background: url('../images/inicio-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+
+div.institucion-activo{
+    background: rgb(255,108,95);
+    border-radius: 5px;
+}
+div.institucion-activo div.institucion{
+    width: 40px;
+    height: 40px;
+    background: url('../images/institucion-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+div.unidad-activo{
+    background: rgb(255,160,0);
+    border-radius: 5px;
+}
+div.unidad-activo div.unidades{
+    width: 40px;
+    height: 40px;
+    background: url('../images/unidades-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+
+div.profesor-activo{
+    background: #5B5188;
+    border-radius: 5px;
+}
+div.profesor-activo div.profesor{
+    width: 40px;
+    height: 40px;
+    background: url('../images/profesor-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+div.alumno-activo{
+    background: rgb(255,160,0);
+    border-radius: 5px;
+}
+div.alumno-activo div.alumno{
+    width: 40px;
+    height: 40px;
+    background: url('../images/alumno-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+div.circulo-activo{
+    background: rgb(255,108,95);
+    border-radius: 5px;
+}
+div.circulo-activo div.circulo{
+    width: 40px;
+    height: 40px;
+    background: url('../images/circulo-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+div.box-menu-item-contenido{
+    flex-direction: row;
+    align-items: center;
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;
+
+}
+
+div.box-menu-item-logo{
+    flex: 2;
+    width: 40px;
+    text-align: right;
+    text-align: -webkit-right;
+    text-align: -moz-right;
+}
+
+div.box-menu-item-logo>img{
+    width: 40px;
+}
+
+div.box-menu-item-titulo{
+    margin-left: 20px;
+    flex: 4;
+}
+
+/*********  LOGOS ************/
+
+div.home{
+    width: 40px;
+    height: 40px;
+    background: url('../images/inicio-ico.png') no-repeat center;
+    background-size: 40px;
+}
+
+div.box-menu-item:hover div.home{
+    width: 40px;
+    height: 40px;
+    background: url('../images/inicio-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+div.institucion{
+    width: 40px;
+    height: 40px;
+    background: url('../images/institucion-icon.png') no-repeat center;
+    background-size: 40px;
+}
+
+div.box-menu-item:hover div.institucion{
+    width: 40px;
+    height: 40px;
+    background: url('../images/institucion-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+
+
+div.unidades{
+    width: 40px;
+    height: 40px;
+    background: url('../images/unidades-icon.png') no-repeat center;
+    background-size: 40px;
+}
+
+
+div.box-menu-item:hover div.unidades{
+    width: 40px;
+    height: 40px;
+    background: url('../images/unidades-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+div.profesor{
+    width: 40px;
+    height: 40px;
+    background: url('../images/profesor_ico.png') no-repeat center;
+    background-size: 40px;
+}
+
+
+div.box-menu-item:hover div.profesor{
+    width: 40px;
+    height: 40px;
+    background: url('../images/profesor-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+
+div.alumno{
+    width: 40px;
+    height: 40px;
+    background: url('../images/alumno-ico.png') no-repeat center;
+    background-size: 40px;
+}
+
+
+div.box-menu-item:hover div.alumno{
+    width: 40px;
+    height: 40px;
+    background: url('../images/alumno-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+div.circulo{
+    width: 40px;
+    height: 40px;
+    background: url('../images/circulo-ico.png') no-repeat center;
+    background-size: 40px;
+}
+
+
+div.box-menu-item:hover div.circulo{
+    width: 40px;
+    height: 40px;
+    background: url('../images/circulo-ico-white.png') no-repeat center;
+    background-size: 40px;
+}
+
+
+/********** POPUP *********/
+
+div.popup-user-opcion{
+    width: 165px;
+    height: 70px;
+    top: 45px;
+    background: url('../images/popup_background.png') no-repeat center;
+    background-size: 100%;
+    position: absolute;
+    visibility: collapse;
+    padding-top: 32px;
+    text-align: center;
+
+}
+
+
+/*********************************/
+
+
+div.box-contenido{
+    width: 100%;
+}
+
+
+div.box-user{
+
+    /*position: fixed;*/
+    width: 100%;
+    /*height: 80px;*/
+    text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+}
+
+div.box-user-linea{
+    /*background: green;*/
+    border-bottom:  2px solid rgb(176,178,179);
+    height: 100%;
+    width: 85%;
+    /* display: flex;
+    flex-direction: column;*/
+    justify-content: center;
+
+    text-align: right;
+    text-align: -webkit-right;
+    text-align: -moz-right;
+    padding-bottom: 2px;
+}
+
+div.box-user-linea>*{
+    /*background: yellow;*/
+    text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    width: 200px;
+}
+
+
+
+div.boton-usuario{
+    background: white;
+    border-radius: 5px;
+    border: 2px solid rgb(176,178,179);
+    color: rgb(176,178,179);
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;
+}
+
+div.boton-usuario>div>img{
+    width: 30px;
+}
+
+div.boton-usuario>span{
+    padding-left: 6px;
+}
+
+span.popup-user-name{
+    width: 100px;
+}
+
+div.popup-user-raiz{
+    width: 0px;
+}
+
+
+div.boton-usuario>* {
+    padding: 2px;
+}
+
+/********* Tooltip *********/
+div.tooltips {
+    position: relative;
+    display: inline;
+}
+div.tooltips span {
+    position: absolute;
+    width:140px;
+    color: #FFFFFF;
+    background: #000000;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    visibility: hidden;
+    border-radius: 6px;
+}
+div.tooltips span:after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -8px;
+    width: 0; height: 0;
+    border-bottom: 8px solid #000000;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+}
+div.tooltips-hover span {
+    visibility: visible;
+    opacity: 0.8;
+    top: 30px;
+    left: 50%;
+    margin-left: -76px;
+    z-index: 999;
+}
+
+/*  Super */
+
+div.cursor-pointer{
+    cursor:pointer;
+}
+div.panel-super-boton{
+    padding-top: 150px;
+}
+
+div.home-super-boton{
+    width: 250px;
+    height: 150px;
+    border-radius: 5px;
+    border: 2px solid rgb(176,178,179);
+    border-top: 0px;
+    padding: 20px;
+
+    display: flex;
+
+    flex-direction: row;
+    align-items: center;
+    margin-top: 30px;
+}
+
+div.home-super-boton>div{
+    width: 80px;
+    padding-left: 10px;
+}
+
+div.home-super-boton>p{
+
+    font-size: 1.5em;
+    padding-left: 10px;
+}
+
+div.home-super-boton.institucion_esq{
+    background: url('../images/institucion_esquina.png');
+    background-size: 50px;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
+
+div.home-super-boton.unidad_esq{
+    background: url('../images/unidad_esquina.png');
+    background-size: 50px;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
+
+div.home-super-boton.profesor_esq{
+    background: url('../images/profesor_esquina.png');
+    background-size: 50px;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
+
+div.home-super-boton.alumno_esq{
+    background: url('../images/alumno_esquina.png');
+    background-size: 50px;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
+
+div.home-super-boton.circulo_esq{
+    background: url('../images/circulo_esquina.png');
+    background-size: 50px;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
+
+.popup-link {
+    cursor: pointer;
+    color: white;
+    padding-left: 6px;
+}
+
+.popup-link:hover{
+    color: dodgerblue;
+}
+
+
+/************************************/
+
+
+div.box-creditos{
+
+    /*position: fixed;*/
+    width: 100%;
+    /*height: 80px;*/
+    text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+}
+
+div.box-creditos-linea{
+    border-top:  2px solid rgb(176,178,179);
+    height: 100%;
+    width: 85%;
+    justify-content: center;
+ 
+    margin-top: 40px;
+}
+
+div.box-creditos-linea > *{
+    text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+}  
+
+
+.box-footer-img {
+    width: 50px;
+    height: 50px;
+}

@@ -1,0 +1,216 @@
+﻿@model MLearningDB.LearningObject
+
+@using Newtonsoft.Json
+
+@{
+    ViewBag.Title = "Nueva Unidad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ActiveRole = "PROFESOR";
+}
+
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/app/unidad/unidadController.js")"></script>
+    <script src="@Url.Content("~/Scripts/app/unidad/unidadService.js")"></script>
+    <script>
+        home = false;
+        contraer_menu();
+        agregarClickItem();
+        hacerHome(false);
+        var LOtagsIds = @Html.Raw(JsonConvert.SerializeObject(ViewBag.tagList));
+        var circleID = @ViewBag.CircleID;
+        var currentLO = @Html.Raw(JsonConvert.SerializeObject(Model));
+</script>
+}
+<div ng-controller="unidadController">
+    @using (Html.BeginForm("CreateLO", "Publisher", FormMethod.Post, new { id = "unitForm", name = "unitForm", ng_submit = "asdf" }))
+    {
+        <div class="container-fluid">
+
+            <div class="container">
+                <div class="row"><br></div>
+                <div class="row"><br></div>
+                <div class="row"><br></div>
+                <div class='titulo_Prin'>{{message}} UNIDAD</div>
+                <div class="row"><br></div>
+            </div>
+            <div class="container cont_Principal">
+
+                <div class="row"><br></div>
+
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="loTitle"> Titulo de la Unidad</label>
+                                <input name="loTitle" ng-model="unidadActual.title" class="form-control" type="text" required />
+                                <span style="color:red" ng-show="unitForm.loTitle.$dirty && unitForm.loTitle.$invalid">
+                                    <span ng-show="unitForm.loTitle.$error.required">Campo obligatorio</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div style="margin-top:10px">
+                                            <label for="nombre"> Tipo:</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-offset-1 col-sm-4">
+                                        <div class="radio">
+                                            <input type="radio" ng-model='unidadActual.type' value="@((int)MLearning.Core.Configuration.LOType.Public)"> Publico
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="radio">
+                                            <input type="radio" ng-model='unidadActual.type' value="@((int)MLearning.Core.Configuration.LOType.Private)"> Privado
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row"><br></div>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <div style="margin-top:8px">
+                                    <label for="nombre"> Etiqueta</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-10">
+                                @*<select class="form-control" ng-model="unidadActual.etiqueta" ng-options="etiqueta.name for etiqueta in etiquetas track by etiqueta.id"></select>*@
+                                <select id="loTags" kendo-multi-select
+                                        k-ng-model="unidadActual.tags"
+                                        k-placeholder="'Seleccione Tags ...'"
+                                        k-data-text-field="'name'"
+                                        k-data-value-field="'id'"
+                                        @*serverFiltering: true,*@
+                                        k-data-source="{ transport: {read: { url:'@Url.Action("Read_tags", "Resources")', type:'post', dataType: 'json', data: onAdditionalData}} }"></select>
+
+                            </div>
+                        </div>
+                        <div class="row"><br></div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="nombre"> Descripcion</label>
+                                <textarea class="form-control"
+                                          ng-model="unidadActual.description" type="text"
+                                          rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="row"><br></div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="row">
+                            <div class="col-xs-offset-4 col-xs-4 text-center img_cubierta" style="width: 100%; margin-left: 0%;">
+                                <div class="row"><br></div>
+                                <input id="coverImageIn" name="coverImageIn" ng-model="unidadActual.url_cover" type="hidden" required />
+                                <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ unidadActual.url_cover }}" style="max-width: 100%; height: auto;" />
+                                <div class="row"><br></div>
+                                <div class="row">
+                                    <input id="kendoCoverImage" name="files"
+                                           type="file"
+                                           kendo-upload
+                                           k-async="{ saveUrl: '@Url.Action("UploadImage", "Resources")', autoUpload: true }"
+                                           k-multiple="false"
+                                           k-show-file-list="false"
+                                           k-success="onCoverUploadSuccess" />
+                                </div>
+                                <div class="row"><br></div>
+                                <div class="row">Imagen de Cubierta</div>
+                            </div>
+
+                        </div>
+                        <div class="row"><br></div>
+                        <div class="row">
+                            <div class="col-xs-offset-3 col-xs-6">
+                                <label for="nombre">Opcional</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-offset-3 col-xs-6 text-center img_optional" style="width: 100%; margin-left: 0%;">
+                                <div class="row"><br></div>
+
+                                <div class="row">
+                                    <div class="col-xs-offset-1 col-xs-10 text-center img_cubierta">
+                                        <div class="row"><br></div>
+                                        <input id="backgroundImageIn" name="backgroundImageIn" ng-model="unidadActual.url_background" type="hidden" />
+                                        <img id="coverImage" src="/images/029_icon_imagen.png" ng-src="{{ unidadActual.url_background }}" style="max-width: 100%; height: auto;" />
+                                        <div class="row"><br></div>
+                                        <div class="row">
+                                            <input id="kendoCoverImage" name="files"
+                                                   type="file"
+                                                   kendo-upload
+                                                   k-async="{ saveUrl: '@Url.Action("UploadImage", "Resources")', autoUpload: true }"
+                                                   k-multiple="false"
+                                                   k-show-file-list="false"
+                                                   k-success="onBackgroundUploadSuccess" />
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="row"><br></div>
+                                <div class="row">
+                                    Imagen de fondo
+                                    @*<div class="col-xs-offset-1 col-xs-2">col1</div>
+                                        <div class="col-xs-2">col2</div>
+                                        <div class="col-xs-2">col3</div>
+                                        <div class="col-xs-2">col4</div>*@
+                                </div>
+                                <div class="row"><br></div>
+                            </div>
+                        </div>
+                        <div class="row"><br></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row"><br></div>
+        </div>
+        <div class="container">
+            <div class="row"><br></div>
+            <div class="row">
+                <div id="okButton" class="col-xs-offset-4 col-xs-2  col-sm-offset-5 col-sm-2 col-md-offset-9 col-md-1">
+                    <a ng-click="updateLO()" href="#" ng-show="unidadActual.id!=null">
+                        <img class="btn_med" src="/images/035_btn_guardar.png">
+                    </a>
+                    <a ng-click="crearUnidad()" href="#" ng-show="unidadActual.id==null">
+                        <img class="btn_med" src="/images/030_btn_crear.png">
+                    </a>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-1">
+                    <a ng-click="cancelarUnidad()" href="#">
+                        <img class="btn_med" src="/images/031_btn_cancelar.png">
+                    </a>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-1">
+                    <span ng-bind="statusMsg"></span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+
+    var f = $('#unitForm');
+    var url = f.attr('action');
+    f.removeAttr('action');
+    f.attr('asyncAction',url);
+
+    function GetImageUrl(e)
+    {
+        $("#okButton *").removeAttr('disabled').on('click');
+        url_cover = e.response.url;
+        $("#coverImage").attr("src", url_cover);
+        //var input = $("#coverImageIn")
+        //input.val(e.response.url);
+        //input.trigger('input');
+        //angular.element($('#coverImageIn')).triggerHandler('input')
+        //scope.unidadActual.url_cover = e.response.url;
+        console.log(url_cover);
+    }
+</script>
+

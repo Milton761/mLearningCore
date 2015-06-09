@@ -1,0 +1,106 @@
+﻿@model MLearningDB.User
+
+@using (Html.BeginForm("updateUser", "Home", FormMethod.Post, new { id = "profileForm"}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>User</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.created_at)
+        @Html.HiddenFor(model => model.updated_at)
+        @Html.HiddenFor(model => model.social_id)
+        @Html.HiddenFor(model => model.is_online)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.name,"Nombre", new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.name)
+                @Html.ValidationMessageFor(model => model.name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.lastname,"Apellidos" ,new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.lastname)
+                @Html.ValidationMessageFor(model => model.lastname)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.username, "Usuario", new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.username)
+                @Html.ValidationMessageFor(model => model.username)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.passwordt, "Contraseña", new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.PasswordFor(model => model.passwordt)
+                @Html.ValidationMessageFor(model => model.passwordt)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.email, "Email",new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.email)
+                @Html.ValidationMessageFor(model => model.email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.image_url, "Imagen", new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                <img width="128" height="128" src="@Model.image_url" />
+                @*@Html.EditorFor(model => model.image_url)
+                @Html.ValidationMessageFor(model => model.image_url)*@
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<script>
+    
+
+    $("#profileForm").submit(function (e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        //console.log(formURL);
+        $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                //data: return data from server
+                if(data.errors)
+                { console.log(data.errors); }
+                var window = $("#profileWindow");
+                if (window) {
+                    //console.log(formURL);
+                    window.data("kendoWindow").close();
+                }
+                    
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+                //if fails      
+            }
+        });
+        e.preventDefault(); //STOP default action
+        //e.unbind(); //unbind. to stop multiple form submit.
+    });
+</script>
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@

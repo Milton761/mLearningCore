@@ -1,0 +1,114 @@
+﻿@model MLearning.Core.Entities.head_by_institution
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h3>Institución</h3>
+    
+     <br />
+        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.head_id)
+        @Html.HiddenFor(model => model.institution_id)
+        @Html.HiddenFor(model => model.created_at)
+        @Html.HiddenFor(model => model.updated_at)
+        @Html.HiddenFor(model => model.icreated_at)
+        @Html.HiddenFor(model => model.iupdated_at)
+    <div class="form-horizontal">
+        
+        <div>
+            @Html.LabelFor(model => model.institution_name, "Nombre")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.institution_name)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.country, "País")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.country)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.region,"Región/Estado")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.region)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.city,"Ciudad")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.city)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.postal_code, "Cod. Postal")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.postal_code)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.telephone, "Telefono")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.telephone)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.email, "Email")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.email)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.website_address, "Sitio Web")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.website_address)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.notes, "Descripción")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.notes)
+        </div>
+        <br />
+        <h4>Director</h4>
+        <br />
+
+        <div>
+            @Html.LabelFor(model => model.name, "Nombres")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.name)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.lastname, "Apellidos")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.lastname)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.username, "Usuario")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.username)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.password, "Contraseña")
+        </div>
+        <div>
+            @Html.PasswordFor(model => model.password, new { value = "" });
+            @Html.ValidationMessageFor(model => model.password,"", new { value = "" })
+        </div>
+
+    </div>
+}

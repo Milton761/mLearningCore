@@ -1,0 +1,104 @@
+﻿@model MLearning.Core.Entities.circle_by_owner
+@using  MLearning.Core.Configuration
+@{
+    var attributes = new Dictionary<string, object>();
+    attributes.Add("role", "form");
+    var comboattr = new Dictionary<string, object>();
+    comboattr.Add("data-value-primitive", true);
+}
+
+@using (Html.BeginForm("Circle_create", "Head", FormMethod.Post, attributes))
+{
+    
+    @Html.AntiForgeryToken()
+    <h3>Circulo</h3>
+
+    <br />
+    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.institution_id)
+    /*@Html.HiddenFor(model => model.created_at)
+    @Html.HiddenFor(model => model.updated_at)*/
+    <div class="form-horizontal">
+
+        <div class="form-group ml">
+            @Html.LabelFor(model => model.code, "Codigo")
+            @Html.EditorFor(model => model.code)
+        </div>
+
+        <div class="form-group ml">
+            @Html.LabelFor(model => model.name, "Nombre")
+            @Html.EditorFor(model => model.name)
+        </div>
+
+        <div class="form-group ml">
+            @Html.LabelFor(model => model.type, "Tipo")
+            <label class="radio-inline">@Html.RadioButtonFor(model => model.type, (int)CircleType.Public) Público</label>
+            <label class="radio-inline">@Html.RadioButtonFor(model => model.type, (int)CircleType.Private) Privado</label>
+        </div>
+        
+        <div class="form-group ml">
+            @Html.LabelFor(model => model.owner_id, "Profesor")
+            @(Html.Kendo().ComboBoxFor(model => model.owner_id)
+        //.Name("owner_id")
+          .DataTextField("fullname")
+          .DataValueField("id")
+          .HtmlAttributes(new { style = "width:250px" })
+          .Filter("contains")
+          .Placeholder("Selecione profesor...")
+          .IgnoreCase(true)
+        .AutoBind(false)
+          .MinLength(3)
+        .HtmlAttributes(comboattr)
+          .DataSource(source =>
+          {
+              //source.Read(read =>
+              //{
+              //    read.Action("Publisher_read", "Head").Type(HttpVerbs.Post);
+              //})
+              //.ServerFiltering(true);
+
+              source.Custom()
+             .ServerFiltering(true)
+             .Type("aspnetmvc-ajax")
+             .Transport(transport =>
+             {
+                 transport.Read("Publisher_read", "Head");
+             })
+
+             .Schema(schema =>
+             {
+                 schema.Data("Data")
+                       .Total("Total");
+             });
+          })
+            )
+        </div>
+
+            <!--(Html.Kendo().AutoCompleteFor(model => model.owner_id)
+          .Name("publisher")
+          .DataTextField("ProductName")
+          .DataValueField("ProductID")
+          .Filter("contains")
+          .MinLength(3)
+          .HtmlAttributes(new { style = "width:250px" })
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("GetInstitutionPublishers", "Head")
+                      .Data("onAdditionalData").Type(HttpVerbs.Post);
+              })
+              .ServerFiltering(true);
+          })
+        )-->
+
+        </div>
+}
+
+<script>
+    function onAdditionalData() {
+        return {
+            text: $("#publisher").val()
+        };
+    }
+</script>

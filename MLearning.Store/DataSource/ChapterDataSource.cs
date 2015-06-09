@@ -28,6 +28,8 @@ namespace DataSource
         }
 
 
+
+
         private string _author;
 
         public string Author

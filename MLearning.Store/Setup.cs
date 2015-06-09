@@ -14,11 +14,10 @@ namespace MLearning.Store
         {
         }
 
-
         protected override void InitializeLastChance()
         {
-            base.InitializeLastChance();
             Mvx.RegisterSingleton<IAsyncStorageService>(new AsyncStorageStoreService());
+            base.InitializeLastChance();
         }
         protected override IMvxApplication CreateApp()
         {

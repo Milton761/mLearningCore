@@ -91,6 +91,34 @@ namespace MLReader
             }
         }
 
+
+        private byte[] _imagebytes;
+
+        public byte[] ImageBytes
+        {
+            get { return _imagebytes; }
+            set
+            {
+                _imagebytes = value;
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("ImageBytes"));
+            }
+        }
+        
+        
+
+        private string _imageurl;
+
+        public string ImageUrl
+        {
+            get { return _imageurl; }
+            set { _imageurl = value;
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs("ImageUrl"));
+            }
+        }
+        
+
         private string _videourl;
 
         public string VideoUrl

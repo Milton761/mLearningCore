@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MLearning.Core.Configuration;
 using System.IO;
+using Core.Repositories;
 
 namespace MLearning.Core.Services
 {
@@ -56,7 +57,7 @@ namespace MLearning.Core.Services
         /// <returns></returns>
         Task<OperationResult> CreateAndRegisterConsumer(User account, int institution_id);
 
-
+        IRepositoryService repositoryService();
 
         Task RegisterUserToInstitution(int user_id, int institution_id);
 
@@ -71,6 +72,7 @@ namespace MLearning.Core.Services
         /// <returns></returns>
         Task<int> CreateCircle(int ownerid,string name,int type);
 
+        Task<int> CreateCircle(Circle circle);
 
         /// <summary>
         /// Registers a user in a circle
@@ -80,6 +82,7 @@ namespace MLearning.Core.Services
         /// <returns></returns>
         Task AddUserToCircle(int userid, int circleid);
 
+        Task RemoveUserFromCircle(int user_id, int circle_id);
 
         /// <summary>
         /// Persist an object in the database of type T
@@ -131,6 +134,8 @@ namespace MLearning.Core.Services
         /// <returns></returns>
         Task<List<Circle>> GetCircles(string startWith);
 
+        Task<List<Circle>> GetCircles();
+
         /// <summary>
         /// List all Institutions
         /// </summary>
@@ -168,6 +173,9 @@ namespace MLearning.Core.Services
 
         Task<List<LearningObject>> GetPublicLOs();
 
+        Task<List<lo_by_owner>> GetLOsbyOwner();
+
+        Task<List<lo_by_owner>> GetLOsbyOwner(int user_id);
 
         /// <summary>
         /// List all users registered in a circle
@@ -184,10 +192,6 @@ namespace MLearning.Core.Services
         /// <returns></returns>
         Task<List<post_with_username>> GetPostByCircle(int circleid);
        
-
-     
-     
-
         /// <summary>
         /// List all publishers in an institution
         /// </summary>
@@ -231,9 +235,11 @@ namespace MLearning.Core.Services
         /// </summary>
         /// <param name="circle_id"></param>
         /// <returns></returns>
+        /// 
         Task<List<tag_by_circle>> GetTagsByCircle(int circle_id);
 
         Task<List<tag_by_page>> GetTagsByLO(int lo_id);
+        Task<List<tag_by_lo>> GetLOTags(int lo_id);
 
         Task<List<tag_by_page>> GetTagsByPage(int page_id);
 
@@ -242,6 +248,8 @@ namespace MLearning.Core.Services
 
 
         Task AddTagToPage(int tag_id, int page_id);
+
+        Task AddTagToLO(int tag_id, int lo_id);
 
         Task<List<quiz_by_circle>> GetQuizzesByCircle(int circle_id);
 
@@ -259,7 +267,7 @@ namespace MLearning.Core.Services
         /// <param name="inst"></param>
         /// <param name="inst_head"></param>
         /// <returns></returns>
-        Task CreateInstitution(Institution inst,Head head_info, User user_credentials);
+        Task<int> CreateInstitution(Institution inst, Head head_info, User user_credentials);
 
         /// <summary>
         /// Returns the Institution ID of the Head User with the given UserID
@@ -274,6 +282,8 @@ namespace MLearning.Core.Services
         /// <param name="inst_id"></param>
         /// <returns></returns>
         Task<List<consumer_by_institution>> GetConsumersByInstitution(int inst_id);
+
+        Task<List<circle_by_owner>> GetCirclesByInstitution(int inst_id);
 
         Task UnSubscribeConsumerFromCircle(int user_id, int circle_id);
 
@@ -298,5 +308,12 @@ namespace MLearning.Core.Services
         Task<string> UploadResource(Stream s,string filename);
 
         Task DeleteTagFromPage(int tag_id, int page_id);
+
+        Task DeleteTagFromLO(int tag_id, int lo_id);
+
+        Task<List<LOsection>> GetSectionsByLO(int lo_id);
+
+        Task<List<Page>> GetPagesByLOSection(int sec_id);
+
     }
 }

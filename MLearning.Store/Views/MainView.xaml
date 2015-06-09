@@ -6,27 +6,31 @@
     xmlns:components="using:MLearning.Store.Components"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:views="using:Cirrious.MvvmCross.WindowsCommon.Views"
+    xmlns:views="using:Cirrious.MvvmCross.WindowsCommon.Views" 
     mc:Ignorable="d">
 
-    <Grid Background="White">
+    <Grid >
 
         <Viewbox>
             <Grid x:Name="MainGrid" Width="1366" Height="768" >
                 <!--Background Image-->
-                <Grid x:Name="BackgroundImage">
-                    <Image Source="ms-appx:///Resources/muro/fondo.png" Stretch="UniformToFill" />
+                <Grid >
+ 
+                    <Image Source="ms-appx:///Resources/brackgroundlogin.jpg" Stretch="UniformToFill"></Image>
+                    <components:MLFadeImage x:Name="BackgroundImage" ></components:MLFadeImage>
+                    <!--Image x:Name="LOBackgroundImage" Source="ms-appx:///Resources/muro/fondo.png" Opacity="0.0" Stretch="UniformToFill" /-->
                 </Grid>
+                 
 
-                <!--Background Brush-->
+                <!--Background Brush>
                 <Grid x:Name="BackgroundBrush" >
                     <Grid.Background>
-                        <LinearGradientBrush Opacity="0.8" StartPoint="0.5,0.0" EndPoint="0.5,1.0">
+                        <LinearGradientBrush Opacity="0.6" StartPoint="0.5,0.0" EndPoint="0.5,1.0">
                             <GradientStop Color="#3E3935" Offset="0.0"></GradientStop>
                             <GradientStop Color="#1E1B1E" Offset="1.0"></GradientStop>
                         </LinearGradientBrush>
                     </Grid.Background>
-                </Grid>
+                </Grid -->
  
                 
                 <!--Content Grid-->
@@ -37,7 +41,8 @@
                         <Grid.RenderTransform>
                             <CompositeTransform TranslateX="0" TranslateY="0" />
                         </Grid.RenderTransform>
-                        <Image Source="ms-appx:///Resources/muro/logo.png" Width="50" Height="50" Margin="16,20,16,698"/>
+                        <!-- x:Name="LogoImage" Source="ms-appx:///Resources/muro/logo.png" Width="50" Height="50" Margin="16,20,16,698"/-->
+                        <components:MLFadeImage x:Name="LogoFadeImage" BrushVisible="False"  Width="50" Height="50" Margin="16,20,16,698"  ></components:MLFadeImage>
 
                         <Image x:Name="back" Tapped="back_Tapped" Source="ms-appx:///Resources/muro/tareas/btn_back.png" Width="50" Height="50" Margin="16,90,16,628"/>
 
@@ -57,7 +62,7 @@
                     </Grid>
 
                     <!--List Grid-->
-                    <Grid x:Name="ListGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Width="248" Height="768" Background="#F6F0EA">
+                    <Grid x:Name="ListGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Width="248" Height="768">
                         <Grid.RenderTransform>
                             <CompositeTransform TranslateX="82" TranslateY="0" />
                         </Grid.RenderTransform>
@@ -96,7 +101,7 @@
                     <Image Visibility="Collapsed" Source="ms-appx:///Resources/muromock.png" Stretch="UniformToFill" Opacity="1.0" />
 
                     <!--Detail Grid  Background="#FFFFFF" -->
-                    <Grid x:Name="DetailGrid" Background="#FFFFFF"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="720" Height="768" >
+                    <Grid x:Name="DetailGrid"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="720" Height="768" >
                         <Grid.RenderTransform>
                             <CompositeTransform TranslateX="330" TranslateY="0" />
                         </Grid.RenderTransform>
@@ -116,14 +121,16 @@
                                 <TextBlock Text=" > " Foreground="#85B727" FontSize="22" FontStretch="Expanded" Height="30" ></TextBlock>
                                 <TextBlock x:Name="UnitNameBlock" Text="Nombre Unidad" FontSize="22" Foreground="Black" FontStretch="Expanded" Height="30" ></TextBlock>
                                 <Grid Width="116" Tapped="Open_Tapped" >
-                                    <Image Height="24" VerticalAlignment="Top" Source="ms-appx:///Resources/muro/tareas/btn_open.png"></Image>
+                                    <Image x:Name="OpenLOImage" Height="24" VerticalAlignment="Top" Source="ms-appx:///Resources/muro/tareas/btn_open.png"></Image>
                                 </Grid>
                             </StackPanel>
                         </Grid>
                         <!-- MLOs Grid -->
-                        <Grid Background="Transparent" Margin="38,112,20,490">
+                        <Grid Background="Transparent" Margin="38,112,20,490"> 
                             <components:LoadingView x:Name="MLOsRing" Width="662" Height="162" BackOpacity="0" RingColor="Gray" RingWidth="28" ></components:LoadingView>
-                            <Grid  x:Name="MLOsGrid" ></Grid>
+                            <Grid  x:Name="MLOsGrid" >
+                                
+                            </Grid>
                         </Grid>
                         
                         <!--Commnets list h = 368-->

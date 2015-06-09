@@ -1,6 +1,7 @@
 ﻿using Core.DownloadCache;
 using MLearning.Core.Configuration;
 using MLearning.Core.Entities;
+using MLearning.Core.Entities.json;
 using MLearning.Core.Services;
 using MLearning.Web.Models;
 using MLearning.Web.Singleton;
@@ -35,20 +36,54 @@ namespace MLearning.Web.Controllers
                  RedirectToAction("Index","Home");
             }
         }
-     
 
-   
+        //public ActionResult Details() 
         // GET: /Page/Create
-
         //
-
-        [Authorize(Roles = Constants.PublisherRole)]
-         async public Task<ActionResult> Index(int? id)
+        //[Authorize(Roles = Constants.PublisherRole)]
+         public async Task<ActionResult> Index(int? id, int? sectionId)
          {
-
-             return RedirectToAction("EditLO", "Publisher");
-         
+             PageID = ViewBag.PageID = id?? default(int);
+             Page page = null;
+             if (id != null)
+             {
+                 page = await _mLearningService.GetObjectWithId<Page>(id ?? default(int));
+                 ViewBag.currentLO = await _mLearningService.GetObjectWithId<LearningObject>(page.lo_id);
+                 var tagList = await _mLearningService.GetTagsByPage(page.id);
+                 ViewBag.pageTag = tagList.First();
+                 sectionId = page.LOsection_id;
+             }
+             if(sectionId != null && sectionId != default(int))
+             {
+                  ViewBag.currentLOsection = await _mLearningService.GetObjectWithId<LOsection>(sectionId ?? default(int));
+             }
+             return View(page);
          }
+
+        [HttpPost]
+         public async Task<ActionResult> Create(Page page, Tag tag)
+         {
+             page.created_at = DateTime.UtcNow;
+             page.updated_at = DateTime.UtcNow;
+             int id = await _mLearningService.CreateObject<Page>(page, p => p.id);
+             await _mLearningService.AddTagToPage(tag.id, id);
+             return Json(new JsonActionResult { resultId = id, url = Url.Action("", new { id = id }) });
+         }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public async Task<ActionResult> Update(Page page, Tag tag)
+        {
+            page.updated_at = DateTime.UtcNow;
+            await _mLearningService.UpdateObject<Page>(page);
+            var tagList = await _mLearningService.GetTagsByPage(page.id);
+            var _pageTag = tagList.First();
+            if(tag.id != _pageTag.tag_id)
+            {
+                await _mLearningService.DeleteTagFromPage(_pageTag.tag_id, page.id);
+                await _mLearningService.AddTagToPage(tag.id, page.id);
+            }
+            return Json(new JsonActionResult());
+        }
 
         [Authorize(Roles = Constants.PublisherRole)]
         public ActionResult Create(int lo_id)
@@ -63,7 +98,7 @@ namespace MLearning.Web.Controllers
         // Post: /Page/Create
         [HttpPost]
         [ValidateInput(false)]
-        async public Task<ActionResult> Create(Page page/*JsonPage page*/)
+        async public Task<ActionResult> Create_(Page page/*JsonPage page*/)
         {
             try
             {

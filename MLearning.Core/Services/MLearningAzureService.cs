@@ -33,7 +33,10 @@ namespace MLearning.Core.Services
         }
 
 
-
+        public IRepositoryService repositoryService()
+        {
+            return _repositoryService;
+        }
 
         // Serverside: if login OK, sets field is_online to TRUE
         public async Task<LoginOperationResult<T>> ValidateLogin<T>(T account, Expression<Func<T, bool>> validation, Func<T, int> getID, Func<T, int> getType)
@@ -132,8 +135,17 @@ namespace MLearning.Core.Services
             return c.id;
         }
 
-    
+        public async Task<int> CreateCircle(Circle circle)
+        {
 
+            circle.created_at = DateTime.UtcNow;
+            circle.updated_at = DateTime.UtcNow;
+
+            await _repositoryService.InsertAsync<Circle>(circle);
+
+            return circle.id;
+        }
+    
         public async Task<int> CreateObject<T>(T obj, Func<T,int> getId)
         {
             await _repositoryService.InsertAsync<T>(obj);
@@ -145,7 +157,7 @@ namespace MLearning.Core.Services
         {
             Circle_has_LO circleLO = new Circle_has_LO { circle_id = circleid, lo_id = loid, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow };
 
-            _repositoryService.InsertAsync<Circle_has_LO>(circleLO);
+            await _repositoryService.InsertAsync<Circle_has_LO>(circleLO);
         }
 
         public async Task<List<circle_by_user>> GetCirclesByUser(int userid)
@@ -221,8 +233,16 @@ namespace MLearning.Core.Services
 
         }
 
-      
 
+        public async Task<List<lo_by_owner>> GetLOsbyOwner()
+        {
+            return await _repositoryService.SearchForAsync<lo_by_owner>(lo => true, new Dictionary<string, string>(), false);
+        }
+
+        public async Task<List<lo_by_owner>> GetLOsbyOwner(int user_id)
+        {
+            return await _repositoryService.SearchForAsync<lo_by_owner>(lo => lo.user_id == user_id , new Dictionary<string, string>(), false);
+        }
 
         public async Task DownloadLOPage(string url_package)
         {
@@ -277,6 +297,20 @@ namespace MLearning.Core.Services
            await _repositoryService.InsertAsync<CircleUser>(cuser);
         }
 
+        public async Task RemoveUserFromCircle(int user_id, int circle_id)
+        {
+            try
+            {
+                var cus = await _repositoryService.SearchForAsync<CircleUser>(cu => cu.Circle_id == circle_id && cu.User_id == user_id , new Dictionary<string, string>(), false);
+                var target = cus.FirstOrDefault();
+                await _repositoryService.DeleteAsync<CircleUser>(target);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
+        }
+
         public async Task<List<Circle>> GetCircles(string startsWith)
         {
             List<Circle> list;
@@ -290,6 +324,11 @@ namespace MLearning.Core.Services
             }
 
             return list;
+        }
+
+        public async Task<List<Circle>> GetCircles()
+        {
+            return await _repositoryService.GetAllAsync<Circle>();
         }
 
 
@@ -345,7 +384,7 @@ namespace MLearning.Core.Services
 
                 first.like = !first.like;
 
-                _repositoryService.UpdateAsync<UserLO>(first);
+                await _repositoryService.UpdateAsync<UserLO>(first);
             }
         }
 
@@ -366,7 +405,7 @@ namespace MLearning.Core.Services
 
             user.is_online = false;
 
-            _repositoryService.UpdateAsync<User>(user);
+            await _repositoryService.UpdateAsync<User>(user);
         }
 
 
@@ -389,6 +428,10 @@ namespace MLearning.Core.Services
 #endif
         }
 
+        async public Task<List<tag_by_lo>> GetLOTags(int lo_id)
+        {
+            return await _repositoryService.SearchForAsync<tag_by_lo>(t => t.lo_id == lo_id, t => t.updated_at, t => t.id, false);
+        }
 
         async public Task<List<tag_by_page>> GetTagsByPage(int page_id)
         {
@@ -424,7 +467,7 @@ namespace MLearning.Core.Services
 
 
 
-        async public Task CreateInstitution(Institution inst, Head head_info,User user_credentials)
+        async public Task<int> CreateInstitution(Institution inst, Head head_info, User user_credentials)
         {
             //Create Head account
 
@@ -439,7 +482,7 @@ namespace MLearning.Core.Services
 
             old_head.title = head_info.title;
 
-            _repositoryService.UpdateAsync<Head>(old_head);
+            await _repositoryService.UpdateAsync<Head>(old_head);
 
             //Create institution
             inst.updated_at = DateTime.UtcNow;
@@ -447,8 +490,8 @@ namespace MLearning.Core.Services
 
            int inst_id = await CreateObject<Institution>(inst, i => i.id);     
             //Relationship
-           RegisterUserToInstitution(r.id, inst_id);
-            
+           await RegisterUserToInstitution(r.id, inst_id);
+           return user_id;
         }
 
 
@@ -482,6 +525,11 @@ namespace MLearning.Core.Services
 #endif
         }
 
+        async public Task<List<circle_by_owner>> GetCirclesByInstitution(int inst_id)
+        {
+            return await _repositoryService.SearchForAsync<circle_by_owner>(c => c.institution_id == inst_id,new Dictionary<string,string>(), false);
+        }
+
         async public Task<OperationResult> CreateAndRegisterPublisher(User account, Publisher publisher, int institution_id)
         {
             OperationResult op = await CreateAccount<User>(account, u => u.id, UserType.Publisher);
@@ -499,7 +547,7 @@ namespace MLearning.Core.Services
             old_publisher.telephone = publisher.telephone;
             old_publisher.title = publisher.title;
 
-            _repositoryService.UpdateAsync<Publisher>(old_publisher);
+            await _repositoryService.UpdateAsync<Publisher>(old_publisher);
 
             if (institution_id != Constants.NoInstitution)
             {
@@ -518,7 +566,7 @@ namespace MLearning.Core.Services
 
             if (institution_id != Constants.NoInstitution)
             {
-                RegisterUserToInstitution(user_id, institution_id);
+                await RegisterUserToInstitution(user_id, institution_id);
             }
             
 
@@ -529,7 +577,7 @@ namespace MLearning.Core.Services
         public async Task RegisterUserToInstitution(int user_id, int institution_id)
         {
             Institution_has_User institutionHead = new Institution_has_User { institution_id = institution_id, user_id = user_id, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow };
-            CreateObject<Institution_has_User>(institutionHead, i => i.id);
+            await CreateObject<Institution_has_User>(institutionHead, i => i.id);
         }
 
 
@@ -542,7 +590,7 @@ namespace MLearning.Core.Services
            if (relationList.Count > 0)
            {
                var toDelete = relationList.FirstOrDefault();
-               _repositoryService.DeleteAsync<CircleUser>(toDelete);
+               await _repositoryService.DeleteAsync<CircleUser>(toDelete);
            }
         }
 
@@ -619,6 +667,10 @@ namespace MLearning.Core.Services
             await _repositoryService.InsertAsync<PageTag>(new PageTag { page_id = page_id, tag_id = tag_id, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow });
         }
 
+        public async Task AddTagToLO(int tag_id, int lo_id)
+        {
+            await _repositoryService.InsertAsync<LearningObjectTag>(new LearningObjectTag { lo_id = lo_id, tag_id = tag_id, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow });
+        }
 
         public async Task DeleteTagFromPage(int tag_id, int page_id)
         {
@@ -629,7 +681,14 @@ namespace MLearning.Core.Services
 
         }
 
+        public async Task DeleteTagFromLO(int tag_id, int lo_id)
+        {
 
+            var list = await _repositoryService.SearchForAsync<LearningObjectTag>(lot => lot.tag_id == tag_id && lot.lo_id == lo_id, pt => pt.updated_at, pt => pt.id, false);
+
+            await _repositoryService.DeleteAsync<LearningObjectTag>(list.FirstOrDefault());
+
+        }
 
         public async Task<List<Question>> GetQuestionsByQuiz(int quiz_id)
         {
@@ -652,6 +711,16 @@ namespace MLearning.Core.Services
         public async Task<List<Quiz>> GetQuizzesByLO(int lo_id)
         {
             return await _repositoryService.SearchForAsync<Quiz>(q => q.LearningObject_id==lo_id, q => q.updated_at, q => q.id, false);
+        }
+
+        public async Task<List<LOsection>> GetSectionsByLO(int lo_id)
+        {
+            return await _repositoryService.SearchForAsync<LOsection>(s => s.LO_id == lo_id, new Dictionary<String,String>(), false);
+        }
+
+        public async Task<List<Page>> GetPagesByLOSection(int sec_id)
+        {
+            return await _repositoryService.SearchForAsync<Page>(s => s.LOsection_id == sec_id, new Dictionary<String, String>(), false);
         }
     }
 }

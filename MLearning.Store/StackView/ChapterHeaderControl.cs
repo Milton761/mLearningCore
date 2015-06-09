@@ -36,7 +36,7 @@ namespace StackView
 
         public string Author
         {
-            set { _tags.Text = value.ToUpper(); }
+            set { _tags.Text = "Autor : " + value; }
             get { return _author.Text; }
         }
 
@@ -73,23 +73,23 @@ namespace StackView
             Children.Add(panelgrid);
 
             _title = new TextBlock();
-            _title.FontSize = 33;
-            _title.FontWeight = Windows.UI.Text.FontWeights.Thin;
+            _title.FontSize = 36;
+            _title.FontWeight = Windows.UI.Text.FontWeights.SemiLight;
             _title.TextWrapping = TextWrapping.Wrap;
-            _title.Height = 108.0; //88.0;
+            _title.Height = 128.0; //88.0;
             _title.Width = 366.0;
-            _title.Foreground = new SolidColorBrush(Windows.UI.Colors.Gray);
+            _title.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
             _title.Text = "EXPERIENCIA DE USUARIO";
             panelgrid.Children.Add(_title);
 
             _tags = new TextBlock();
-            _tags.FontSize = 28;//33;
-            _tags.FontWeight = Windows.UI.Text.FontWeights.Black;
+            _tags.FontSize = 33;
+            _tags.FontWeight = Windows.UI.Text.FontWeights.Normal;
             _tags.Height = 90.0; //52.0;
             _tags.Width = 366.0;
             _tags.TextWrapping = TextWrapping.Wrap;
             _tags.Foreground = new SolidColorBrush(Windows.UI.Colors.Aquamarine);
-            _tags.Text = "INMERSIVA";
+            _tags.Text = "Autor : "+ "INMERSIVA";
             panelgrid.Children.Add(_tags);
 
             _author = new TextBlock();
@@ -97,17 +97,17 @@ namespace StackView
             _author.TextWrapping = TextWrapping.Wrap;
             _author.Height = 58.0;
             _author.Width = 366.0;
-            _author.Foreground = new SolidColorBrush(Windows.UI.Colors.Gray);
+            _author.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
             _author.Text = "Sensacional e intuitivo";
             ///panelgrid.Children.Add(_author);
 
             _description = new TextBlock();
-            _description.FontSize = 19;
-            _description.FontWeight = Windows.UI.Text.FontWeights.Light;
+            _description.FontSize = 22;
+            _description.FontWeight = Windows.UI.Text.FontWeights.Normal;
             _description.TextWrapping = TextWrapping.Wrap;
             _description.Height = 178.0;
             _description.Width = 366.0;
-            _description.Foreground = new SolidColorBrush(Windows.UI.Colors.Gray);
+            _description.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
             _description.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat";
             panelgrid.Children.Add(_description);
 

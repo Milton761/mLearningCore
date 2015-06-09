@@ -1,0 +1,54 @@
+<p>This is the directives/primero view.</p>
+<h1 ng-click="hola()">Slide {{campo.name}}
+</h1>
+
+<div class="container-fluid">
+
+    <form class="form" name="primeroForm" id="primeroForm">
+    <div class="row">
+        <div class="col-xs-6">
+            <!-- titulo-->
+            <div class="row">
+                <div class="col-xs-offset-1 col-xs-3">
+                    <label for="nombre"> Titulo de la Pagina</label>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-xs-offset-1 col-xs-4">
+                    <input ng-model="primeroActual.titulo" class="form-control" type="text" placeholder="Titulo (Opcional)">
+                </div>
+            </div>
+
+            <!-- descripcion-->
+            <div class="row">
+                <div class="col-xs-offset-1 col-xs-3">
+                    <label for="descripcion"> Descripcion</label>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-xs-offset-1 col-xs-4">
+
+                    <textarea class="form-control"
+                              ng-model="primeroActual.descripcion" type="text"
+                              placeholder="Texto"  rows="3">
+                    </textarea>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+        campo del a Imagen
+            <div class="col-xs-offset-1 col-xs-4">
+                <input ng-model="primeroActual.imagen" class="form-control" type="image" placeholder="Titulo (Opcional)">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    </form>
+</div>
+

@@ -33,13 +33,18 @@ namespace MLearning.Store.Views
         LoginGrid _logingrid = new LoginGrid();
         LoadingView _loadingview = new LoadingView();
         PopupView popup = new PopupView();
-        string a = "";
+
+         
         public LoginView()
         {
             this.InitializeComponent();
+           // 
             MainGrid.Children.Add(new GridResource());
+             
+           
             MainGrid.Children.Add(_logingrid);
             MainGrid.Children.Add(_loadingview);
+            _loadingview.Opacity = 0.0;
             Canvas.SetZIndex(_loadingview,-10);
             MainGrid.Children.Add(popup);
             this.Loaded += LoginView_Loaded;
@@ -48,8 +53,6 @@ namespace MLearning.Store.Views
         void LoginView_Loaded(object sender, RoutedEventArgs e)
         {
             var vm = (LoginViewModel)this.ViewModel;
-
-            
             ((LoginViewModel)this.ViewModel).PropertyChanged += LoginView_PropertyChanged;
 
             /**Binding myBinding = new Binding() { Source = vm.Username, Mode=BindingMode.TwoWay };
@@ -64,7 +67,8 @@ namespace MLearning.Store.Views
             {
                 var command = ((LoginViewModel)this.ViewModel).LoginCommand;
                 command.Execute(null);
-                Canvas.SetZIndex(_loadingview, 10); 
+                Canvas.SetZIndex(_loadingview, 10);
+                _loadingview.Opacity = 1.0;
             };
 
 
@@ -80,7 +84,8 @@ namespace MLearning.Store.Views
                 if (!vm.LoginOK)
                 {
                     popup.Message = "Ingrese datos correctos";
-                    Canvas.SetZIndex(_loadingview, -10); 
+                    Canvas.SetZIndex(_loadingview, -10);
+                    _loadingview.Opacity = 0.0;
                 }  
             }
 
@@ -89,7 +94,8 @@ namespace MLearning.Store.Views
                 if (!vm.ConnectionOK)
                 {
                     popup.Message = "Verifique su conexión de Internet";
-                    Canvas.SetZIndex(_loadingview, -10); 
+                    Canvas.SetZIndex(_loadingview, -10);
+                    _loadingview.Opacity = 0.0;
                 }  
             }
         }

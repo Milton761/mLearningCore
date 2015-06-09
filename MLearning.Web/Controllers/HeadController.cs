@@ -10,32 +10,27 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+using MLearning.Core.Entities;
 
 namespace MLearning.Web.Controllers
 {
     public class HeadController : MLController
     {
-
-                
+            
          private IMLearningService _mLearningService;
 		public HeadController() : base()
         {
 
-           
             _mLearningService = ServiceManager.GetService();
         }
-
-
-  
-
-
 
         //
         // GET: /Head/
          [Authorize(Roles=Constants.HeadRole)]
         async public Task<ActionResult> Index(int ?id)
         {
-
 
                 if (id != null)
                 {
@@ -53,21 +48,256 @@ namespace MLearning.Web.Controllers
                     }
 
                 }
-            
 
-                
-                InstitutionID = await _mLearningService.GetHeadInstitutionID(UserID);
+                ViewBag.InstitutionId = InstitutionID = await _mLearningService.GetHeadInstitutionID(UserID);
 
-                var publisherList = await _mLearningService.GetPublishersByInstitution(InstitutionID);
-                var consumersList = await _mLearningService.GetConsumersByInstitution(InstitutionID);
+                //var publisherList = await _mLearningService.GetPublishersByInstitution(InstitutionID);
+                //var consumersList = await _mLearningService.GetConsumersByInstitution(InstitutionID);
 
-
-                return View("PublisherConsumerList", new AdminHeadViewModel { Publishers = publisherList, Consumers = consumersList });
-          
-
-            
+                //return View("PublisherConsumerList", new AdminHeadViewModel { Publishers = publisherList, Consumers = consumersList });
+                return View();
+           
         }
 
+        #region Publisher CRUD
+         public ActionResult Publishers(int? id)
+         {
+             if (id != null)
+             {
+                 ViewBag.InstitutionId = InstitutionID = id ?? default(int);
+             }
+             return View();
+         }
+
+         public async Task<ActionResult> Publisher_create([DataSourceRequest] DataSourceRequest request, publisher_by_institution pub)
+         {
+             if (pub != null && ModelState.IsValid)
+             {
+                 var result = await _mLearningService.CreateAndRegisterPublisher(
+                     new User { name = pub.name, lastname = pub.lastname, email = pub.email, username = pub.username, password = EncryptionService.encrypt(pub.password) }
+                     , new Publisher { country = pub.country, region = pub.region, city = pub.city, telephone = pub.telephone }, InstitutionID);
+                 pub = await _mLearningService.GetObjectWithId<publisher_by_institution>(result.id);
+             }
+             return Json(new[] { pub }.ToDataSourceResult(request, ModelState));
+         }
+
+         public async Task<ActionResult> Publisher_read([DataSourceRequest] DataSourceRequest request)
+         {
+             //await _mLearningService.GetObjectWithId<publisher_by_institution>(6138);
+             var publisherList = await _mLearningService.GetPublishersByInstitution(InstitutionID);
+             return Json(publisherList.ToDataSourceResult(request));
+         }
+
+        //public async Task<ActionResult> GetInstitutionPublishers
+
+         public async Task<ActionResult> Publisher_update([DataSourceRequest] DataSourceRequest request, publisher_by_institution pub)
+         {
+             if (pub != null && ModelState.IsValid)
+             {
+                 var user = await _mLearningService.GetObjectWithId<User>(pub.id);
+                 var publisher = await _mLearningService.GetObjectWithId<Publisher>(pub.publisher_id);
+
+                 user.name = pub.name;
+                 user.lastname = pub.lastname;
+                 user.username = pub.username;
+                 user.email = pub.email;
+                 if (pub.password != null)
+                    user.password = EncryptionService.encrypt(pub.password);
+                
+                 publisher.country = pub.country;
+                 publisher.region = pub.region;
+                 publisher.city = pub.city;
+                 publisher.telephone = pub.telephone;
+
+                 //Update DB
+                 await _mLearningService.UpdateObject<User>(user);
+                 await _mLearningService.UpdateObject<Publisher>(publisher);
+                 pub = await _mLearningService.GetObjectWithId<publisher_by_institution>(pub.id); 
+             }
+             return Json(new[] { pub }.ToDataSourceResult(request,ModelState));
+         }
+        
+         public async Task<ActionResult> Publisher_destroy([DataSourceRequest] DataSourceRequest request, publisher_by_institution pub)
+         {
+             if (pub != null && ModelState.IsValid)
+             {
+                 await _mLearningService.DeleteObject<Publisher>(new Publisher { id = pub.publisher_id });
+                 await _mLearningService.DeleteObject<User>(new User { id = pub.id });
+             }
+             return Json(new[] { pub }.ToDataSourceResult(request, ModelState));
+         }
+        #endregion
+
+        #region Consumers CRUD
+         public ActionResult Consumers(int? id)
+         {
+             if(id != null)
+             {
+                 ViewBag.InstitutionId = InstitutionID = id ?? default(int);
+             }
+             return View();
+         }
+
+         public async Task<ActionResult> Consumer_create([DataSourceRequest] DataSourceRequest request, consumer_by_institution cons)
+         {
+             if (cons != null && ModelState.IsValid)
+             {
+                 var result = await _mLearningService.CreateAndRegisterConsumer(
+                     new User { name = cons.name, lastname = cons.lastname, email = cons.email, username = cons.username, password = EncryptionService.encrypt(cons.password) }
+                     , InstitutionID);
+                 cons = await _mLearningService.GetObjectWithId<consumer_by_institution>(result.id);
+
+                 //await _mLearningService.CreateAndRegisterConsumer(consumerObj.User, InstitutionID);
+             }
+             return Json(new[] { cons }.ToDataSourceResult(request, ModelState));
+         }
+
+         public async Task<ActionResult> Consumer_read([DataSourceRequest] DataSourceRequest request)
+         {
+             //await _mLearningService.GetObjectWithId<publisher_by_institution>(6138);
+             var list = await _mLearningService.GetConsumersByInstitution(InstitutionID);
+             return Json(list.ToDataSourceResult(request));
+         }
+
+         public async Task<ActionResult> Consumer_update([DataSourceRequest] DataSourceRequest request, consumer_by_institution cons)
+         {
+             if (cons != null && ModelState.IsValid)
+             {
+                 var user = await _mLearningService.GetObjectWithId<User>(cons.id);
+
+                 user.name = cons.name;
+                 user.lastname = cons.lastname;
+                 user.username = cons.username;
+                 user.email = cons.email;
+                 if (cons.password != null)
+                     user.password = EncryptionService.encrypt(cons.password);
+
+                 //Update DB
+                 await _mLearningService.UpdateObject<User>(user);
+                 cons = await _mLearningService.GetObjectWithId<consumer_by_institution>(cons.id);
+             }
+             return Json(new[] { cons }.ToDataSourceResult(request, ModelState));
+         }
+
+         public async Task<ActionResult> Consumer_destroy([DataSourceRequest] DataSourceRequest request, consumer_by_institution cons)
+         {
+             if (cons != null && ModelState.IsValid)
+             {
+                 await _mLearningService.DeleteObject<User>(new User { id = cons.id });
+             }
+             return Json(new[] { cons }.ToDataSourceResult(request, ModelState));
+         }
+#endregion
+
+        #region Circle CRUD
+         public ActionResult Circles(int? id)
+         {
+             if (id != null)
+             {
+                 ViewBag.InstitutionId = InstitutionID = id ?? default(int);
+             }
+             return View();
+         }
+
+         public async Task<ActionResult> Circle_create([DataSourceRequest] DataSourceRequest request, circle_by_owner circle)
+         {
+             if (circle != null && ModelState.IsValid)
+             {
+                 Circle c = new Circle { code=circle.code, institution_id = InstitutionID, name = circle.name, type = circle.type, owner_id = circle.owner_id };
+
+                 int circleId = await _mLearningService.CreateCircle(c);
+                circle = await _mLearningService.GetObjectWithId<circle_by_owner>(circleId);
+                
+             }
+             return Json(new[] { circle }.ToDataSourceResult(request, ModelState));
+         }
+
+         public async Task<ActionResult> Circle_read([DataSourceRequest] DataSourceRequest request)
+         {
+             //await _mLearningService.GetObjectWithId<publisher_by_institution>(6138);
+             var list = await _mLearningService.GetCirclesByInstitution(InstitutionID);
+             return Json(list.ToDataSourceResult(request));
+         }
+
+         public async Task<ActionResult> Circle_update([DataSourceRequest] DataSourceRequest request, circle_by_owner circle)
+         {
+             if (circle != null && ModelState.IsValid)
+             {
+                 var cir = await _mLearningService.GetObjectWithId<Circle>(circle.id);
+
+
+                 cir.name = circle.name;
+                 cir.type = circle.type;
+                 cir.code = circle.code;
+                 cir.owner_id = circle.owner_id;
+
+                 //Update DB
+                 await _mLearningService.UpdateObject<Circle>(cir);
+                 circle = await _mLearningService.GetObjectWithId<circle_by_owner>(circle.id);
+             }
+             return Json(new[] { circle }.ToDataSourceResult(request, ModelState));
+         }
+
+         public async Task<ActionResult> Circle_destroy([DataSourceRequest] DataSourceRequest request, circle_by_owner circle)
+         {
+             if (circle != null && ModelState.IsValid)
+             {
+                 await _mLearningService.DeleteObject<Circle>(new Circle { id = circle.id });
+             }
+             return Json(new[] { circle }.ToDataSourceResult(request, ModelState));
+         }
+#endregion
+
+        #region Circle Admin
+         public async Task<ActionResult> CircleConsumers(int id)
+         {
+             CircleID = ViewBag.circleId = id;
+             var circle = await _mLearningService.GetObjectWithId<Circle>(id);
+             ViewBag.CircleName = circle.name;
+             return View();
+         }
+
+         public async Task<ActionResult> CircleConsumers_read([DataSourceRequest] DataSourceRequest request)
+         {
+             List<consumer_by_circle> cc = await _mLearningService.GetConsumersByCircle(CircleID);
+             return Json(cc.ToDataSourceResult(request));
+         }
+
+         public async Task<ActionResult> GetConsumers([DataSourceRequest] DataSourceRequest request)
+         {
+             List<consumer_by_institution> cs = await _mLearningService.GetConsumersByInstitution(InstitutionID);
+
+             //Debug.Print(request.Filters.Count.ToString());
+
+             return Json(cs.ToDataSourceResult(request));
+         }
+
+         public async Task<ActionResult> AddConsumers(List<int> ids, int circleId)
+         {
+
+             foreach (int id in ids)
+             {
+                 await _mLearningService.AddUserToCircle(id, circleId);
+             }
+
+             return Json("Ok!");
+         }
+
+         public async Task<ActionResult> CircleConsumer_destroy([DataSourceRequest] DataSourceRequest request, consumer_by_circle cons)
+         {
+             if (cons != null && ModelState.IsValid)
+             {
+                 await _mLearningService.RemoveUserFromCircle(cons.id, cons.Circle_id);
+                 /*if (CircleID != null)
+                 {
+                     await _mLearningService.UnSubscribeConsumerFromCircle(user_id, CircleID);
+                 }*/
+             }
+             return Json(new[] { cons }.ToDataSourceResult(request, ModelState));
+         }
+#endregion
+
+        #region old CRUDS
         //
         // GET: /Head/Details/5
          [Authorize(Roles = Constants.HeadRole)]
@@ -158,10 +388,10 @@ namespace MLearning.Web.Controllers
 
 
                 //Update DB
-                _mLearningService.UpdateObject<User>(pubObj.User);
+                await _mLearningService.UpdateObject<User>(pubObj.User);
 
 
-                _mLearningService.UpdateObject<Publisher>(pubObj.Publisher);
+                await _mLearningService.UpdateObject<Publisher>(pubObj.Publisher);
 
 
 
@@ -203,7 +433,7 @@ namespace MLearning.Web.Controllers
 
                 return RedirectToAction("Index", new { id = UserID });
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return RedirectToAction("Index", new { id = UserID });
             }
@@ -294,10 +524,10 @@ namespace MLearning.Web.Controllers
 
 
                 //Update DB
-                _mLearningService.UpdateObject<User>(consumerObj.User);
+                await _mLearningService.UpdateObject<User>(consumerObj.User);
 
 
-                _mLearningService.UpdateObject<Consumer>(consumerObj.Consumer);
+                await _mLearningService.UpdateObject<Consumer>(consumerObj.Consumer);
 
 
 
@@ -339,12 +569,11 @@ namespace MLearning.Web.Controllers
 
                 return RedirectToAction("Index", new { id = UserID });
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return RedirectToAction("Index", new { id = UserID });
             }
         }
-
-       
     }
+        #endregion
 }

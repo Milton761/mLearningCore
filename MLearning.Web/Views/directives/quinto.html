@@ -1,0 +1,45 @@
+<p>This is the directives/quinto view.</p>
+
+<h1 ng-click="hola()">Slide {{campo.name}}</h1>
+<div class="container-fluid">
+
+    <form class="form" name="primeroForm" id="primeroForm">
+        <div class="row">
+            <div class="col-xs-12">
+
+
+                <div class="row">
+                    <div class="col-xs-12">
+
+
+                        <!-- descripcion-->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="descripcion"> Descripcion</label>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-xs-12">
+
+                                <textarea class="form-control"
+                                          ng-model="quintoActual.cita" type="text"
+                                          placeholder="alguna cita o frase"  rows="3">
+                                </textarea>
+
+                            </div>
+                        </div>
+                    </div>
+
+</div>
+                <div class="row">
+                    <div class="col-xs-offset-3 col-xs-9">
+                        <input ng-model="quintoActual.autor" class="form-control" type="text" placeholder="Autor de la cita o Frase">
+                    </div>
+</div>
+
+            </div>
+        </div>
+
+    </form>
+</div>

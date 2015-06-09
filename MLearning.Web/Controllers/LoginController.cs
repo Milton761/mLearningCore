@@ -19,7 +19,7 @@ using System.Web.Security;
 
 namespace MLearning.Web.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : MLController
     {
 
 
@@ -39,29 +39,25 @@ namespace MLearning.Web.Controllers
             }
         }
 
-        private async void SignIn( bool isPersistent,string username,UserType type)
+        private void SignIn( bool isPersistent,string username,UserType type)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, username), new Claim(ClaimTypes.Role,type.ToString()), new Claim(ClaimTypes.Name,username)}, DefaultAuthenticationTypes.ApplicationCookie, ClaimTypes.Name, ClaimTypes.Role);
-            
-         
+                
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent}, identity);
-
-            
-
-            
+        
         }
 
 
         // GET: Login
         public ActionResult Index()
         {
+            if(Request.IsAuthenticated && userType!=null)
+            {
+                return redirectToRoleHome();
+            }
             return View();
         }
-
-
-      
-
 
         [HttpPost]
         async public Task<ActionResult> Login(FormCollection collection)
@@ -79,43 +75,15 @@ namespace MLearning.Web.Controllers
 
                 LoginOperationResult<User> result = await _mLearningService.ValidateLogin<User>(user, u => u.password == user.password && u.username == user.username, u => u.id, u => u.type);
                 // LoginOperationResult result = await _mLearningService.ValidateConsumerLogin(user.username,user.password);
-
+                UserID = result.id;
                 if (result.successful)
                 {
                    
-                   UserType userType = (UserType)result.userType;
+                   userType = (UserType)result.userType;
                     //Session Code HERE
-                    SignIn(false, username,userType);
+                    SignIn(false, username,userType?? default(UserType));
 
-
-                    switch (userType)
-                    {
-                        case UserType.SuperAdmin:
-
-                            return RedirectToAction("Index","Admin");
-
-
-                            break;
-
-                        case UserType.Head:
-
-
-                            return RedirectToAction("Index", "Head", new { id=result.id});
-                       
-                            break;
-
-                        case UserType.Publisher:
-
-                            return RedirectToAction("Index","Publisher", new { id=result.id});
-                            break;
-                    
-                         default:
-                            return RedirectToAction("Index");
-                          break;
-                      
-
-                    }
-
+                    return redirectToRoleHome();
 
                 }
                 else
@@ -124,8 +92,6 @@ namespace MLearning.Web.Controllers
 
                 }
 
-
-               
             }
             catch
             {
@@ -134,6 +100,28 @@ namespace MLearning.Web.Controllers
         
         }
 
+        ActionResult redirectToRoleHome()
+        {
+            UserType uType = (userType?? default(UserType));
+            switch ((UserType)uType)
+            {
+                case UserType.SuperAdmin:
+
+                    return RedirectToAction("Index", "Admin");
+
+                case UserType.Head:
+
+                    return RedirectToAction("Index", "Head", new { id = UserID });
+
+                case UserType.Publisher:
+
+                    return RedirectToAction("Index", "Publisher", new { id = UserID });
+
+                default:
+                    return RedirectToAction("Index");
+
+            }
+        }
 
         [HttpPost]        
         public ActionResult LogOff()

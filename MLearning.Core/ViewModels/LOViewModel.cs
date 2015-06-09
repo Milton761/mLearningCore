@@ -274,7 +274,13 @@ namespace MLearning.Core.ViewModels
                 set { _stack = value; RaisePropertyChanged("stack"); }
             }
 
-
+            
+            stack_wrapper _stack2;
+            public stack_wrapper stack2
+            {
+                get { return _stack; }
+                set { _stack2 = value; RaisePropertyChanged("stack2"); }
+            }
 
 
 
@@ -316,17 +322,12 @@ namespace MLearning.Core.ViewModels
         {
             Title = LOsInCircle[_loCurrentIndex].lo.title;
             Description = LOsInCircle[_loCurrentIndex].lo.description;
-
-            if (LOsInCircle[_loCurrentIndex].stack.StacksList.Count > 0 && LOsInCircle[_loCurrentIndex].stack.StacksList[0].PagesList.Count > 0)
+            if (LOsInCircle[_loCurrentIndex].stack.StacksList[0].PagesList[0].cover_bytes==null )
             {
-                if (LOsInCircle[_loCurrentIndex].stack.StacksList[0].PagesList[0].cover_bytes == null)
-                {
-                    LoadPageImages(_loCurrentIndex);
-
-                }
-                GroupedPagesList = LOsInCircle[_loCurrentIndex].stack.StacksList;
+                LoadPageImages(_loCurrentIndex);
+                
             }
-            
+            GroupedPagesList = LOsInCircle[_loCurrentIndex].stack.StacksList;
         }
 
 

@@ -9,7 +9,6 @@ using Core.ViewModels;
 using Microsoft.WindowsAzure.MobileServices;
 using MLearning.Core.Configuration;
 using MLearning.Core.Entities;
-using MLearning.Core.Entities.json;
 using MLearning.Core.Services;
 using MLearningDB;
 using Newtonsoft.Json;
@@ -529,10 +528,10 @@ namespace MLearning.Core.ViewModels
             try
             {
                 var watch = Stopwatch.StartNew();
-                //await LoadCircleTags(CircleID);
-                //await LoadPostsInCircle(CircleID);
-                //await LoadUsersInCircle(CircleID);
-                //await LoadLearningObjects(CircleID);
+                await LoadCircleTags(CircleID);
+                await LoadPostsInCircle(CircleID);
+                await LoadUsersInCircle(CircleID);
+                await LoadLearningObjects(CircleID);
                 await LoadQuizzes(CircleID);
 
                 watch.Stop();
@@ -1064,104 +1063,6 @@ namespace MLearning.Core.ViewModels
             _TmpQuizzesList = QuizzesList;
         }
 
-
-        List<Question> _questionsList;
-        public List<Question> QuestionList
-        {
-            get { return _questionsList; }
-            set { _questionsList = value; RaisePropertyChanged("QuestionList"); }
-        }
-
-
-
-        MvxCommand<quiz_by_circle> _selectQuizCommand;
-        public System.Windows.Input.ICommand SelectQuizCommand
-        {
-            get
-            {
-                _selectQuizCommand = _selectQuizCommand ?? new MvxCommand<quiz_by_circle>(DoSelectQuizCommand);
-                return _selectQuizCommand;
-            }
-        }
-
-        void DoSelectQuizCommand(quiz_by_circle q)
-        {
-            LoadQuestions(q.id);   
-        }
-
-
-        private async void LoadQuestions(int p)
-        {
-             QuestionList = await _mLearningService.GetQuestionsByQuiz(p);
-        }
-
-
-
-        List<QuestionOption> _questionOptions;
-        public List<QuestionOption> QuestionOptions
-        {
-            get { return _questionOptions; }
-            set { _questionOptions = value; RaisePropertyChanged("QuestionOptions"); }
-        }
-        
-
-
-        MvxCommand<Question> _selectQuestionCommand;
-        public System.Windows.Input.ICommand SelectQuestionCommand
-        {
-            get
-            {
-                _selectQuestionCommand = _selectQuestionCommand ?? new MvxCommand<Question>(DoSelectQuestionCommand);
-                return _selectQuestionCommand;
-            }
-        }
-
-        void DoSelectQuestionCommand(Question q)
-        {
-            LoadQuestionOptions(q.id);
-        }
-
-        private async void LoadQuestionOptions(int p)
-        {
-            QuestionOptions = await _mLearningService.GetOptionsByQuestion(p);
-        }
-
-
-        MvxCommand<QuestionAnswerWrapper> _saveUserAnswer;
-        public System.Windows.Input.ICommand SaveUserAnswer
-        {
-            get
-            {
-                _saveUserAnswer = _saveUserAnswer ?? new MvxCommand<QuestionAnswerWrapper>(DoSaveUserAnswer);
-                return _saveUserAnswer;
-            }
-        }
-
-        void DoSaveUserAnswer(QuestionAnswerWrapper qaw)
-        {
-            _mLearningService.SaveUserAnswer(UserID, qaw.question_id, JsonConvert.SerializeObject(qaw.answer));
-        }
-
-
-        MvxCommand<QuestionOption> _testSaveUserAnswer;
-        public System.Windows.Input.ICommand TestSaveUserAnswer
-        {
-            get
-            {
-                _testSaveUserAnswer = _testSaveUserAnswer ?? new MvxCommand<QuestionOption>(DoTestSaveUserAnswer);
-                return _testSaveUserAnswer;
-            }
-        }
-
-        void DoTestSaveUserAnswer(QuestionOption qo)
-        {
-            var Answer = new QuestionAnswer{singleOption_id=qo.id};
-            _mLearningService.SaveUserAnswer(UserID, qo.Question_id, JsonConvert.SerializeObject(Answer));
-        }
-
-
-        //private void LoadQues
-
         #endregion
 
 
@@ -1186,7 +1087,7 @@ namespace MLearning.Core.ViewModels
                (lo) => { return lo.lo.url_cover; });
 
             
-            
+
            
         }
 
@@ -1266,5 +1167,11 @@ namespace MLearning.Core.ViewModels
             await repo.TryGetTableUpdates();
         
         }
+
+
+
+
+
+
     }
 }

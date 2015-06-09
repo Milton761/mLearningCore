@@ -2,8 +2,8 @@
 /* CSS Document */
 
 body {
-	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
-	background-color: #f0f0f0;
+	/*font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	background-color: #f0f0f0;*/
 	margin: 0;
 	padding: 0;
 	color: #000;
@@ -14,7 +14,7 @@ ul, ol, dl {
 	margin: 0;
 }
 h1, h2, h3, h4, h5, h6, p {
-	margin-top: 0;	
+	/*margin-top: 0;	*/
 	padding-right: 15px;
 	padding-left: 15px;
 }
@@ -37,7 +37,7 @@ a:hover, a:active, a:focus {
 .row span {
       display: inline-block;
       vertical-align: middle;
-	  top:50%;
+	  /*top:50%;*/
       line-height: normal;
 	  position: relative;
 	  color:#9b9c9e;
@@ -162,6 +162,7 @@ a:hover, a:active, a:focus {
 	border: 5px solid #eee;
 
 	}
+/*
 .container {
 	width: 80%;
 	padding-top: 10px;
@@ -170,7 +171,7 @@ a:hover, a:active, a:focus {
 	position: static;
 	min-height: 450px;
 
-}
+}*/
 
 .content {
 	padding: 10px 0;
@@ -246,8 +247,8 @@ caption {
 }
 tbody
 {
-	color:#9b9c9e;
-	font-size:1.6em;
+	/*color:#9b9c9e;
+	font-size:1.6em;*/
 	text-align:center;
 }
 .tablehead { border-radius: 15px; }
@@ -257,7 +258,7 @@ th {
 	background-color:#0682c1;
 	text-align:center;
 }
-th,td,tr {border: 0px solid silver; vertical-align:middle; height: 45px;  }
+/*th,td,tr {border: 0px solid silver; vertical-align:middle; height: 45px;  }*/
 th{color:#FFF;}
 em {font-size: 14px bold; font-style:italic; color:#000;}
 /**Zebra Stripes**/
@@ -276,6 +277,8 @@ tr:nth-child(odd) /**every odd row**/
 .row {
   width: 100%;
   /*margin: 0 auto;*/
+  margin-right: 0;
+  margin-left: 0;
     text-align: center;
 }
 
@@ -340,6 +343,14 @@ tr:nth-child(odd) /**every odd row**/
 	background-position: right bottom;
 	background-size:60px;
 	top: 50%;
+}
+
+.verticalCenter{
+  position: relative;
+  top: 50%;
+  /*-webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);*/
 }
 
 .unidad {
@@ -479,4 +490,8 @@ tr:nth-child(odd) /**every odd row**/
   -webkit-border-radius: 4px;
 }
 
-</style>
+img.fullwidth {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+}
