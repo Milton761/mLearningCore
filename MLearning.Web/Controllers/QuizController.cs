@@ -25,6 +25,11 @@ namespace MLearning.Web.Controllers
             _mLearningService = ServiceManager.GetService();
         }
 
+        public ActionResult Index()
+         {
+             return View();
+         }
+
 
          #region CRUD quiz
          public ActionResult Create(int LO_id)
