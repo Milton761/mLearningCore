@@ -17,7 +17,7 @@ namespace MLearning.Web.Controllers
     {
       
 
-                
+         
          private IMLearningService _mLearningService;
          public QuizController()
              : base()
