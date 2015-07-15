@@ -43,7 +43,7 @@
 
 
 /*contenedores */
-.cont_Principal {
+.cont_Principal{
     background:rgb(248,239,233);
     border-radius:10px;
 }
@@ -194,5 +194,85 @@ border:0px;
   animation-name: fadeInUp;
 }
 
+.question{
+   background-color: #F6F7FA;
+   border: 1px solid #F6F7FA;
+   border-radius: 6px;
+   padding: 20px 5px;
+   margin-bottom: 10px;
+   color: #9C9E9F;
+   font-size: 16px;
+}
+.question .title{
+    margin-top: 25px;
+}
+.question .alternatives span{
+    margin-right: 25px;
+}
+.question .alternatives{
+    margin-bottom: 10px;
+}
+.question label{
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    color: #9C9E9F;
+}
+.question input.title-quiz{
+    height: 50px;
+    font-size: 20px;
+    text-align: center;
+    font-weight:lighter;
+}
 
+.question .drag-drop{
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    min-height: 180px;
+    text-align: center;
+    line-height: 200px;
+    margin-top: 20px;
+    font-size: 12px;
+    padding: 5px;
+}
+.question .drag-drop-alternatives input.form-control,.question .drag-drop-alternatives label {
+    display: inline-block !important;
+}
+.question .drag-drop-alternatives input.form-control{
+    width: 70%;
+}
+.question .drag-drop-alternatives label{
+    margin-right: 8px;
+}
+.question .drag-drop-alternatives span{
+    margin-right: 8px;
+}
+.question .drag-drop-alternatives .drag-drop{
+    display: inline-block;
+    min-width: 100px;
+    min-height: 100px;
+    line-height: 100px;
+}
+.question h3{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    color: #9C9E9F;
+    font-size: 16px;
+}
+.question .content-special > .form-group{
+    line-height: 45px;
+}
 
+.question .inputItem{
+  width: 50px;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #9C9E9F;
+  background-color: #fff;
+  text-align: center;
+  border: 1px solid #B0B2B3;
+  border-radius: 4px;
+}
