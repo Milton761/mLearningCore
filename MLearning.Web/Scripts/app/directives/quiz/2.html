@@ -1,0 +1,64 @@
+<div class="question">
+    <div class="row">
+        <div class="col-xs-12">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Titulo de la pregunta">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control"
+                                      ng-model="examen.loparagraph" type="text"
+                                      placeholder="Descripcion (opcional)" rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="drag-drop">
+                            Drag & Drop files
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+         
+                            <h3>Type of answer</h3>
+                            <div class="alternatives">
+                                <span>Alternatives</span>  Numbers
+
+                                <input type="text" ng-model='numero' ng-enter='crearRespuestas({num:numero})' placeholder='N°' ng-blur="numero='' " class='inputItem'>
+                            </div>
+                            
+                            <label>Answer (seth the correct)</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" id="blankCheckbox" value="option1">
+                                    <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Alternative 1">
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" id="blankCheckbox" value="option1">
+                                    <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Alternative 2">
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" id="blankCheckbox" value="option1">
+                                    <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Alternative 3">
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" id="blankCheckbox" value="option1">
+                                    <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Alternative 4">
+                                </label>
+                            </div>
+                       
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

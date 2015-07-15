@@ -137,7 +137,7 @@ namespace MLearning.Web.Controllers
         {
 
             if (PublisherID == default(int))
-                return Json(new JsonActionResult { errors = new Object[] { "No publisher defined" } });
+                return Json(new JsonActionResult { errors = new String[] { "No publisher defined" } });
             try
             {
                 //Create LO

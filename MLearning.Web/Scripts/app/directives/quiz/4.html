@@ -1,0 +1,96 @@
+<div class="question">
+    <div class="row">
+        <div class="col-xs-12">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Titulo de la pregunta">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control"
+                                      ng-model="examen.loparagraph" type="text"
+                                      placeholder="Descripcion (opcional)" rows="4"></textarea>
+                        </div>
+
+                        <h3>Type of answer</h3>
+                        <div class="alternatives">
+                            <span>Alternatives</span>  Numbers
+                            <input type="text" ng-model='numero' ng-enter='crearRespuestas({num:numero})' placeholder='N' ng-blur="numero='' " class='inputItem'>
+                        </div>
+
+                        <label>Answer (seth the correct)</label>
+                    </div>
+                </div>
+
+                <div class="drag-drop-alternatives">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <span>A</span>
+                            <div class="drag-drop">
+                                Drag & Drop files
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="checkbox">
+                                <label>C </label>
+                                <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Alternative 1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drag-drop-alternatives">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <span>B</span>
+                            <div class="drag-drop">
+                                Drag & Drop files
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="checkbox">
+                                <label>A</label>
+                                <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Alternative 1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drag-drop-alternatives">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <span>C</span>
+                            <div class="drag-drop">
+                                Drag & Drop files
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="checkbox">
+                                <label>D</label>
+                                <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Alternative 1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drag-drop-alternatives">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <span>D</span>
+                            <div class="drag-drop">
+                                Drag & Drop files
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="checkbox">
+                                <label>B</label>
+                                <input ng-model="examen.lotitle" class="form-control" type="text" placeholder="Alternative 1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

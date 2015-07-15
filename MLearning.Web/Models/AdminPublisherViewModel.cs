@@ -24,8 +24,8 @@ namespace MLearning.Web.Models
     }
 
     public class SelectableTag
-    { 
-        public string Name {get;set;}
+    {
+        public string Name { get; set; }
         public bool IsSelected { get; set; }
     }
 
@@ -49,7 +49,12 @@ namespace MLearning.Web.Models
     public class QuizQuestionsModel
     {
         public Quiz Quiz { get; set; }
-        public List<Question> Questions { get; set; }
+        //public List<Question> Questions { get; set; }
+        public ICollection<QuestionOptionsModel> QuestionsOptions { get; set; }
     }
-
+    public class QuestionOptionsModel
+    {
+        public Question Question { get; set; }
+        public ICollection<QuestionOption> Options { get; set; }
+    }
 }

@@ -279,7 +279,7 @@ tr:nth-child(odd) /**every odd row**/
   /*margin: 0 auto;*/
   margin-right: 0;
   margin-left: 0;
-    text-align: center;
+   /* text-align: center; */
 }
 
 .lapiz {
