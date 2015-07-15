@@ -2055,12 +2055,6 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MLearning.Core\MLearning.Core.csproj">
-      <Project>{b1c6aa81-1532-477b-bda1-2add36344699}</Project>
-      <Name>MLearning.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
