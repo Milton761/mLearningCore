@@ -15,32 +15,27 @@ namespace MLearning.Web.Controllers
 {
     public class QuizController : MLController
     {
-      
 
-         
-         private IMLearningService _mLearningService;
-         public QuizController()
-             : base()
+
+
+        private IMLearningService _mLearningService;
+        public QuizController()
+            : base()
         {
             _mLearningService = ServiceManager.GetService();
         }
 
-        public ActionResult Index()
-         {
-             return View();
-         }
 
-
-         #region CRUD quiz
-         public ActionResult Create(int LO_id)
-         {
-              LOID = LO_id;              
-             return View("QuizCreate");
-         }
+        #region CRUD quiz
+        public ActionResult Create(int LO_id)
+        {
+            LOID = LO_id;
+            return View("QuizCreate");
+        }
         //
         // POST: /Quiz/Create
         [HttpPost]
-        async public Task<ActionResult> Create(Quiz model)
+        async public Task<ActionResult> Create(Quiz model, ICollection<QuestionOptionsModel> questions)
         {
             try
             {
@@ -48,8 +43,23 @@ namespace MLearning.Web.Controllers
                 model.created_at = DateTime.UtcNow;
                 model.updated_at = DateTime.UtcNow;
 
-                int quizId = await _mLearningService.CreateObject<Quiz>(model,q=>q.id);
+                int quizId = await _mLearningService.CreateObject<Quiz>(model, q => q.id);
 
+                foreach (var questionOptions in questions)
+                {
+                    Question question = questionOptions.Question;
+                    question.Quiz_id = quizId;
+                    question.created_at = DateTime.UtcNow;
+                    question.updated_at = DateTime.UtcNow;
+                    int questionId = await _mLearningService.CreateObject<Question>(question, q => q.id);
+                    foreach (var option in questionOptions.Options)
+                    {
+                        option.created_at = DateTime.UtcNow;
+                        option.updated_at = DateTime.UtcNow;
+                        option.Question_id = questionId;
+                        int optionId = await _mLearningService.CreateObject<QuestionOption>(option, o => o.id);
+                    }
+                }
 
                 /*foreach (var question in model.Questions)
                 {
@@ -70,7 +80,7 @@ namespace MLearning.Web.Controllers
                 }*/
 
 
-               // return Json(Url.Action("EditLO", "Publisher", new { lo_id = LOID }));
+                // return Json(Url.Action("EditLO", "Publisher", new { lo_id = LOID }));
 
                 return RedirectToAction("EditLO", "Publisher");
             }
@@ -85,9 +95,18 @@ namespace MLearning.Web.Controllers
         public async Task<ActionResult> Edit(int quiz_id)
         {
             var quiz = await _mLearningService.GetObjectWithId<Quiz>(quiz_id);
+            List<QuestionOptionsModel> questionOptions = new List<QuestionOptionsModel>();
             var questions = await _mLearningService.GetQuestionsByQuiz(quiz_id);
+            foreach (Question question in questions)
+            {
+                ICollection<QuestionOption> options = await _mLearningService.GetOptionsByQuestion(question.id);
+                QuestionOptionsModel questionOption = new QuestionOptionsModel();
+                questionOption.Question = question;
+                questionOption.Options = options;
+                questionOptions.Add(questionOption);
+            }
             LOID = quiz.LearningObject_id;
-            return View("QuizEdit", new QuizQuestionsModel { Quiz = quiz, Questions = questions});
+            return View("QuizEdit", new QuizQuestionsModel { Quiz = quiz, QuestionsOptions = questionOptions });
         }
 
         //
@@ -99,15 +118,23 @@ namespace MLearning.Web.Controllers
             try
             {
                 await _mLearningService.UpdateObject<Quiz>(qqm.Quiz);
+                foreach (var questionsOptions in qqm.QuestionsOptions)
+                {
+                    await _mLearningService.UpdateObject<Question>(questionsOptions.Question);
+                    foreach (var option in questionsOptions.Options)
+                    {
+                        await _mLearningService.UpdateObject<QuestionOption>(option);
+                    }
+                }
                 return RedirectToAction("EditLO", "Publisher", new { lo_id = LOID });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.Print(e.Message);
             }
             var quiz = await _mLearningService.GetObjectWithId<Quiz>(quiz_id);
             var questions = await _mLearningService.GetQuestionsByQuiz(quiz_id);
-            return View("QuizEdit", new QuizQuestionsModel { Quiz = quiz, Questions = questions });
+            return View("QuizEdit", qqm/*, new QuizQuestionsModel { Quiz = quiz, Questions = questions }*/);
         }
 
         //
@@ -115,8 +142,10 @@ namespace MLearning.Web.Controllers
         public async Task<ActionResult> Delete(int quiz_id)
         {
             var todelete = await _mLearningService.GetObjectWithId<Quiz>(quiz_id);
+
             LOID = todelete.LearningObject_id;
-            return View("QuizDelete",todelete);
+
+            return View("QuizDelete", todelete);
         }
 
         //
